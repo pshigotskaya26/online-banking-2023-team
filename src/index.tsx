@@ -10,7 +10,6 @@ const root = ReactDOM.createRoot(
 );
 
 const router = createBrowserRouter(routes);
-
 root.render(<RouterProvider router={router} />);
 
 reportWebVitals();
