@@ -4,7 +4,7 @@ const initialState: ServicesState = {
   services: [],
 }
 
-export const ServiceReducer = (state = initialState, action: ServicesActions): ServicesState => {
+export const ServicesReducer = (state = initialState, action: ServicesActions): ServicesState => {
   switch (action.type) {
     case ServicesActionTypes.FETCH_SERVICES:
       return {

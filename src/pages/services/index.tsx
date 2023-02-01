@@ -7,7 +7,7 @@ export const ServicesPage = () => {
   let {services} = useAppSelector(state => state.services)
   useEffect(() => {
     fetchServices()
-  })
+  }, [])
 
 
   return <div>
@@ -15,6 +15,6 @@ export const ServicesPage = () => {
       services.map(el => {
         return el.title
       })
-    }
+    }1
   </div>
 }

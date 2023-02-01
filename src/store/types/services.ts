@@ -11,7 +11,6 @@ export enum ServicesActionTypes {
 interface FetchServicesAction {
   type: ServicesActionTypes.FETCH_SERVICES,
   payload: IService[]
-  // payload: IService[]
 }
 
 
