@@ -4,7 +4,7 @@ import {useActions} from "../../hooks/useActions";
 
 export const ServicesPage = () => {
   const {fetchServices} = useActions()
-  let {services} = useAppSelector(state => state.services)
+  let {services, loadingServices, errorLoadingServices} = useAppSelector(state => state.services)
   useEffect(() => {
     fetchServices()
   }, [])
@@ -12,9 +12,12 @@ export const ServicesPage = () => {
 
   return <div>
     {
-      services.map(el => {
-        return el.title
-      })
-    }1
+      loadingServices
+        ? " Загрузка "
+        : services.map(el => {
+          return el.title
+        })
+    }
+
   </div>
 }

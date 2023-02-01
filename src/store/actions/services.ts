@@ -4,7 +4,17 @@ import {ServicesActions, ServicesActionTypes} from "../types/services";
 
 export const fetchServices = () => {
   return (dispatch: Dispatch<ServicesActions>) => {
-    const response = servicesAPI.fetchServices()
-    dispatch({type: ServicesActionTypes.FETCH_SERVICES, payload: response})
+    try {
+      dispatch({type: ServicesActionTypes.FETCH_SERVICES})
+      const response = servicesAPI.fetchServices()
+      setTimeout(() => {
+        dispatch({type: ServicesActionTypes.FETCH_SERVICES_SUCCESS, payload: response})
+      }, 500)
+    } catch (e) {
+      dispatch({
+        type: ServicesActionTypes.FETCH_SERVICES_ERROR,
+        payload: "Не удалозь загрузить список услуг"
+      })
+    }
   }
 }
