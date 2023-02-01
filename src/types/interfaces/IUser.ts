@@ -1,5 +1,3 @@
-import type ICard from './ICard'
-
 export default interface IUser {
   id: number;
   name: string;
@@ -8,5 +6,5 @@ export default interface IUser {
   secret: string;
   phone: string;
   photo: string; // base64
-  card: ICard[];
+  cards: number[]; //cardids
 }
