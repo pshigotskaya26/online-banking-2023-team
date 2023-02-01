@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import DashboardPage from '../pages/dashboard';
+import { ServicesPage } from '../pages/services';
 
 const routes = [
   {
     path: '/',
     element: <DashboardPage />,
+  },
+  {
+    path: '/services',
+    element: <ServicesPage />,
   },
   {
     path: '/example',
