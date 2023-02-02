@@ -23,7 +23,7 @@ const ServicesList: React.FC<ServicesListProps> = ({services, loadingServices, s
   }
 
   const servicesItems = services.map(service => {
-    return <ServicesItem service={service} handleServiceItem={handleServiceItem}/>
+    return <ServicesItem service={service} key={service.id} handleServiceItem={handleServiceItem}/>
   })
 
 
