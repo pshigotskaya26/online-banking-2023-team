@@ -4,7 +4,7 @@ import Footer from '../../components/footer';
 import React from 'react';
 
 interface ClientLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {

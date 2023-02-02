@@ -5,7 +5,7 @@ import DashboardPage from '../pages/dashboard';
 const routes = [
   {
     path: '/',
-    element: <DashboardPage />
+    element: <DashboardPage />,
   },
   {
     path: '/example',
@@ -14,12 +14,12 @@ const routes = [
         <h1>Hello World</h1>
         <Link to="about">About Us</Link>
       </div>
-    )
+    ),
   },
   {
     path: 'dashboard',
-    element: <DashboardPage />
-  }
+    element: <DashboardPage />,
+  },
 ];
 
 export default routes;
