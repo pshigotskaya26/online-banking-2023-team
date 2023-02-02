@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css';
 
-const Header: React.FC = (): JSX.Element => {
+const Header: React.FC = () => {
   return (
     <div className={'header'}>
       <div className={'header__logo'}>B</div>

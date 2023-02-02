@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ICard from "../../types/interfaces/ICard";
 import { ITransaction } from "../../types/interfaces/ITransaction";
 
-const DashboardPage = (): JSX.Element => {
+const DashboardPage = () => {
   const [cards, setCards] = useState<ICard[]>([]);
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
 
