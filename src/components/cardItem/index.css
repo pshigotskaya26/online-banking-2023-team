@@ -1,0 +1,14 @@
+.card-item {
+	background-color: #495bd9;
+	@apply flex flex-col gap-y-2.5 w-80; /*320px*/
+}
+
+.card-number,
+.card-term,
+.card-balance {
+	@apply flex gap-x-2.5 basis-10;
+}
+
+.card-balance {
+	@apply justify-between;
+}
