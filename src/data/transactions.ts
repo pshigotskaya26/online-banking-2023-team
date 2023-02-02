@@ -1,4 +1,4 @@
-import { ITransaction } from "../types/interfaces/ITransaction";
+import ITransaction from "../types/interfaces/ITransaction";
 import TransactionsTypesEnum from "../types/enums/TransactionsTypesEnum";
 import TransactionStatusEnum from "../types/enums/TransactionStatusEnum";
 
