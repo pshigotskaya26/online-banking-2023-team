@@ -1,14 +1,13 @@
+import dayjs from 'dayjs';
+
 export const getStringDate = (time: number) => {
-	const date = new Date(time);
-	return `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
+	return dayjs(time).format('DD-MM-YYYY');
 };
 
 export const getStringTerm = (time: number) => {
-	const date = new Date(time);
-	return `${date.getMonth()}/${date.getFullYear().toString().slice(2)}`;
+	return dayjs(time).format('MM/YY');
 };
 
 export const getStringTime = (time: number) => {
-	const date = new Date(time);
-	return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+	return dayjs(time).format('hh:mm:ss');
 };
