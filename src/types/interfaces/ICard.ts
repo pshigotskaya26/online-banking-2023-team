@@ -7,4 +7,5 @@ export default interface ICard {
   currency: CardCurrencyEnum; // BYN/RUB/USD
   account: string; // IBAN BY134678484000000154501
   userid: number;
+  balance: number;
 }
