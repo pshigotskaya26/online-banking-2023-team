@@ -7,12 +7,12 @@ interface ClientLayoutProps {
   children: React.ReactNode;
 }
 
-const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
+const ClientLayout: React.FC<ClientLayoutProps> = ({children}) => {
   return (
     <div className={'container mx-auto'}>
-      <Header />
+      <Header/>
       <div>{children}</div>
-      <Footer />
+      <Footer/>
     </div>
   );
 };

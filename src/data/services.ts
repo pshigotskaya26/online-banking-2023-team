@@ -5,6 +5,11 @@ const servicesData: IService[] = [{
   code: 100,
   isAvailable: true,
   title: 'Dodo Pizza'
+}, {
+  id: 2,
+  code: 100,
+  isAvailable: true,
+  title: 'Апельсины'
 }];
 
 export default servicesData;

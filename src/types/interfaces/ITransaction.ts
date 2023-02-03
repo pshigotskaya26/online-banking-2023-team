@@ -1,7 +1,7 @@
 import TransactionsTypesEnum from "../enums/TransactionsTypesEnum";
 import TransactionStatusEnum from "../enums/TransactionStatusEnum";
 
-export interface ITransaction {
+export default interface ITransaction {
   id: number;
   userid: number;
   cardid: number;
