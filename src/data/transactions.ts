@@ -2,7 +2,7 @@ import ITransaction from "../types/interfaces/ITransaction";
 import TransactionsTypesEnum from "../types/enums/TransactionsTypesEnum";
 import TransactionStatusEnum from "../types/enums/TransactionStatusEnum";
 
-const transactions: ITransaction[] = [
+const transactionsData: ITransaction[] = [
 {
   id: 1,
   userid: 1,
@@ -29,4 +29,4 @@ const transactions: ITransaction[] = [
 
 ];
 
-export default transactions;
+export default transactionsData;

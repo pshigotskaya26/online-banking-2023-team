@@ -1,0 +1,7 @@
+.transaction-item {
+	@apply even:bg-gray-100;
+}
+
+.transaction-item td {
+	@apply p-1.5;
+}

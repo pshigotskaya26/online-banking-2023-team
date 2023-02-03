@@ -1,0 +1,19 @@
+.transactionList-container {
+	@apply py-5 border-b border-solid border-b-gray-200;
+}
+
+.transactionList__title {
+	@apply pb-6 text-xl text-blue-800;
+}
+
+.transactionList__table {
+	@apply w-full;
+}
+
+.transactionList__head {
+	@apply text-white bg-amber-400;
+}
+
+.transactionList__head th {
+	@apply p-1.5 text-start font-normal;
+}
