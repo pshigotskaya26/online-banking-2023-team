@@ -1,4 +1,4 @@
-import IUser from "../types/interfaces/IUser";
+import IUser from '../types/interfaces/IUser';
 
 const users: IUser[] = [
   {
@@ -9,10 +9,8 @@ const users: IUser[] = [
     photo: '',
     secret: '',
     password: 'User1234',
-    cards: [
-      1
-    ]
-  }
+    cards: [1],
+  },
 ];
 
 export default users;

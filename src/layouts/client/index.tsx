@@ -9,7 +9,7 @@ interface ClientLayoutProps {
 
 const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   return (
-    <div className={'container mx-auto'}>
+    <div className="container mx-auto">
       <Header />
       <div>{children}</div>
       <Footer />
