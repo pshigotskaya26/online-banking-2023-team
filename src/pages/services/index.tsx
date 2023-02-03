@@ -11,6 +11,7 @@ import IService from "../../types/interfaces/IService";
 export const ServicesPage = () => {
   const {fetchServices} = useActions()
   let {services, loadingServices} = useAppSelector(state => state.services)
+
   useEffect(() => {
     fetchServices()
   }, [])
