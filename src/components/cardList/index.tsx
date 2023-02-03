@@ -13,8 +13,8 @@ const CardList: React.FC<CardListProps> = (props) => {
 		<div className='cardList-container'>
 			<h2 className='cardList__title'>Card list:</h2>
 			<div className='cardList__content'>
-				{props.cards.map((cardItem: ICard,index: number) => (
-					<CardItem key={index} card={cardItem} />
+				{props.cards.map((cardItem: ICard) => (
+					<CardItem key={cardItem.id} card={cardItem} />
 				))}
 			</div>
 			<div className='cardList__button'>

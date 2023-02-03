@@ -24,8 +24,8 @@ const TransactionList: React.FC<TransitionListProps> = (props) => {
 						</tr>
 					</thead>
 					<tbody>
-						{props.transactions.map((transactionItem: ITransaction, index: number) => (
-							<TransactionItem key={index} transaction={transactionItem} />
+						{props.transactions.map((transactionItem: ITransaction) => (
+							<TransactionItem key={transactionItem.id} transaction={transactionItem} />
 						))}
 					</tbody>
 				</table>
