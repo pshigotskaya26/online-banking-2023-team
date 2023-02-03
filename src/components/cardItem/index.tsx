@@ -1,10 +1,10 @@
 import React from 'react';
 import './index.css';
 import ICard from '../../types/interfaces/ICard';
-import { getStringTerm } from "../../utils/getStringTerm";
+import { getStringTerm } from "../../utils/formateDateTime";
 
 interface CardItemProps {
-    card: ICard;
+	card: ICard;
 }
 
 const CardItem: React.FC<CardItemProps> = (props) => {

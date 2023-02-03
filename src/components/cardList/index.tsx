@@ -5,7 +5,7 @@ import ICard from "../../types/interfaces/ICard";
 import CardItem from '../cardItem';
 
 interface CardListProps {
-    cards: ICard[];
+	cards: ICard[];
 }
 
 const CardList: React.FC<CardListProps> = (props) => {
