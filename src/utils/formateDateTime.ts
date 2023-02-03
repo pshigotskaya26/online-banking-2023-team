@@ -5,7 +5,7 @@ export const getStringDate = (time: number) => {
 
 export const getStringTerm = (time: number) => {
 	const date = new Date(time);
-	return `${date.getMonth()}/${date.getFullYear()}`;
+	return `${date.getMonth()}/${date.getFullYear().toString().slice(2)}`;
 };
 
 export const getStringTime = (time: number) => {
