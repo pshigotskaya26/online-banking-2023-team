@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.css';
 import ICard from '../../types/interfaces/ICard';
+import { getStringTerm } from "../../utils/getStringTerm";
 
 interface CardItemProps {
     card: ICard;
@@ -15,7 +16,7 @@ const CardItem: React.FC<CardItemProps> = (props) => {
 			</div>
 			<div className='card-term'>
 				<div className='card-term__text'>Срок действия:</div>
-				<div className='card-term__value'>{props.card.expired}</div>
+				<div className='card-term__value'>{getStringTerm(props.card.expired)}</div>
 			</div>
 			<div className='card-balance'>
 				<div className='card-balance__text'>Баланс:</div>
