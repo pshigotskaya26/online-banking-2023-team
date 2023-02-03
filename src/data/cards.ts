@@ -11,7 +11,7 @@ const cardsData: ICard[] = [{
   balance: 0
 },
 {
-	id: 1,
+	id: 2,
 	userid: 1,
 	account: 'BY134678484000000154501',
 	currency: CardCurrencyEnum.BYN,
