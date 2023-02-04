@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import Button from "../button";
 import InputText from "../inputText";
 import {useActions} from "../../hooks/useActions";
@@ -18,7 +18,8 @@ const ServiceNew = () => {
       code: +code,
       isAvailable: isAvailable,
       id: Date.now(),
-      title: name
+      title: name,
+      isActive: false
     }
 
     addService(service)
