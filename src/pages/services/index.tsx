@@ -11,6 +11,7 @@ import IService from "../../types/interfaces/IService";
 export const ServicesPage = () => {
   const {fetchServices} = useActions()
   let {services, loadingServices} = useAppSelector(state => state.services)
+
   useEffect(() => {
     fetchServices()
   }, [])
@@ -34,16 +35,18 @@ export const ServicesPage = () => {
     <>
       <PageTitle title={"Services for admin"} description={"Service Management Page"}/>
 
-      <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-        <div className={"flex flex-col basis-1/3"}>
+      <div className="flex grow-0">
+        <div className={"flex flex-col grow-0 w-2/6 mr-2"}>
           <ServicesList
             services={services}
             loadingServices={loadingServices}
-            setActiveComponent={setActiveComponent}/>
+            setActiveComponent={setActiveComponent}
+            isActiveFormNewProduct={isVisibleForm}
+          />
         </div>
-        <div className={"flex flex-col basis-2/3 "}>
-          {isVisibleForm && <ServiceNew/>}
-          {isVisibleInfo && <ServiceInfo service={activeServiceInfo}/>}
+        <div className={"flex flex-col w-4/6"}>
+          {isVisibleForm && <ServiceNew />}
+          {isVisibleInfo && <ServiceInfo service={activeServiceInfo} />}
         </div>
       </div>
     </>

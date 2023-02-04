@@ -13,6 +13,34 @@ class ServicesAPI {
     return res
   }
 
+  createService(serviceData: IService): IService[] | Error {
+
+    if (!localStorage.getItem("services")) {
+      let servicesNew: IService[] = [serviceData]
+      localStorage.setItem("services", JSON.stringify(servicesNew))
+      return servicesNew
+    } else {
+      let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
+      let servicesWithCode = services.find(service => service.code === serviceData.code)
+
+      if (!servicesWithCode) {
+        let servicesNew: IService[] = [...services, serviceData]
+        localStorage.setItem("services", JSON.stringify(servicesNew))
+        return servicesNew
+      } else {
+        throw new Error("A service with this code exists")
+      }
+    }
+  }
+
+  deleteService(id: number) {
+    let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
+    let servicesNew: IService[] = services.filter(service => service.id !== id)
+    localStorage.setItem("services", JSON.stringify(servicesNew))
+
+  }
+
+
 }
 
 const servicesAPI = new ServicesAPI();
