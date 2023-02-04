@@ -13,19 +13,22 @@ class ServicesAPI {
     return res
   }
 
-  createService(service: IService) {
-    let services = localStorage.getItem("services")
-    if (!services) {
-      localStorage.setItem("services", JSON.stringify([service]))
+  createService(serviceData: IService): IService[] | Error {
+
+    if (!localStorage.getItem("services")) {
+      let servicesNew: IService[] = [serviceData]
+      localStorage.setItem("services", JSON.stringify(servicesNew))
+      return servicesNew
     } else {
-      let arr = JSON.parse(services) as IService[]
-      let servicesWithCode = arr.filter(el => el.code !== service.code)
-      console.log(servicesWithCode.length)
-      if (!servicesWithCode.length) {
-        throw new Error("Такой код существует")
+      let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
+      let servicesWithCode = services.find(service => service.code === serviceData.code)
+
+      if (!servicesWithCode) {
+        let servicesNew: IService[] = [...services, serviceData]
+        localStorage.setItem("services", JSON.stringify(servicesNew))
+        return servicesNew
       } else {
-        arr.push(service)
-        localStorage.setItem("services", JSON.stringify(arr))
+        throw new Error("A service with this code exists")
       }
     }
   }

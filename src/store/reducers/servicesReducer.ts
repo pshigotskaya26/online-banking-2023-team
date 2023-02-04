@@ -4,6 +4,7 @@ const initialState: ServicesState = {
   loadingServices: false,
   services: [],
   errorLoadingServices: "",
+  errorAddNewService: "",
 }
 
 export const ServicesReducer = (state = initialState, action: ServicesActions): ServicesState => {
@@ -14,6 +15,8 @@ export const ServicesReducer = (state = initialState, action: ServicesActions): 
       return {...state, loadingServices: false, services: action.payload}
     case ServicesActionTypes.FETCH_SERVICES_ERROR:
       return {...state, loadingServices: false, errorLoadingServices: action.payload}
+    case ServicesActionTypes.ADD_NEW_SERVICE_ERROR:
+      return {...state, errorAddNewService: action.payload}
     default:
       return state
   }

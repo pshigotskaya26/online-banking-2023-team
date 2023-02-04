@@ -3,6 +3,7 @@ import Button from "../button";
 import InputText from "../inputText";
 import {useActions} from "../../hooks/useActions";
 import IService from "../../types/interfaces/IService";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 const ServiceNew = () => {
   const {addService} = useActions()
@@ -10,6 +11,7 @@ const ServiceNew = () => {
   const [code, setCode] = useState<string>("");
   const [isAvailable, setIsAvailable] = useState<boolean>(true);
 
+  const { errorAddNewService } = useAppSelector(state => state.services)
   const handleNewService = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     let service: IService = {
@@ -18,8 +20,10 @@ const ServiceNew = () => {
       id: Date.now(),
       title: name
     }
-    console.log(service)
+
     addService(service)
+    setName("")
+    setCode("")
   }
   return <div
     className="w-full bg-white border border-gray-200 rounded-lg shadow">
@@ -61,6 +65,7 @@ const ServiceNew = () => {
           </div>
           <Button text={"Add product"} isDisable={!(name.length && code.length)} handleButton={handleNewService}/>
         </form>
+        <div>{errorAddNewService}</div>
       </div>
     </section>
   </div>

@@ -24,17 +24,22 @@ export const fetchServices = () => {
 export const addService = (service: IService) => {
   return (dispatch: Dispatch<ServicesActions>) => {
     try {
-      // dispatch({type: ServicesActionTypes.FETCH_SERVICES})
+      dispatch({type: ServicesActionTypes.FETCH_SERVICES})
       const response = servicesAPI.createService(service)
-      console.log(response)
+      setTimeout(() => {
+        if (!(response instanceof Error)) {
+          dispatch({type: ServicesActionTypes.FETCH_SERVICES_SUCCESS, payload: response})
+        }
+      }, 500)
     } catch (e: unknown) {
       if (e instanceof Error) {
-        console.log(e.message)
-        // dispatch({
-        //   type: ServicesActionTypes.FETCH_SERVICES_ERROR,
-        //   payload: e.message
-        // })
+        dispatch({
+          type: ServicesActionTypes.ADD_NEW_SERVICE_ERROR,
+          payload: e.message
+        })
       }
+    } finally {
+      dispatch({type: ServicesActionTypes.FETCH_SERVICES_ERROR, payload: ""})
     }
   }
 }
