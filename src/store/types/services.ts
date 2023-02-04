@@ -1,9 +1,10 @@
-import IService from "../../types/interfaces/IService";
+import IService from '../../types/interfaces/IService';
+import { IAdminUser, IClientUser } from '../../types/interfaces/IUser';
 
 export interface ServicesState {
-  loadingServices: boolean,
-  services: IService[],
-  errorLoadingServices: string
+  loadingServices: boolean;
+  services: IService[];
+  errorLoadingServices: string;
 }
 
 export enum ServicesActionTypes {
@@ -13,21 +14,20 @@ export enum ServicesActionTypes {
 }
 
 interface FetchServicesAction {
-  type: ServicesActionTypes.FETCH_SERVICES,
+  type: ServicesActionTypes.FETCH_SERVICES;
 }
 
 interface FetchServicesActionSuccess {
-  type: ServicesActionTypes.FETCH_SERVICES_SUCCESS,
-  payload: IService[]
+  type: ServicesActionTypes.FETCH_SERVICES_SUCCESS;
+  payload: IService[];
 }
 
 interface FetchServicesActionError {
-  type: ServicesActionTypes.FETCH_SERVICES_ERROR,
-  payload: string
+  type: ServicesActionTypes.FETCH_SERVICES_ERROR;
+  payload: string;
 }
 
-
-export type ServicesActions = FetchServicesAction | FetchServicesActionSuccess | FetchServicesActionError
-
-
-
+export type ServicesActions =
+  | FetchServicesAction
+  | FetchServicesActionSuccess
+  | FetchServicesActionError;

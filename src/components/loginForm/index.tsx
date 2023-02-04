@@ -1,7 +1,28 @@
 import React, { useState } from 'react';
 import './style.css';
+import { fetchUserInfo } from '../../store/actions/authorization';
+import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useActions } from '../../hooks/useActions';
 
 const LoginForm: React.FC = () => {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useAppDispatch();
+  const { fetchUserInfo } = useActions();
+
+  const formSubmit = (e: React.MouseEvent) => {
+    const credentials = {
+      login,
+      password,
+    };
+    fetchUserInfo(credentials);
+    e.preventDefault();
+    setLogin('');
+    setPassword('');
+  };
+
   return (
     <div className="relative flex flex-col justify-center min-h-max overflow-hidden">
       <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl lg:max-w-xl">
@@ -16,7 +37,12 @@ const LoginForm: React.FC = () => {
             >
               Email
             </label>
-            <input type="email" className="email-input" />
+            <input
+              type="email"
+              className="email-input"
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
+            />
           </div>
           <div className="mb-2">
             <label
@@ -28,13 +54,18 @@ const LoginForm: React.FC = () => {
             <input
               type="password"
               className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <a href="#" className="text-xs text-purple-600 hover:underline">
             Forgot Password?
           </a>
           <div className="mt-6">
-            <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+            <button
+              className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+              onClick={formSubmit}
+            >
               Login
             </button>
           </div>

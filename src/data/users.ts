@@ -1,15 +1,15 @@
-import IUser from '../types/interfaces/IUser';
+import { IClientUser } from '../types/interfaces/IUser';
 
-const users: IUser[] = [
+const users: IClientUser[] = [
   {
     id: 1,
     name: 'Pavel Bazhenov',
-    email: 'p.bazhenov@mail.ru',
+    email: 'user@mail.ru',
     phone: '+357291324567',
     photo: '',
-    secret: '',
-    password: 'User1234',
     cards: [1],
+    type: 'Client',
+    password: '123456',
   },
 ];
 
