@@ -14,10 +14,7 @@ const Button: React.FC<ButtonProps> = ({text, isDisable, handleButton}) => {
       ${isDisable && "bg-gray-200"}
       `}
 
-    onClick={isDisable
-      ? handleButton
-      : () => {}
-  }
+    onClick={handleButton}
   >{text}</button>
 }
 

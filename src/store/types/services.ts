@@ -11,7 +11,8 @@ export enum ServicesActionTypes {
   FETCH_SERVICES = 'FETCH_SERVICES',
   FETCH_SERVICES_SUCCESS = 'FETCH_SERVICES_SUCCESS',
   FETCH_SERVICES_ERROR = 'FETCH_SERVICES_ERROR',
-  ADD_NEW_SERVICE_ERROR = 'ADD_NEW_SERVICE_ERROR'
+  ADD_NEW_SERVICE_ERROR = 'ADD_NEW_SERVICE_ERROR',
+  DELETE_SERVICE = "DELETE_SERVICE"
 }
 
 interface FetchServicesAction {
@@ -33,11 +34,18 @@ interface AddNewServiceErrorAction {
   payload: string
 }
 
+interface DeleteServiceAction {
+  type: ServicesActionTypes.DELETE_SERVICE,
+  payload: number
+}
+
+
 
 export type ServicesActions = FetchServicesAction
   | FetchServicesActionSuccess
   | FetchServicesActionError
   | AddNewServiceErrorAction
+  | DeleteServiceAction
 
 
 

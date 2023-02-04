@@ -9,10 +9,12 @@ interface ServiceInfoProps {
 }
 
 const ServiceInfo: FC<ServiceInfoProps> = ({service}) => {
-
+  // const { deleteService } = useActions()
   const {code, isAvailable, id, title} = service
 
-
+  const handleDeleteService = () => {
+    // deleteService(id)
+  }
 
   return <div
     className="w-full p-4 bg-white border min-h-[300px] border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
@@ -24,9 +26,13 @@ const ServiceInfo: FC<ServiceInfoProps> = ({service}) => {
       <ServiceInfoItemEditable title={title} value={"Name"} icon={faHouse} />
       <ServiceInfoItemEditable title={code} value={"Code"} icon={faHashtag}/>
       <ServiceInfoItemEditable title={isAvailable} value={"Услуга доступна"} icon={faBuildingShield} />
-      <div className={"w-full border-t-2"}>
-        <Button text={"Delete"} handleButton={() => {}} isDisable={false} />
-        <Button text={"Disable"} handleButton={() => {}} isDisable={false} />
+      <div className={"w-full border-t-2 flex justify-center"}>
+        <div className={"pr-1"}>
+          <Button text={"Delete"} handleButton={handleDeleteService} isDisable={false} />
+        </div>
+        <div>
+          <Button text={"Disable"} handleButton={() => {}} isDisable={false} />
+        </div>
       </div>
     </div>
   </div>

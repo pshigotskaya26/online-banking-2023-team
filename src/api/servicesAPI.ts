@@ -33,6 +33,13 @@ class ServicesAPI {
     }
   }
 
+  deleteService(id: number) {
+    let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
+    let servicesNew: IService[] = services.filter(service => service.id !== id)
+    localStorage.setItem("services", JSON.stringify(servicesNew))
+
+  }
+
 
 }
 

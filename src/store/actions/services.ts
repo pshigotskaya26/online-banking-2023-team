@@ -43,3 +43,17 @@ export const addService = (service: IService) => {
     }
   }
 }
+
+export  const deleteService = (id: number) => {
+  return async (dispatch: Dispatch<ServicesActions>) => {
+    try {
+      await servicesAPI.deleteService(id)
+      dispatch({type: ServicesActionTypes.DELETE_SERVICE, payload: id})
+
+    } catch (e) {
+      if (e instanceof Error) {
+
+      }
+    }
+  }
+}

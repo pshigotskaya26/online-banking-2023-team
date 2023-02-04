@@ -46,7 +46,7 @@ export const ServicesPage = () => {
         </div>
         <div className={"flex flex-col w-4/6"}>
           {isVisibleForm && <ServiceNew />}
-          {isVisibleInfo && <ServiceInfo service={activeServiceInfo}/>}
+          {isVisibleInfo && <ServiceInfo service={activeServiceInfo} />}
         </div>
       </div>
     </>
