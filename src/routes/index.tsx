@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import DashboardPage from '../pages/dashboard';
 import { ServicesPage } from '../pages/services';
+import NewCardPage from '../pages/newcard';
 
 const routes = [
   {
@@ -25,6 +26,10 @@ const routes = [
     path: 'dashboard',
     element: <DashboardPage />,
   },
+  {
+	path: '/new-card',
+	element: <NewCardPage />
+  }
 ];
 
 export default routes;
