@@ -1,21 +1,26 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './style.css';
-import { fetchUserInfo } from '../../store/actions/authorization';
-import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useActions } from '../../hooks/useActions';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import UserRolesEnum from '../../types/enums/UserRolesEnum';
+import { Simulate } from 'react-dom/test-utils';
+import submit = Simulate.submit;
 
 const MAX_FILE_SIZE = 204800;
+const MIN_PASS_LENGTH = 6;
 
 const RegistrationForm: React.FC = () => {
   const [name, setName] = useState('');
-  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passRepeat, setPassRepeat] = useState('');
   const [phone, setPhone] = useState(375);
   const [photo, setPhoto] = useState('');
+  const [isFormValid, setFormValid] = useState(false);
+
+  const { createUserInfo } = useActions();
+  const navigate = useNavigate();
 
   const imgInput = useRef<HTMLInputElement>(null);
   const showDialog = () => {
@@ -38,20 +43,62 @@ const RegistrationForm: React.FC = () => {
     }
   };
 
-  const validateName = () => {
+  const isNameValid = () => {
     const names = name.split(' ');
     return names.length >= 2 && names.every((name) => name.length >= 3);
   };
 
-  const dispatch = useAppDispatch();
-  const { createUserInfo } = useActions();
+  const isEmailValid = () => {
+    return email.match(/[^@\s]+@[^@\s]+\.[^@\s]{2,4}/);
+  };
 
-  const navigate = useNavigate();
+  const isPasswordValid = () => {
+    return password.length >= MIN_PASS_LENGTH && password === passRepeat;
+  };
+
+  const isPhoneValid = () => {
+    return `${phone}`.match(/[0-9]{9,}/);
+  };
+
+  useEffect(() => {
+    const validityResult = !!(
+      isNameValid() &&
+      isEmailValid() &&
+      isPasswordValid() &&
+      isPhoneValid()
+    );
+    setFormValid(validityResult);
+  }, [name, email, password, passRepeat, phone]);
+
+  const nameInputClass = () => {
+    if (name.length === 0) return 'input-default';
+    if (isNameValid()) return 'input-valid';
+    return 'input-invalid';
+  };
+
+  const emailInputClass = () => {
+    if (email.length === 0) return 'input-default';
+    if (isEmailValid()) return 'input-valid';
+    return 'input-invalid';
+  };
+
+  const passwordInputClass = () => {
+    if (passRepeat.length === 0) return 'input-default';
+    if (isPasswordValid()) return 'input-valid';
+    return 'input-invalid';
+  };
+
+  const phoneInputClass = () => {
+    if (`${phone}`.length === 0) return 'input-default';
+    if (isPhoneValid()) return 'input-valid';
+    return 'input-invalid';
+  };
+
   const formSubmit = (e: React.MouseEvent) => {
     const userInfo = {
       id: 0,
       name,
-      email: login,
+      email,
       password,
       phone: '' + phone,
       photo,
@@ -78,14 +125,13 @@ const RegistrationForm: React.FC = () => {
             </label>
             <input
               type="text"
-              className={`name-input`}
+              className={nameInputClass()}
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
               placeholder="Name Surname"
             />
           </div>
-
           <div className="mb-2">
             <label
               htmlFor="email"
@@ -95,9 +141,9 @@ const RegistrationForm: React.FC = () => {
             </label>
             <input
               type="email"
-              className="email-input"
-              value={login}
-              onChange={(e) => setLogin(e.target.value)}
+              className={emailInputClass()}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="name@example.com"
             />
@@ -111,7 +157,7 @@ const RegistrationForm: React.FC = () => {
             </label>
             <input
               type="password"
-              className="password-input"
+              className={passwordInputClass()}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -125,7 +171,7 @@ const RegistrationForm: React.FC = () => {
             </label>
             <input
               type="password"
-              className="password-input"
+              className={passwordInputClass()}
               value={passRepeat}
               onChange={(e) => setPassRepeat(e.target.value)}
             />
@@ -137,14 +183,13 @@ const RegistrationForm: React.FC = () => {
             >
               Phone
             </label>
-
             <div className="flex">
               <span className="inline-flex items-center px-3 mt-2 text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                 +
               </span>
               <input
                 type="tel"
-                className="phone-input"
+                className={`mt-2 ${phoneInputClass()}`}
                 value={phone}
                 onChange={(e) => setPhone(parseInt(e.target.value))}
               />
@@ -165,7 +210,6 @@ const RegistrationForm: React.FC = () => {
                 ref={imgInput}
                 onChange={loadImage}
               />
-
               <div
                 className="block w-32 h-32 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
                 aria-describedby="user_avatar_help"
@@ -192,11 +236,12 @@ const RegistrationForm: React.FC = () => {
               </div>
             </div>
           </div>
-
           <div className="mt-6">
             <button
-              className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+              type="button"
+              className={isFormValid ? 'submit-active' : 'submit-inactive'}
               onClick={formSubmit}
+              disabled={!isFormValid}
             >
               Create account
             </button>
