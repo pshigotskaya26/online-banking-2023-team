@@ -33,16 +33,16 @@ const ServiceCreate: FC<ServiceCreateProps> = ({title, service, callback, textBu
   // const {errorAddNewService} = useAppSelector(state => state.services)
   const handleForm = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    let service: IService = {
+    let serviceObj: IService = {
       code: +code,
       isAvailable: isAvailable,
-      id: Date.now(),
+      id: service?.id ? service.id : Date.now(),
       icon: icon,
       title: name,
       isActive: false
     }
 
-    callback(service)
+    callback(serviceObj)
     setName("")
     setCode(0)
   }

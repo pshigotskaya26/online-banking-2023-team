@@ -57,3 +57,19 @@ export  const deleteService = (id: number) => {
     }
   }
 }
+
+
+export  const updateService = (service: IService) => {
+  return async (dispatch: Dispatch<ServicesActions>) => {
+    try {
+      await servicesAPI.updateService(service)
+      dispatch({type: ServicesActionTypes.UPDATE_SERVICE, payload: service})
+    } catch (e) {
+      if (e instanceof Error) {
+
+      }
+    }
+  }
+}
+
+

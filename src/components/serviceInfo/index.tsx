@@ -8,10 +8,11 @@ import ServiceCreate from "../serviceCreate";
 
 interface ServiceInfoProps {
   service: IService,
-  handleDeleteService: (id: number) => void
+  handleDeleteService: (id: number) => void,
+  handleUpdateService: (service: IService) => void
 }
 
-const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService}) => {
+const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService, handleUpdateService}) => {
   const [editMode, setEditMode] = useState(false)
   const {id, title} = service
 
@@ -36,7 +37,7 @@ const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService}) => {
 
     <div className={"flex flex-wrap"}>
       {editMode
-        ? <ServiceCreate title={"Update service"} textButton={"Update"} service={service} callback={(a) => console.log(a)}/>
+        ? <ServiceCreate title={"Update service"} textButton={"Update"} service={service} callback={handleUpdateService}/>
         : <ServiceInfoViewMode service={service}/>
       }
 

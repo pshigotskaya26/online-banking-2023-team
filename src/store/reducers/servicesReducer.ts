@@ -1,5 +1,4 @@
 import {ServicesActions, ServicesActionTypes, ServicesState} from "../types/services"
-// import services from "../../data/services";
 
 const initialState: ServicesState = {
   loadingServices: false,
@@ -20,6 +19,9 @@ export const ServicesReducer = (state = initialState, action: ServicesActions): 
       return {...state, errorAddNewService: action.payload}
     case ServicesActionTypes.DELETE_SERVICE:
       return {...state, services: state.services.filter(el => el.id !== action.payload)}
+    case ServicesActionTypes.UPDATE_SERVICE:
+      const newServices = state.services.map(el => el.id === action.payload.id ? action.payload : el)
+      return {...state, services: newServices}
     default:
       return state
   }

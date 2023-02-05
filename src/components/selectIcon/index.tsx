@@ -31,7 +31,6 @@ interface SelectIconProps {
 
 const SelectIcon: FC<SelectIconProps> = (props) => {
   const {icons = iconsData, handleChangeIcon, activeIcon = icons[0]} = props
-  debugger
   const handleActiveIcon = (e: React.MouseEvent<HTMLButtonElement>,icon: IconLookup) => {
     e.preventDefault()
     handleChangeIcon(icon)
@@ -40,7 +39,6 @@ const SelectIcon: FC<SelectIconProps> = (props) => {
   return <div className={"flex"}>
     {icons.map((icon) => {
       return <button key={icon.iconName}
-
                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleActiveIcon(e, icon)}
         className={` mr-1 p-2 w-14 rounded-xl ${icon.iconName === activeIcon?.iconName && "bg-gray-200"}`}>
           <FontAwesomeIcon

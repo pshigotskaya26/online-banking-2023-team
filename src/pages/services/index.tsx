@@ -8,9 +8,10 @@ import ServiceInfo from "../../components/serviceInfo";
 import IService from "../../types/interfaces/IService";
 import ServiceCreate from "../../components/serviceCreate";
 import EmptyBox from "../../components/enptyBox";
+import {updateService} from "../../store/actions/services";
 
 export const ServicesPage = () => {
-  const {fetchServices, deleteService, addService} = useActions()
+  const {fetchServices, deleteService, addService, updateService} = useActions()
   let {services, loadingServices} = useAppSelector(state => state.services)
 
   useEffect(() => {
@@ -28,6 +29,11 @@ export const ServicesPage = () => {
   const handleAddService = (service: IService) => {
     addService(service)
   }
+
+  const handleUpdateService = (service: IService) => {
+    updateService(service)
+  }
+
   const setActiveComponent = (service?: IService) => {
     if (service?.id) {
       setActiveServiceInfo(service)
@@ -55,7 +61,7 @@ export const ServicesPage = () => {
         <div className={"flex flex-col w-full w-4/6 border shadow rounded-xl min-h-[300px]"}>
           <div className={"w-full p-4 max-w-2xl mx-auto"}>
             {isVisibleForm && <ServiceCreate title={"Add a new product"} textButton={"Add service"} callback={handleAddService}/>}
-            {isVisibleInfo && <ServiceInfo service={activeServiceInfo} handleDeleteService={handleDeleteService}/>}
+            {isVisibleInfo && <ServiceInfo service={activeServiceInfo} handleDeleteService={handleDeleteService} handleUpdateService={handleUpdateService}/>}
             {(!isVisibleInfo && !isVisibleForm) && <EmptyBox />}
           </div>
         </div>

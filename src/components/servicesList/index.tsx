@@ -21,7 +21,6 @@ const ServicesList: React.FC<ServicesListProps> = (props) => {
     isActiveFormNewProduct
   } = props
   const [servicesItems, setServicesItems] = useState<IService[]>(services)
-
   useEffect(() => {
     setServicesItems(services)
   }, [services])

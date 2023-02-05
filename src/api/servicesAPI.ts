@@ -35,8 +35,21 @@ class ServicesAPI {
 
   deleteService(id: number) {
     let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
-    console.log(services)
     let servicesNew: IService[] = services.filter(service => service.id !== id)
+    localStorage.setItem("services", JSON.stringify(servicesNew))
+  }
+
+
+  updateService(serviceData: IService) {
+    let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
+
+    let servicesNew = services.map(service => {
+      if (service.id === serviceData.id) {
+        return serviceData
+      }
+
+      return service
+    })
     localStorage.setItem("services", JSON.stringify(servicesNew))
   }
 
