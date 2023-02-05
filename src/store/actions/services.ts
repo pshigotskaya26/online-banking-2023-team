@@ -72,4 +72,17 @@ export  const updateService = (service: IService) => {
   }
 }
 
+export const handleAvailabilityService = (id: number) => {
+  return async (dispatch: Dispatch<ServicesActions>) => {
+    try {
+      await servicesAPI.handleAvailabilityService(id)
+      dispatch({type: ServicesActionTypes.HANDLE_AVAILABILITY_SERVICE, payload: id})
+    } catch (e) {
+      if (e instanceof Error) {
+
+      }
+    }
+  }
+}
+
 

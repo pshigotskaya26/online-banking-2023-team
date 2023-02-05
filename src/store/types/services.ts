@@ -14,7 +14,7 @@ export enum ServicesActionTypes {
   ADD_NEW_SERVICE_ERROR = 'ADD_NEW_SERVICE_ERROR',
   DELETE_SERVICE = "DELETE_SERVICE",
   UPDATE_SERVICE = "UPDATE_SERVICE",
-  DISABLE_SERVICE = "DISABLE_SERVICE",
+  HANDLE_AVAILABILITY_SERVICE = "HANDLE_AVAILABILITY_SERVICE",
 }
 
 interface FetchServicesAction {
@@ -46,8 +46,9 @@ interface UpdateServiceAction {
   payload: IService
 }
 
-interface DisableServiceAction {
-  type: ServicesActionTypes.DISABLE_SERVICE,
+interface HandleAvailabilityService {
+  type: ServicesActionTypes.HANDLE_AVAILABILITY_SERVICE,
+  payload: number
 }
 
 export type ServicesActions = FetchServicesAction
@@ -56,4 +57,4 @@ export type ServicesActions = FetchServicesAction
   | AddNewServiceErrorAction
   | DeleteServiceAction
   | UpdateServiceAction
-  | DisableServiceAction
+  | HandleAvailabilityService

@@ -53,6 +53,17 @@ class ServicesAPI {
     localStorage.setItem("services", JSON.stringify(servicesNew))
   }
 
+  handleAvailabilityService(id: number) {
+    let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
+
+    let servicesNew = services.map(service => {
+      if (service.id === id) {
+        return {...service, isAvailable: !service.isAvailable}
+      }
+      return service
+    })
+    localStorage.setItem("services", JSON.stringify(servicesNew))
+  }
 
 }
 

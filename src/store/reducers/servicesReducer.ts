@@ -20,7 +20,9 @@ export const ServicesReducer = (state = initialState, action: ServicesActions): 
     case ServicesActionTypes.DELETE_SERVICE:
       return {...state, services: state.services.filter(el => el.id !== action.payload)}
     case ServicesActionTypes.UPDATE_SERVICE:
-      const newServices = state.services.map(el => el.id === action.payload.id ? action.payload : el)
+      return {...state, services: state.services.map(el => el.id === action.payload.id ? action.payload : el)}
+    case ServicesActionTypes.HANDLE_AVAILABILITY_SERVICE:
+      const newServices = state.services.map(el => el.id === action.payload ? {...el, isAvailable: !el.isAvailable} : el)
       return {...state, services: newServices}
     default:
       return state

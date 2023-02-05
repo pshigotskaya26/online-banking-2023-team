@@ -8,19 +8,27 @@ import ServiceInfo from "../../components/serviceInfo";
 import IService from "../../types/interfaces/IService";
 import ServiceCreate from "../../components/serviceCreate";
 import EmptyBox from "../../components/enptyBox";
-import {updateService} from "../../store/actions/services";
+import { updateService } from "../../store/actions/services";
 
 export const ServicesPage = () => {
-  const {fetchServices, deleteService, addService, updateService} = useActions()
+  const {fetchServices, deleteService, addService, updateService, handleAvailabilityService} = useActions()
   let {services, loadingServices} = useAppSelector(state => state.services)
+
+  const [activeServiceInfo, setActiveServiceInfo] = useState<IService>({} as IService)
+  const [isVisibleInfo, serIsVisibleInfo] = useState(false)
+  const [isVisibleForm, serIsVisibleForm] = useState(false)
 
   useEffect(() => {
     fetchServices()
   }, [])
 
-  const [activeServiceInfo, setActiveServiceInfo] = useState<IService>({} as IService)
-  const [isVisibleInfo, serIsVisibleInfo] = useState(false)
-  const [isVisibleForm, serIsVisibleForm] = useState(false)
+  useEffect(() => {
+    if (activeServiceInfo.id) {
+      const currentService = services.filter(el => el.id === activeServiceInfo.id)[0]
+      setActiveServiceInfo(currentService)
+    }
+
+  }, [services])
 
   const handleDeleteService = (id: number) => {
     deleteService(id)
@@ -32,6 +40,10 @@ export const ServicesPage = () => {
 
   const handleUpdateService = (service: IService) => {
     updateService(service)
+  }
+
+  const handlerAvailabilityService = (id: number) => {
+    handleAvailabilityService(id)
   }
 
   const setActiveComponent = (service?: IService) => {
@@ -61,7 +73,12 @@ export const ServicesPage = () => {
         <div className={"flex flex-col w-full w-4/6 border shadow rounded-xl min-h-[300px]"}>
           <div className={"w-full p-4 max-w-2xl mx-auto"}>
             {isVisibleForm && <ServiceCreate title={"Add a new product"} textButton={"Add service"} callback={handleAddService}/>}
-            {isVisibleInfo && <ServiceInfo service={activeServiceInfo} handleDeleteService={handleDeleteService} handleUpdateService={handleUpdateService}/>}
+            {isVisibleInfo && <ServiceInfo
+              service={activeServiceInfo}
+              handleDeleteService={handleDeleteService}
+              handleUpdateService={handleUpdateService}
+              handleAvailabilityService={handlerAvailabilityService}
+            />}
             {(!isVisibleInfo && !isVisibleForm) && <EmptyBox />}
           </div>
         </div>

@@ -13,7 +13,7 @@ interface ServiceInfoViewModeProps {
 }
 
 const ServiceInfoViewMode: FC<ServiceInfoViewModeProps> = ({service}) => {
-  const {id, title, icon, isAvailable, code} = service
+  const {id, title, isAvailable, code} = service
 
   const values = [
     {
@@ -33,7 +33,7 @@ const ServiceInfoViewMode: FC<ServiceInfoViewModeProps> = ({service}) => {
     },
     {
       title: "Service availability",
-      value: isAvailable ? "Available" : "Not available",
+      value: !isAvailable ? "Available" : "Not available",
       icon: faCheck,
     },
   ]

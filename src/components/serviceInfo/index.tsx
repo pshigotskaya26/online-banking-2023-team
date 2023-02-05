@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import IService from "../../types/interfaces/IService";
 import Button from "../button";
 import ServiceInfoViewMode from "../serviceInfoViewMode";
@@ -9,13 +9,17 @@ import ServiceCreate from "../serviceCreate";
 interface ServiceInfoProps {
   service: IService,
   handleDeleteService: (id: number) => void,
-  handleUpdateService: (service: IService) => void
+  handleUpdateService: (service: IService) => void,
+  handleAvailabilityService: (id: number) => void
 }
 
-const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService, handleUpdateService}) => {
+const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService, handleUpdateService, handleAvailabilityService}) => {
   const [editMode, setEditMode] = useState(false)
-  const {id, title} = service
-
+  const [serviceActive, setServiceActive] = useState(service)
+  console.log(serviceActive.isAvailable)
+  useEffect(() => {
+    setServiceActive(service)
+  }, [service])
   const handleModeView = () => {
     setEditMode(!editMode)
   }
@@ -23,7 +27,7 @@ const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService, handle
   return <>
     <div className={"flex justify-between"}>
       <h5 className="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white truncate">
-        {title}
+        {serviceActive.title}
       </h5>
       <div>
         <button onClick={handleModeView}>
@@ -44,11 +48,10 @@ const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService, handle
       {
         !editMode &&       <div className={"w-full  flex justify-center"}>
           <div className={"pr-1"}>
-            <Button text={"Delete"} handleButton={() => handleDeleteService(id)} isDisable={false}/>
+            <Button text={"Delete"} handleButton={() => handleDeleteService(serviceActive.id)} isDisable={false}/>
           </div>
           <div>
-            <Button text={"Disable"} handleButton={() => {
-            }} isDisable={false}/>
+            <Button text={!serviceActive.isAvailable ? "Disable" : "Enable"} handleButton={() => handleAvailabilityService(serviceActive.id)} isDisable={false}/>
           </div>
         </div>
       }
