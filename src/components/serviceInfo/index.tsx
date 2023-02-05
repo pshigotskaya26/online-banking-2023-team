@@ -1,15 +1,18 @@
-import React, {FC} from "react";
+import React, {FC, useState} from "react";
 import IService from "../../types/interfaces/IService";
 import Button from "../button";
 import {useActions} from "../../hooks/useActions";
+import ServiceInfoViewMode from "../serviceInfoViewMode";
+import ServiceInfoEditMode from "../serviceInfoEditMode";
 
 interface ServiceInfoProps {
   service: IService
 }
 
 const ServiceInfo: FC<ServiceInfoProps> = ({service}) => {
-  const { deleteService } = useActions()
-  const {code, icon, isAvailable, id, title} = service
+  const {deleteService} = useActions()
+  const [editMode, setEditMode] = useState(false)
+  const {id, title} = service
 
   const handleDeleteService = () => {
     deleteService(id)
@@ -22,25 +25,18 @@ const ServiceInfo: FC<ServiceInfoProps> = ({service}) => {
       {title}
     </h5>
     <div className={"flex flex-wrap"}>
+      { editMode
+        ? <ServiceInfoEditMode service={service}/>
+        : <ServiceInfoViewMode service={service}/>
+      }
 
-      {/*{*/}
-      {/*  dataServiceInfo.map(el => {*/}
-      {/*    return <ServiceInfoItemEditable*/}
-      {/*      key={el.title}*/}
-      {/*      title={el.title}*/}
-      {/*      icon={el.icon}*/}
-      {/*      childrenView={el.childrenView}*/}
-      {/*      childrenEdit={el.childrenEdit}*/}
-      {/*      isEditable={el.isEditable}*/}
-      {/*    />*/}
-      {/*  })*/}
-      {/*}*/}
       <div className={"w-full border-t-2 flex justify-center"}>
         <div className={"pr-1"}>
-          <Button text={"Delete"} handleButton={handleDeleteService} isDisable={false} />
+          <Button text={"Delete"} handleButton={handleDeleteService} isDisable={false}/>
         </div>
         <div>
-          <Button text={"Disable"} handleButton={() => {}} isDisable={false} />
+          <Button text={"Disable"} handleButton={() => {
+          }} isDisable={false}/>
         </div>
       </div>
     </div>

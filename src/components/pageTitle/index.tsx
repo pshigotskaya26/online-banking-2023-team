@@ -16,4 +16,4 @@ const PageTitle: React.FC<PageTitleProps> = ({title, description}) => {
   </>
 }
 
-export default PageTitle;
+export default React.memo(PageTitle);

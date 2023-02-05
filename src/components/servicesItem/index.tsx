@@ -10,7 +10,7 @@ interface ServicesItemProps {
 
 const ServicesItem: React.FC<ServicesItemProps> = ({service, handleServiceItem}) => {
   const currentIcon = service.icon ? service.icon : faReceipt
-  return <div>
+  return <div className={"service__item"}>
     <button onClick={() => handleServiceItem(service)}
             className={`flex w-full text-left items-center rounded-lg p-1.5
             ${service.isActive && "bg-gray-200"}
