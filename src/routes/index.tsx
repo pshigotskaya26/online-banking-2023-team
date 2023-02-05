@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import DashboardPage from '../pages/dashboard';
 import { ServicesPage } from '../pages/services';
 import AuthorizationPage from '../pages/authorization';
+import RegistrationPage from '../pages/registration';
 
 const routes = [
   {
@@ -34,6 +35,11 @@ const routes = [
     path: '/login',
     element: <AuthorizationPage />,
     name: 'Login',
+  },
+  {
+    path: '/registration',
+    element: <RegistrationPage />,
+    name: 'Registration',
   },
 ];
 

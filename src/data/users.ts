@@ -1,4 +1,5 @@
 import { IClientUser } from '../types/interfaces/IUser';
+import UserRolesEnum from '../types/enums/UserRolesEnum';
 
 const users: IClientUser[] = [
   {
@@ -8,7 +9,7 @@ const users: IClientUser[] = [
     phone: '+357291324567',
     photo: '',
     cards: [1],
-    type: 'Client',
+    role: UserRolesEnum.CLIENT,
     password: '123456',
   },
 ];

@@ -4,6 +4,7 @@ import { fetchUserInfo } from '../../store/actions/authorization';
 import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useActions } from '../../hooks/useActions';
+import { Link } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const [login, setLogin] = useState('');
@@ -114,7 +115,7 @@ const LoginForm: React.FC = () => {
 
         <p className="mt-8 text-xs font-light text-center text-gray-700">
           {' '}
-          Don't have an account?{' '}
+          Don't have an account? <Link to="/registration"></Link>
           <a href="#" className="font-medium text-purple-600 hover:underline">
             Sign up
           </a>

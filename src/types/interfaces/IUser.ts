@@ -1,10 +1,12 @@
+import UserRolesEnum from '../enums/UserRolesEnum';
+
 interface IUser {
   id: number;
   name: string;
   email: string;
   phone: string;
   photo: string; // base64
-  type: 'Client' | 'Admin';
+  role: UserRolesEnum;
   password: string;
 }
 

@@ -1,8 +1,7 @@
 import { Dispatch } from 'redux';
-
 import { AuthActionTypes, AuthUserActions } from '../types/auth';
 import { AuthUserData } from '../../types/interfaces/IUser';
-import authUserAPI from '../../api/authUserAPI';
+import authUserAPI from '../../api/userAPI';
 
 export const fetchUserInfo = (credentials: AuthUserData) => {
   return (dispatch: Dispatch<AuthUserActions>) => {
