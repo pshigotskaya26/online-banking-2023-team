@@ -1,16 +1,16 @@
 import './index.css';
+import React from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-import React from 'react';
 
 interface ClientLayoutProps {
   children: React.ReactNode;
 }
 
-const ClientLayout: React.FC<ClientLayoutProps> = ({children}) => {
+const AdminLayout: React.FC<ClientLayoutProps> = ({children}) => {
   return (
     <div>
-      <Header/>
+      <Header />
       <main>
         <section className="bg-white dark:bg-gray-900">
           <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-12 lg:px-6">
@@ -18,10 +18,9 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({children}) => {
           </div>
         </section>
       </main>
-
-      <Footer/>
+      <Footer />
     </div>
   );
 };
 
-export default ClientLayout;
+export default AdminLayout;
