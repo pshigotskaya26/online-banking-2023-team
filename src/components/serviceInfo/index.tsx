@@ -2,9 +2,8 @@ import React, {FC, useState} from "react";
 import IService from "../../types/interfaces/IService";
 import Button from "../button";
 import ServiceInfoViewMode from "../serviceInfoViewMode";
-import ServiceInfoEditMode from "../serviceInfoEditMode";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFloppyDisk, faPenClip, faClose} from "@fortawesome/free-solid-svg-icons";
+import {faClose, faEdit} from "@fortawesome/free-solid-svg-icons";
 import ServiceCreate from "../serviceCreate";
 
 interface ServiceInfoProps {
@@ -28,7 +27,7 @@ const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService}) => {
       <div>
         <button onClick={handleModeView}>
           <FontAwesomeIcon
-            icon={faClose}
+            icon={editMode ? faClose : faEdit}
             size={"lg"}
             className={"text-gray-600 hover:text-blue-600 "}/>
         </button>

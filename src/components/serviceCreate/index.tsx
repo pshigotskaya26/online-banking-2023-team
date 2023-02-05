@@ -1,9 +1,12 @@
-import React, {FC, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import IService from "../../types/interfaces/IService";
 import {addService} from "../../store/actions/services";
 import InputText from "../inputText";
 import Button from "../button";
+import SelectIcon from "../selectIcon";
+import {IconLookup} from "@fortawesome/fontawesome-svg-core";
+import InputNumber from "../inputNumber";
 
 interface ServiceCreateProps {
   title: string,
@@ -14,10 +17,18 @@ interface ServiceCreateProps {
 
 const ServiceCreate: FC<ServiceCreateProps> = ({title, service, callback, textButton}) => {
   const [name, setName] = useState<string>("");
-  const [code, setCode] = useState<string>("");
+  const [code, setCode] = useState<number>(0);
   const [isAvailable, setIsAvailable] = useState<boolean>(true);
-  // const [icon, setIcon] = useState<boolean>();
+  const [icon, setIcon] = useState<IconLookup | undefined>(undefined);
 
+
+  useEffect(() => {
+    setName(service?.title ? service.title : "")
+    setCode(service?.code ? service.code : 0)
+    setIsAvailable(service?.isAvailable ? service.isAvailable : true)
+    // @ts-ignore
+    setIcon(service?.icon)
+  }, [service])
 
   // const {errorAddNewService} = useAppSelector(state => state.services)
   const handleForm = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,13 +37,18 @@ const ServiceCreate: FC<ServiceCreateProps> = ({title, service, callback, textBu
       code: +code,
       isAvailable: isAvailable,
       id: Date.now(),
+      icon: icon,
       title: name,
       isActive: false
     }
 
     callback(service)
     setName("")
-    setCode("")
+    setCode(0)
+  }
+
+  const handleActiveIcon = (icon: IconLookup) => {
+    setIcon(icon)
   }
 
 
@@ -51,9 +67,8 @@ const ServiceCreate: FC<ServiceCreateProps> = ({title, service, callback, textBu
             setValue={setName}/>
         </div>
         <div className="w-full">
-          <InputText
+          <InputNumber
             label={"Code"}
-            placeholder={"123"}
             name={"code"}
             value={code}
             setValue={setCode}
@@ -73,9 +88,12 @@ const ServiceCreate: FC<ServiceCreateProps> = ({title, service, callback, textBu
             <option value="false">No</option>
           </select>
         </div>
+        <div className="sm:col-span-2">
+          <SelectIcon handleChangeIcon={handleActiveIcon} activeIcon={icon}/>
+        </div>
 
       </div>
-      <Button text={textButton} isDisable={!(name.length && code.length)} handleButton={handleForm}/>
+      <Button text={textButton} isDisable={!(name.length && code.toString())} handleButton={handleForm}/>
     </form>
   </div>
 

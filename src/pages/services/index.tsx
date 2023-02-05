@@ -7,9 +7,10 @@ import ServicesList from "../../components/servicesList";
 import ServiceInfo from "../../components/serviceInfo";
 import IService from "../../types/interfaces/IService";
 import ServiceCreate from "../../components/serviceCreate";
+import EmptyBox from "../../components/enptyBox";
 
 export const ServicesPage = () => {
-  const {fetchServices, deleteService} = useActions()
+  const {fetchServices, deleteService, addService} = useActions()
   let {services, loadingServices} = useAppSelector(state => state.services)
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export const ServicesPage = () => {
     serIsVisibleInfo(false)
   }
   const handleAddService = (service: IService) => {
-    console.log(service)
+    addService(service)
   }
   const setActiveComponent = (service?: IService) => {
     if (service?.id) {
@@ -55,6 +56,7 @@ export const ServicesPage = () => {
           <div className={"w-full p-4 max-w-2xl mx-auto"}>
             {isVisibleForm && <ServiceCreate title={"Add a new product"} textButton={"Add service"} callback={handleAddService}/>}
             {isVisibleInfo && <ServiceInfo service={activeServiceInfo} handleDeleteService={handleDeleteService}/>}
+            {(!isVisibleInfo && !isVisibleForm) && <EmptyBox />}
           </div>
         </div>
       </div>
