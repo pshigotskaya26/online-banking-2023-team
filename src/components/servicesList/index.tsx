@@ -13,12 +13,13 @@ interface ServicesListProps {
   isActiveFormNewProduct: boolean
 }
 
-const ServicesList: React.FC<ServicesListProps> = ({
-                                                     services,
-                                                     loadingServices,
-                                                     setActiveComponent,
-                                                     isActiveFormNewProduct
-                                                   }) => {
+const ServicesList: React.FC<ServicesListProps> = (props) => {
+  const {
+    services,
+    loadingServices,
+    setActiveComponent,
+    isActiveFormNewProduct
+  } = props
   const [servicesItems, setServicesItems] = useState<IService[]>(services)
 
   useEffect(() => {
@@ -42,8 +43,8 @@ const ServicesList: React.FC<ServicesListProps> = ({
   })
 
   return <div
-    className="w-full flex flex-col p-4 bg-gray-50 border min-h-[300px] border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
-    <h5 className="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white">
+    className="w-full p-4 flex flex-col bg-gray-50 border min-h-[300px] border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <h5 className="text-base font-semibold text-gray-900 md:text-xl dark:text-white">
       Services List
     </h5>
 

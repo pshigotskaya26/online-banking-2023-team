@@ -5,11 +5,11 @@ import AdminLayout from "../../layouts/admin";
 import PageTitle from "../../components/pageTitle";
 import ServicesList from "../../components/servicesList";
 import ServiceInfo from "../../components/serviceInfo";
-import ServiceNew from "../../components/serviceNew";
 import IService from "../../types/interfaces/IService";
+import ServiceCreate from "../../components/serviceCreate";
 
 export const ServicesPage = () => {
-  const {fetchServices} = useActions()
+  const {fetchServices, deleteService} = useActions()
   let {services, loadingServices} = useAppSelector(state => state.services)
 
   useEffect(() => {
@@ -20,6 +20,13 @@ export const ServicesPage = () => {
   const [isVisibleInfo, serIsVisibleInfo] = useState(false)
   const [isVisibleForm, serIsVisibleForm] = useState(false)
 
+  const handleDeleteService = (id: number) => {
+    deleteService(id)
+    serIsVisibleInfo(false)
+  }
+  const handleAddService = (service: IService) => {
+    console.log(service)
+  }
   const setActiveComponent = (service?: IService) => {
     if (service?.id) {
       setActiveServiceInfo(service)
@@ -44,9 +51,11 @@ export const ServicesPage = () => {
             isActiveFormNewProduct={isVisibleForm}
           />
         </div>
-        <div className={"flex flex-col w-4/6"}>
-          {isVisibleForm && <ServiceNew />}
-          {isVisibleInfo && <ServiceInfo service={activeServiceInfo} />}
+        <div className={"flex flex-col w-full w-4/6 border shadow rounded-xl min-h-[300px]"}>
+          <div className={"w-full p-4 max-w-2xl mx-auto"}>
+            {isVisibleForm && <ServiceCreate title={"Add a new product"} textButton={"Add service"} callback={handleAddService}/>}
+            {isVisibleInfo && <ServiceInfo service={activeServiceInfo} handleDeleteService={handleDeleteService}/>}
+          </div>
         </div>
       </div>
     </>

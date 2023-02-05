@@ -1,46 +1,60 @@
 import React, {FC, useState} from "react";
 import IService from "../../types/interfaces/IService";
 import Button from "../button";
-import {useActions} from "../../hooks/useActions";
 import ServiceInfoViewMode from "../serviceInfoViewMode";
 import ServiceInfoEditMode from "../serviceInfoEditMode";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faFloppyDisk, faPenClip, faClose} from "@fortawesome/free-solid-svg-icons";
+import ServiceCreate from "../serviceCreate";
 
 interface ServiceInfoProps {
-  service: IService
+  service: IService,
+  handleDeleteService: (id: number) => void
 }
 
-const ServiceInfo: FC<ServiceInfoProps> = ({service}) => {
-  const {deleteService} = useActions()
+const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService}) => {
   const [editMode, setEditMode] = useState(false)
   const {id, title} = service
 
-  const handleDeleteService = () => {
-    deleteService(id)
+  const handleModeView = () => {
+    setEditMode(!editMode)
   }
 
+  return <>
+    <div className={"flex justify-between"}>
+      <h5 className="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white truncate">
+        {title}
+      </h5>
+      <div>
+        <button onClick={handleModeView}>
+          <FontAwesomeIcon
+            icon={faClose}
+            size={"lg"}
+            className={"text-gray-600 hover:text-blue-600 "}/>
+        </button>
+      </div>
+    </div>
 
-  return <div
-    className="w-full p-4 bg-white border min-h-[300px] border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
-    <h5 className="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white truncate">
-      {title}
-    </h5>
     <div className={"flex flex-wrap"}>
-      { editMode
-        ? <ServiceInfoEditMode service={service}/>
+      {editMode
+        ? <ServiceCreate title={"Update service"} textButton={"Update"} service={service} callback={(a) => console.log(a)}/>
         : <ServiceInfoViewMode service={service}/>
       }
 
-      <div className={"w-full border-t-2 flex justify-center"}>
-        <div className={"pr-1"}>
-          <Button text={"Delete"} handleButton={handleDeleteService} isDisable={false}/>
+      {
+        !editMode &&       <div className={"w-full  flex justify-center"}>
+          <div className={"pr-1"}>
+            <Button text={"Delete"} handleButton={() => handleDeleteService(id)} isDisable={false}/>
+          </div>
+          <div>
+            <Button text={"Disable"} handleButton={() => {
+            }} isDisable={false}/>
+          </div>
         </div>
-        <div>
-          <Button text={"Disable"} handleButton={() => {
-          }} isDisable={false}/>
-        </div>
-      </div>
+      }
+
     </div>
-  </div>
+  </>
 }
 
 export default ServiceInfo

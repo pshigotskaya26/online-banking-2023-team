@@ -16,6 +16,10 @@ const ServiceInfoViewMode: FC<ServiceInfoViewModeProps> = ({service}) => {
       value: id ,
     },
     {
+      title: "Title",
+      value: title ,
+    },
+    {
       title: "Code",
       value: code,
     },
@@ -27,7 +31,7 @@ const ServiceInfoViewMode: FC<ServiceInfoViewModeProps> = ({service}) => {
   return <>
     {
       values.map(({title, value}) => {
-        return <div className="flex w-full mb-2 items-center space-x-3 border rounded-2xl p-0.5  min-h-[2.8em]">
+        return <div key={title} className="flex w-full mb-2 items-center space-x-3 border rounded-2xl p-0.5  min-h-[2.8em]">
           <div className={"w-1/12 text-center"}>
             <FontAwesomeIcon icon={icon ? icon : faBuildingShield} size={"lg"} className={"text-blue-600"}/>
           </div>
