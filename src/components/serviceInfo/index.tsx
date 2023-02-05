@@ -1,20 +1,20 @@
 import React, {FC} from "react";
 import IService from "../../types/interfaces/IService";
-import ServiceInfoItemEditable from "../serviceInfoItemEditable";
-import {faBuildingShield, faCheck, faHouse, faHashtag} from "@fortawesome/free-solid-svg-icons";
 import Button from "../button";
+import {useActions} from "../../hooks/useActions";
 
 interface ServiceInfoProps {
   service: IService
 }
 
 const ServiceInfo: FC<ServiceInfoProps> = ({service}) => {
-  // const { deleteService } = useActions()
-  const {code, isAvailable, id, title} = service
+  const { deleteService } = useActions()
+  const {code, icon, isAvailable, id, title} = service
 
   const handleDeleteService = () => {
-    // deleteService(id)
+    deleteService(id)
   }
+
 
   return <div
     className="w-full p-4 bg-white border min-h-[300px] border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
@@ -22,10 +22,19 @@ const ServiceInfo: FC<ServiceInfoProps> = ({service}) => {
       {title}
     </h5>
     <div className={"flex flex-wrap"}>
-      <ServiceInfoItemEditable title={id} value={"id"} icon={faCheck}/>
-      <ServiceInfoItemEditable title={title} value={"Name"} icon={faHouse} />
-      <ServiceInfoItemEditable title={code} value={"Code"} icon={faHashtag}/>
-      <ServiceInfoItemEditable title={isAvailable} value={"Услуга доступна"} icon={faBuildingShield} />
+
+      {/*{*/}
+      {/*  dataServiceInfo.map(el => {*/}
+      {/*    return <ServiceInfoItemEditable*/}
+      {/*      key={el.title}*/}
+      {/*      title={el.title}*/}
+      {/*      icon={el.icon}*/}
+      {/*      childrenView={el.childrenView}*/}
+      {/*      childrenEdit={el.childrenEdit}*/}
+      {/*      isEditable={el.isEditable}*/}
+      {/*    />*/}
+      {/*  })*/}
+      {/*}*/}
       <div className={"w-full border-t-2 flex justify-center"}>
         <div className={"pr-1"}>
           <Button text={"Delete"} handleButton={handleDeleteService} isDisable={false} />

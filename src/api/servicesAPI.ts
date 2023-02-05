@@ -1,5 +1,5 @@
 import IService from "../types/interfaces/IService";
-import servicesData from "../data/services";
+// import servicesData from "../data/services";
 
 class ServicesAPI {
   fetchServices(): IService[] {
@@ -8,7 +8,7 @@ class ServicesAPI {
       const data = JSON.parse(localStorage.getItem("services") || "")
       if (Array.isArray(data)) res = data
     } else {
-      res = servicesData
+      res = []
     }
     return res
   }
@@ -35,9 +35,9 @@ class ServicesAPI {
 
   deleteService(id: number) {
     let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
+    console.log(services)
     let servicesNew: IService[] = services.filter(service => service.id !== id)
     localStorage.setItem("services", JSON.stringify(servicesNew))
-
   }
 
 
