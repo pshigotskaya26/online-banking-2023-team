@@ -1,4 +1,5 @@
 import IService from "../types/interfaces/IService";
+
 // import servicesData from "../data/services";
 
 class ServicesAPI {
@@ -13,12 +14,11 @@ class ServicesAPI {
     return res
   }
 
-  createService(serviceData: IService): IService[] | Error {
-
+  createService(serviceData: IService): IService | Error {
     if (!localStorage.getItem("services")) {
       let servicesNew: IService[] = [serviceData]
       localStorage.setItem("services", JSON.stringify(servicesNew))
-      return servicesNew
+      return serviceData
     } else {
       let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
       let servicesWithCode = services.find(service => service.code === serviceData.code)
@@ -26,7 +26,7 @@ class ServicesAPI {
       if (!servicesWithCode) {
         let servicesNew: IService[] = [...services, serviceData]
         localStorage.setItem("services", JSON.stringify(servicesNew))
-        return servicesNew
+        return serviceData
       } else {
         throw new Error("A service with this code exists")
       }
@@ -40,18 +40,23 @@ class ServicesAPI {
   }
 
 
-  updateService(serviceData: IService) {
-    let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
+  updateService(serviceData: IService): IService | Error {
+    let services = JSON.parse((localStorage.getItem("services") || "")) as IService[];
+    const currentService = services.find(el => el.id === serviceData.id) as IService;
+    let restServicesCodes = services.filter(service => service.id !== serviceData.id).map(service => service.code);
+    const newCode = serviceData.code
 
-    let servicesNew = services.map(service => {
-      if (service.id === serviceData.id) {
-        return serviceData
-      }
+    if (restServicesCodes.includes(newCode)) {
+      throw new Error("A service with this code exists")
+    } else {
+      const tempServices = services.map(service => service.id === currentService.id ? serviceData : service)
+      localStorage.setItem("services", JSON.stringify(tempServices))
+    }
 
-      return service
-    })
-    localStorage.setItem("services", JSON.stringify(servicesNew))
+    return serviceData
+
   }
+
 
   handleAvailabilityService(id: number) {
     let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]

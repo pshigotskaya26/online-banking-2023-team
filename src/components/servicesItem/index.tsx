@@ -5,15 +5,16 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface ServicesItemProps {
   service: IService,
+  isActive: boolean,
   handleServiceItem: (id: IService) => void
 }
 
-const ServicesItem: React.FC<ServicesItemProps> = ({service, handleServiceItem}) => {
+const ServicesItem: React.FC<ServicesItemProps> = ({service, handleServiceItem, isActive}) => {
   const currentIcon = service.icon ? service.icon : faReceipt
   return <div className={"flex justify-between"}>
     <button onClick={() => handleServiceItem(service)}
             className={`flex w-full text-left items-center rounded-lg p-1.5
-            ${service.isActive && "bg-gray-200"}
+            ${isActive && "bg-gray-200"}
             text-gray-900
             truncate ...`}>
       <FontAwesomeIcon icon={currentIcon} size={"lg"} className={"text-blue-600"}/>

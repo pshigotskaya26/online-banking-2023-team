@@ -9,37 +9,29 @@ import Button from "../button";
 interface ServicesListProps {
   services: IService[],
   loadingServices: boolean,
-  setActiveComponent: (service?: IService) => void,
-  isActiveFormNewProduct: boolean
+  handleButtonNewService: () => void,
+  handleServiceItem: (service: IService) => void,
+  activeService?: IService
 }
 
 const ServicesList: React.FC<ServicesListProps> = (props) => {
   const {
     services,
     loadingServices,
-    setActiveComponent,
-    isActiveFormNewProduct
+    handleButtonNewService,
+    handleServiceItem,
+    activeService
   } = props
   const [servicesItems, setServicesItems] = useState<IService[]>(services)
   useEffect(() => {
     setServicesItems(services)
   }, [services])
 
-  const handleButtonNewService = () => {
-    setActiveComponent()
-  }
-
-  const handleServiceItem = (service: IService) => {
-    const servicesNew = servicesItems.map(el => el.id === service.id ? {...el, isActive: true} : {
-      ...el,
-      isActive: false
-    })
-    setServicesItems(servicesNew)
-    setActiveComponent(service)
-  }
 
   const servicesArr = servicesItems.map(service => {
-    return <ServicesItem service={service} key={service.id} handleServiceItem={handleServiceItem}/>
+    return <ServicesItem
+      service={service} isActive={service.id === activeService?.id} key={service.id}
+      handleServiceItem={() => handleServiceItem(service)}/>
   })
 
   return <div
@@ -57,7 +49,7 @@ const ServicesList: React.FC<ServicesListProps> = (props) => {
             : <EmptyBox/>
       }
     </div>
-    <Button text={"Add Service"} handleButton={handleButtonNewService} isDisable={isActiveFormNewProduct}/>
+    <Button text={"Add Service"} handleButton={handleButtonNewService} isDisable={false}/>
   </div>
 }
 
