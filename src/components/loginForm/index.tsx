@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
 import { useActions } from '../../hooks/useActions';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 const LoginForm: React.FC = () => {
+  const { user, errorLoadingUser } = useAppSelector((state) => state.authuser);
+
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
   const { fetchUserInfo } = useActions();
+  const navigate = useNavigate();
 
   const formSubmit = (e: React.MouseEvent) => {
     const credentials = {
@@ -15,13 +19,14 @@ const LoginForm: React.FC = () => {
       password,
     };
     fetchUserInfo(credentials);
-    e.preventDefault();
-    setLogin('');
-    setPassword('');
   };
 
+  useEffect(() => {
+    if (user !== null) navigate('/dashboard');
+  }, [user]);
+
   return (
-    <div className="relative flex flex-col justify-center min-h-max overflow-hidden">
+    <div className="relative flex flex-col justify-center min-h-max overflow-hidden p-3">
       <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl lg:max-w-xl">
         <h1 className="text-3xl font-semibold text-center text-purple-700 uppercase">
           Sign in
@@ -67,10 +72,12 @@ const LoginForm: React.FC = () => {
             </button>
           </div>
         </form>
+        {errorLoadingUser && <div>Login error: {errorLoadingUser}</div>}
+
         <div className="relative flex items-center justify-center w-full mt-6 border border-t">
           <div className="absolute px-5 bg-white">Or</div>
         </div>
-        <div className="flex mt-4 gap-x-2">
+        <div className="flex mt-4 gap-x-2 hidden">
           <button
             className="flex items-center justify-center w-full p-2 border border-gray-600 rounded-md focus:ring-2 focus:ring-offset-1 focus:ring-violet-600"
             disabled
@@ -108,10 +115,12 @@ const LoginForm: React.FC = () => {
             </svg>
           </button>
         </div>
-
-        <p className="mt-8 text-xs font-light text-center text-gray-700">
+        <p className="mt-8 text-center text-gray-900 font-semibold">
           {' '}
-          Don't have an account? <Link to="/registration">Create account</Link>
+          Don't have an account?{' '}
+          <Link to="/registration" className={'hover:underline'}>
+            Create account
+          </Link>
         </p>
       </div>
     </div>
