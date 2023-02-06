@@ -10,13 +10,21 @@ interface ServiceInfoProps {
   service: IService,
   handleDeleteService: (id: number) => void,
   handleUpdateService: (service: IService) => void,
-  handleAvailabilityService: (id: number) => void
+  handleAvailabilityService: (id: number) => void,
+  errorAddNewService: string,
+  loadingCreateService: boolean
 }
 
-const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService, handleUpdateService, handleAvailabilityService}) => {
+const ServiceInfo: FC<ServiceInfoProps> = ({
+                                             service,
+                                             handleDeleteService,
+                                             handleUpdateService,
+                                             handleAvailabilityService,
+                                             errorAddNewService,
+                                             loadingCreateService
+                                           }) => {
   const [editMode, setEditMode] = useState(false)
   const [serviceActive, setServiceActive] = useState(service)
-  console.log(serviceActive.isAvailable)
   useEffect(() => {
     setServiceActive(service)
   }, [service])
@@ -41,19 +49,26 @@ const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService, handle
 
     <div className={"flex flex-wrap"}>
       {editMode
-        ? <ServiceCreate title={"Update service"} textButton={"Update"} service={service} callback={handleUpdateService}/>
+        ? <ServiceCreate
+          title={"Update service"}
+          textButton={"Update"}
+          service={service}
+          callback={handleUpdateService}
+          error={errorAddNewService}
+          loadingCreateService={loadingCreateService}
+        />
         : <ServiceInfoViewMode service={service}/>
       }
 
       {
-        !editMode &&       <div className={"w-full  flex justify-center"}>
+        !editMode && <div className={"w-full  flex justify-center"}>
           <div className={"pr-1"}>
             <Button text={"Delete"} handleButton={() => handleDeleteService(serviceActive.id)} isDisable={false}/>
           </div>
           <div>
             <Button
-                text={serviceActive.isAvailable ? "Disable" : "Enable"}
-                handleButton={() => handleAvailabilityService(serviceActive.id)} isDisable={false}
+              text={serviceActive.isAvailable ? "Disable" : "Enable"}
+              handleButton={() => handleAvailabilityService(serviceActive.id)} isDisable={false}
             />
           </div>
         </div>

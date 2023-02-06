@@ -1,5 +1,5 @@
 import {useAppSelector} from "../../hooks/useAppSelector";
-import React, {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {useActions} from "../../hooks/useActions";
 import AdminLayout from "../../layouts/admin";
 import PageTitle from "../../components/pageTitle";
@@ -8,31 +8,32 @@ import ServiceInfo from "../../components/serviceInfo";
 import IService from "../../types/interfaces/IService";
 import ServiceCreate from "../../components/serviceCreate";
 import EmptyBox from "../../components/enptyBox";
-import { updateService } from "../../store/actions/services";
+import {updateService} from "../../store/actions/services";
+import {ModesServicesPage} from "../../types/enums/ModesServicesPage";
 
-export const ServicesPage = () => {
-  const {fetchServices, deleteService, addService, updateService, handleAvailabilityService} = useActions()
-  let {services, loadingServices} = useAppSelector(state => state.services)
+interface ServicesPageProps {
+}
 
-  const [activeServiceInfo, setActiveServiceInfo] = useState<IService>({} as IService)
-  const [isVisibleInfo, serIsVisibleInfo] = useState(false)
-  const [isVisibleForm, serIsVisibleForm] = useState(false)
+export const ServicesPage: FC<ServicesPageProps> = () => {
+  const {
+    fetchServices, deleteService, addService, updateService,
+    handleAvailabilityService, setModeServicePage, setActiveService
+  } = useActions()
+  let {
+    services,
+    loadingServices,
+    activeService,
+    errorAddNewService,
+    mode,
+    loadingCreateService
+  } = useAppSelector(state => state.services)
 
   useEffect(() => {
     fetchServices()
   }, [])
 
-  useEffect(() => {
-    if (activeServiceInfo.id) {
-      const currentService = services.filter(el => el.id === activeServiceInfo.id)[0]
-      setActiveServiceInfo(currentService)
-    }
-
-  }, [services])
-
   const handleDeleteService = (id: number) => {
     deleteService(id)
-    serIsVisibleInfo(false)
   }
   const handleAddService = (service: IService) => {
     addService(service)
@@ -46,15 +47,13 @@ export const ServicesPage = () => {
     handleAvailabilityService(id)
   }
 
-  const setActiveComponent = (service?: IService) => {
-    if (service?.id) {
-      setActiveServiceInfo(service)
-      serIsVisibleInfo(true)
-      serIsVisibleForm(false)
-    } else {
-      serIsVisibleInfo(false)
-      serIsVisibleForm(true)
-    }
+  const handleButtonNewService = () => {
+    setModeServicePage(ModesServicesPage.create)
+  }
+
+  const handleActiveService = (service: IService) => {
+    setActiveService(service)
+    setModeServicePage(ModesServicesPage.infoService)
   }
 
   return <AdminLayout>
@@ -65,21 +64,36 @@ export const ServicesPage = () => {
         <div className={"flex flex-col grow-0 w-2/6 mr-2"}>
           <ServicesList
             services={services}
+            activeService={activeService}
             loadingServices={loadingServices}
-            setActiveComponent={setActiveComponent}
-            isActiveFormNewProduct={isVisibleForm}
+            handleButtonNewService={handleButtonNewService}
+            handleServiceItem={handleActiveService}
           />
         </div>
         <div className={"flex flex-col w-full w-4/6 border shadow rounded-xl min-h-[300px]"}>
           <div className={"w-full p-4 max-w-2xl mx-auto"}>
-            {isVisibleForm && <ServiceCreate title={"Add a new product"} textButton={"Add service"} callback={handleAddService}/>}
-            {isVisibleInfo && <ServiceInfo
-              service={activeServiceInfo}
-              handleDeleteService={handleDeleteService}
-              handleUpdateService={handleUpdateService}
-              handleAvailabilityService={handlerAvailabilityService}
-            />}
-            {(!isVisibleInfo && !isVisibleForm) && <EmptyBox />}
+            {
+              mode === ModesServicesPage.list && <EmptyBox/>
+            }
+            {
+              mode === ModesServicesPage.create && <ServiceCreate
+                title={"Add a new product"}
+                error={errorAddNewService}
+                loadingCreateService={loadingCreateService}
+                textButton={"Add service"}
+                callback={handleAddService}
+              />
+            }
+            {
+              (mode === ModesServicesPage.infoService && activeService) && <ServiceInfo
+                service={activeService}
+                handleDeleteService={handleDeleteService}
+                handleUpdateService={handleUpdateService}
+                errorAddNewService={errorAddNewService}
+                loadingCreateService={loadingCreateService}
+                handleAvailabilityService={handlerAvailabilityService}
+              />
+            }
           </div>
         </div>
       </div>

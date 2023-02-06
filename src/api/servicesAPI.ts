@@ -13,12 +13,11 @@ class ServicesAPI {
     return res
   }
 
-  createService(serviceData: IService): IService[] | Error {
-
+  createService(serviceData: IService): IService | Error {
     if (!localStorage.getItem("services")) {
       let servicesNew: IService[] = [serviceData]
       localStorage.setItem("services", JSON.stringify(servicesNew))
-      return servicesNew
+      return serviceData
     } else {
       let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
       let servicesWithCode = services.find(service => service.code === serviceData.code)
@@ -26,7 +25,7 @@ class ServicesAPI {
       if (!servicesWithCode) {
         let servicesNew: IService[] = [...services, serviceData]
         localStorage.setItem("services", JSON.stringify(servicesNew))
-        return servicesNew
+        return serviceData
       } else {
         throw new Error("A service with this code exists")
       }
@@ -42,15 +41,22 @@ class ServicesAPI {
 
   updateService(serviceData: IService) {
     let services = JSON.parse((localStorage.getItem("services") || "")) as IService[]
+    let servicesWithCode = services.find(service => service.code === serviceData.code)
 
-    let servicesNew = services.map(service => {
-      if (service.id === serviceData.id) {
-        return serviceData
-      }
+    if (!servicesWithCode) {
+      let servicesNew = services.map(service => {
+        if (service.id === serviceData.id) {
+          return serviceData
+        }
 
-      return service
-    })
-    localStorage.setItem("services", JSON.stringify(servicesNew))
+        return service
+      })
+      localStorage.setItem("services", JSON.stringify(servicesNew))
+    } else {
+      throw new Error("A service with this code exists")
+    }
+
+
   }
 
   handleAvailabilityService(id: number) {
