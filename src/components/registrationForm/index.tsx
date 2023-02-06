@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './style.css';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useActions } from '../../hooks/useActions';
 import { useNavigate } from 'react-router-dom';
 import UserRolesEnum from '../../types/enums/UserRolesEnum';
-import { Simulate } from 'react-dom/test-utils';
-import submit = Simulate.submit;
 
 const MAX_FILE_SIZE = 204800;
 const MIN_PASS_LENGTH = 6;
@@ -217,11 +214,7 @@ const RegistrationForm: React.FC = () => {
               >
                 {photo.length === 0 && <i className="fa fa-plus">Add photo</i>}
                 {photo.length > 0 && (
-                  <img
-                    src={photo}
-                    alt="User photo"
-                    className="w-full h-full rounded"
-                  />
+                  <img src={photo} className="w-full h-full rounded" />
                 )}
               </div>
               <div

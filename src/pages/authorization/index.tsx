@@ -1,5 +1,5 @@
 import ClientLayout from '../../layouts/client';
-import React, { useState } from 'react';
+import React from 'react';
 import LoginForm from '../../components/loginForm';
 
 const AuthorizationPage = () => {

@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import './style.css';
-import { fetchUserInfo } from '../../store/actions/authorization';
-import { useDispatch } from 'react-redux';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useActions } from '../../hooks/useActions';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +7,6 @@ const LoginForm: React.FC = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
-  const dispatch = useAppDispatch();
   const { fetchUserInfo } = useActions();
 
   const formSubmit = (e: React.MouseEvent) => {
@@ -59,9 +55,9 @@ const LoginForm: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <a href="#" className="text-xs text-purple-600 hover:underline">
-            Forgot Password?
-          </a>
+          {/*<a href="#" className="text-xs text-purple-600 hover:underline">*/}
+          {/*  Forgot Password?*/}
+          {/*</a>*/}
           <div className="mt-6">
             <button
               className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
@@ -115,10 +111,7 @@ const LoginForm: React.FC = () => {
 
         <p className="mt-8 text-xs font-light text-center text-gray-700">
           {' '}
-          Don't have an account? <Link to="/registration"></Link>
-          <a href="#" className="font-medium text-purple-600 hover:underline">
-            Sign up
-          </a>
+          Don't have an account? <Link to="/registration">Create account</Link>
         </p>
       </div>
     </div>
