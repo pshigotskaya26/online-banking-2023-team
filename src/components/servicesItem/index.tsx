@@ -19,7 +19,7 @@ const ServicesItem: React.FC<ServicesItemProps> = ({service, handleServiceItem})
       <FontAwesomeIcon icon={currentIcon} size={"lg"} className={"text-blue-600"}/>
       <span className="flex-1 ml-2"><span className={"text-gray-600 text-sm mr-1"}>{service.code}</span>
       <span className={"font-medium"}>{service.title}</span></span>
-      {service.isAvailable &&  <FontAwesomeIcon icon={faEyeSlash} size={"sm"} className={"text-gray-300"}/>}
+      {!service.isAvailable &&  <FontAwesomeIcon icon={faEyeSlash} size={"sm"} className={"text-gray-300"}/>}
     </button>
   </div>
 }

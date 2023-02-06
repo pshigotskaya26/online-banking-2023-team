@@ -1,12 +1,11 @@
 import React, {FC, useEffect, useState} from "react";
-import {useAppSelector} from "../../hooks/useAppSelector";
 import IService from "../../types/interfaces/IService";
-import {addService} from "../../store/actions/services";
 import InputText from "../inputText";
 import Button from "../button";
 import SelectIcon from "../selectIcon";
 import {IconLookup} from "@fortawesome/fontawesome-svg-core";
 import InputNumber from "../inputNumber";
+import Checkbox from "../checkbox";
 
 interface ServiceCreateProps {
   title: string,
@@ -25,16 +24,19 @@ const ServiceCreate: FC<ServiceCreateProps> = ({title, service, callback, textBu
   useEffect(() => {
     setName(service?.title ? service.title : "")
     setCode(service?.code ? service.code : 0)
-    setIsAvailable(service?.isAvailable ? service.isAvailable : true)
+    setIsAvailable(service?.isAvailable ? service.isAvailable : false)
     // @ts-ignore
     setIcon(service?.icon)
   }, [service])
 
-  // const {errorAddNewService} = useAppSelector(state => state.services)
+  const handlerAvailability = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAvailable(e.target.checked)
+  }
+
   const handleForm = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     let serviceObj: IService = {
-      code: +code,
+      code: code,
       isAvailable: isAvailable,
       id: service?.id ? service.id : Date.now(),
       icon: icon,
@@ -59,34 +61,21 @@ const ServiceCreate: FC<ServiceCreateProps> = ({title, service, callback, textBu
     <form action="#">
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
         <div className="sm:col-span-2">
-          <InputText
-            label={"Service Name"}
-            placeholder={"Апельсины"}
-            name={"name"}
-            value={name}
-            setValue={setName}/>
+          <InputText label={"Service Name"} placeholder={"Апельсины"} name={"name"}
+            value={name} setValue={setName}/>
         </div>
         <div className="w-full">
-          <InputNumber
-            label={"Code"}
-            name={"code"}
-            value={code}
-            setValue={setCode}
-            type={"number"}
-          />
+          <InputNumber label={"Code"} name={"code"} value={code}
+            setValue={setCode} type={"number"} />
         </div>
 
         <div>
-          <label htmlFor="category"
-                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Available</label>
-          <select id="category"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500
-                      focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700
-                      "
-                  defaultValue={0}>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
+          <Checkbox
+              handleChange={handlerAvailability}
+              isChecked={isAvailable}
+              label="A"
+          />
+
         </div>
         <div className="sm:col-span-2">
           <SelectIcon handleChangeIcon={handleActiveIcon} activeIcon={icon}/>

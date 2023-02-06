@@ -37,6 +37,7 @@ const ServicesList: React.FC<ServicesListProps> = (props) => {
     setServicesItems(servicesNew)
     setActiveComponent(service)
   }
+
   const servicesArr = servicesItems.map(service => {
     return <ServicesItem service={service} key={service.id} handleServiceItem={handleServiceItem}/>
   })

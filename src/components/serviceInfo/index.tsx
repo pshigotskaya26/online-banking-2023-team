@@ -51,7 +51,10 @@ const ServiceInfo: FC<ServiceInfoProps> = ({service, handleDeleteService, handle
             <Button text={"Delete"} handleButton={() => handleDeleteService(serviceActive.id)} isDisable={false}/>
           </div>
           <div>
-            <Button text={!serviceActive.isAvailable ? "Disable" : "Enable"} handleButton={() => handleAvailabilityService(serviceActive.id)} isDisable={false}/>
+            <Button
+                text={serviceActive.isAvailable ? "Disable" : "Enable"}
+                handleButton={() => handleAvailabilityService(serviceActive.id)} isDisable={false}
+            />
           </div>
         </div>
       }
