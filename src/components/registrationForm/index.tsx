@@ -3,6 +3,9 @@ import './style.css';
 import { useActions } from '../../hooks/useActions';
 import { useNavigate } from 'react-router-dom';
 import UserRolesEnum from '../../types/enums/UserRolesEnum';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faImagePortrait} from "@fortawesome/free-solid-svg-icons";
+
 
 const MAX_FILE_SIZE = 204800;
 const MIN_PASS_LENGTH = 6;
@@ -154,6 +157,7 @@ const RegistrationForm: React.FC = () => {
             </label>
             <input
               type="password"
+              placeholder="Min 6 chars"
               className={passwordInputClass()}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -168,6 +172,7 @@ const RegistrationForm: React.FC = () => {
             </label>
             <input
               type="password"
+              placeholder="Min 6 chars"
               className={passwordInputClass()}
               value={passRepeat}
               onChange={(e) => setPassRepeat(e.target.value)}
@@ -208,11 +213,11 @@ const RegistrationForm: React.FC = () => {
                 onChange={loadImage}
               />
               <div
-                className="block w-32 h-32 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                className="flex justify-center items-center w-32 h-32 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
                 aria-describedby="user_avatar_help"
                 onClick={showDialog}
               >
-                {photo.length === 0 && <i className="fa fa-plus">Add photo</i>}
+                {photo.length === 0 && <div><FontAwesomeIcon icon={faImagePortrait} title={"Add photo"} size={"6x"} /><p>Add photo</p></div>}
                 {photo.length > 0 && (
                   <img src={photo} className="w-full h-full rounded" />
                 )}
