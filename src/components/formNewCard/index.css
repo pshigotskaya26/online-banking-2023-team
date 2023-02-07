@@ -21,6 +21,7 @@
 }
 
 .select-currency,
-.select-expiration {
+.select-expiration,
+.select-background {
 	@apply w-full border;
 }

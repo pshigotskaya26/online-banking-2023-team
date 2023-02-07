@@ -2,19 +2,29 @@ import React, {useState} from 'react';
 import './index.css';
 import CardCurrencyEnum from "../../types/enums/CardCurrencyEnum";
 import CardExpiryDateEnum from '../../types/enums/CardExpiryDateEnum';
+import CardBackgroundEnum from '../../types/enums/CardBackgroundEnum';
 import OptionItemCurrency from "../optionItemCurrency";
 import OptionItemExpiration from '../optionItemExpiration';
+import OptionItemBackground from '../optionItemBackground';
 
 const FormNewCard: React.FC = () => {
 	const [currency, setCurrency] = useState<string>(CardCurrencyEnum.USD);
 	const [expiration, setExpiration] = useState<string>(CardExpiryDateEnum.year_1);
+	const [background, setBackground] = useState<string>(CardBackgroundEnum.blue);
 
 	const changeCurrency =(newCurrency: string): void => {
+		console.log(newCurrency);
 		setCurrency(newCurrency);
 	};
 
 	const changeExpiration =(newExpiration: string): void => {
+		console.log(newExpiration);
 		setExpiration(newExpiration);
+	};
+
+	const changeBackground =(newBackground: string): void => {
+		console.log(newBackground);
+		setBackground(newBackground);
 	};
 
 	const handleSelectCurrency = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -24,6 +34,10 @@ const FormNewCard: React.FC = () => {
 	const handleSelectExpiration = (event: React.ChangeEvent<HTMLSelectElement>) => {
 			changeExpiration(event.target.value);
 	}
+
+	const handleSelectBackground = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		changeBackground(event.target.value);
+}
 
 	return (
 			<div className="new-card__form">
@@ -48,7 +62,14 @@ const FormNewCard: React.FC = () => {
 										))}
 									</select>
 								</div>
-								<div className='card-data__bg'>3</div>
+								<div className='card-data__bg'>
+									<p className='mb-4 text-sm font-medium text-gray-900 dark:text-white'>Select background for card:</p>
+									<select onChange={handleSelectBackground} className='select-background' size={Object.keys(CardBackgroundEnum).length} value={background}>
+										{(Object.keys(CardBackgroundEnum)).map((optionItem: string) => (
+											<OptionItemBackground key={optionItem} value={optionItem} />
+										))}
+									</select>
+								</div>
 							</div>
 							<div className='new-card__view-card'></div>
 						</div>
