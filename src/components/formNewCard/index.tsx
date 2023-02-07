@@ -1,18 +1,28 @@
 import React, {useState} from 'react';
 import './index.css';
 import CardCurrencyEnum from "../../types/enums/CardCurrencyEnum";
+import CardExpiryDateEnum from '../../types/enums/CardExpiryDateEnum';
 import OptionItemCurrency from "../optionItemCurrency";
+import OptionItemExpiration from '../optionItemExpiration';
 
 const FormNewCard: React.FC = () => {
-
 	const [currency, setCurrency] = useState<string>(CardCurrencyEnum.USD);
+	const [expiration, setExpiration] = useState<string>(CardExpiryDateEnum.year_1);
 
 	const changeCurrency =(newCurrency: string): void => {
 		setCurrency(newCurrency);
 	};
 
+	const changeExpiration =(newExpiration: string): void => {
+		setExpiration(newExpiration);
+	};
+
 	const handleSelectCurrency = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		changeCurrency(event.target.value);
+	}
+
+	const handleSelectExpiration = (event: React.ChangeEvent<HTMLSelectElement>) => {
+			changeExpiration(event.target.value);
 	}
 
 	return (
@@ -31,7 +41,12 @@ const FormNewCard: React.FC = () => {
 									</select>
 								</div>
 								<div className='card-data__expiration'>
-									
+									<p className='mb-4 text-sm font-medium text-gray-900 dark:text-white'>Select a card expiration date:</p>
+									<select onChange={handleSelectExpiration} className='select-expiration' size={Object.values(CardExpiryDateEnum).length} value={expiration}>
+										{(Object.values(CardExpiryDateEnum)).map((optionItem: string) => (
+											<OptionItemExpiration key={optionItem} value={optionItem} />
+										))}
+									</select>
 								</div>
 								<div className='card-data__bg'>3</div>
 							</div>
@@ -45,7 +60,6 @@ const FormNewCard: React.FC = () => {
 					{/*<input className="input-create-card" type="submit" onClick={handleCreateNewCard} />*/}
 				</form>
 			</div>
-		
 	);
 };
 
