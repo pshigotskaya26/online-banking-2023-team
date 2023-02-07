@@ -1,4 +1,5 @@
 import CardCurrencyEnum from "../enums/CardCurrencyEnum";
+import CardBackgroundEnum from "../enums/CardBackgroundEnum";
 
 export default interface ICard {
   id: number; // internal
@@ -8,4 +9,5 @@ export default interface ICard {
   account: string; // IBAN BY134678484000000154501
   userid: number;
   balance: number;
+  background: CardBackgroundEnum;
 }
