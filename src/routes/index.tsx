@@ -4,11 +4,12 @@ import DashboardPage from '../pages/dashboard';
 import { ServicesPage } from '../pages/services';
 import AuthorizationPage from '../pages/authorization';
 import RegistrationPage from '../pages/registration';
+import MainPage from '../pages/main';
 
 const routes = [
   {
     path: '/',
-    element: <DashboardPage />,
+    element: <MainPage />,
     name: 'Home',
   },
   {
@@ -33,7 +34,12 @@ const routes = [
   },
   {
     path: '/login',
-    element: <AuthorizationPage />,
+    element: <AuthorizationPage isLogin={true} />,
+    name: 'Login',
+  },
+  {
+    path: '/logout',
+    element: <AuthorizationPage isLogin={false} />,
     name: 'Login',
   },
   {
