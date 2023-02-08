@@ -18,6 +18,10 @@ export const getStringCardNumber = (cardNumber: number) => {
 	return resultStringCardNumber;
 };
 
+export const getStringCardBalance = (cardBalance: number) => {
+	return cardBalance.toString();
+};
+
 export const getIdUser = (arrUsers: IUser[], idProps: number) => {
 	return arrUsers.filter((user: IUser) => user.id === idProps)[0];
 };
@@ -73,6 +77,10 @@ export const changeNumberToStar = (stringNumber: string) => {
 	return resultStr + stringNumber.slice(-5);
 };
 
+export const changeBalanceToStar = (stringNumber: string) => {
+	return '*'.repeat(stringNumber.length)
+};
+
 export const changeCardNumber = (isShownValue: boolean, stringNumber: string) => {
 
 	if (isShownValue) {
@@ -82,3 +90,12 @@ export const changeCardNumber = (isShownValue: boolean, stringNumber: string) =>
 		return changeNumberToStar(stringNumber);
 	}
 }
+
+export const changeCardBalance = (isShownValue: boolean, stringNumber: string) => {
+	if (isShownValue) {
+		return stringNumber;
+	}
+	else {
+		return changeBalanceToStar(stringNumber);
+	}
+};

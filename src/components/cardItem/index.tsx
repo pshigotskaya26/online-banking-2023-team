@@ -9,6 +9,7 @@ import { getIdUser } from '../../utils/formateCardData';
 import users from "../../data/users";
 import CardIconEye from '../cardIconEye';
 import CardNumber from '../cardNumber';
+import CardBalance from '../cardBalance';
 
 import imgBlue from "../../assets/cardBackground/card-bg-blue.png";
 import imgGreen from "../../assets/cardBackground/card-bg-green.png";
@@ -77,7 +78,7 @@ const CardItem: React.FC<CardItemProps> = (props) => {
 			</div>
 			<div className='card-balance'>
 				<div className='card-balance__text'>Balance:</div>
-				<div className='card-balance__value'>{props.card.balance} {props.card.currency}</div>
+				<CardBalance isShownData={isShownData} cardBalance={props.card.balance} cardCurrency={props.card.currency} />
 				<div className='card_balance__icon-eye'>
 					<div className='icon-eye'onClick={changeIconEye}>
 						<CardIconEye isShownData={isShownData} />
