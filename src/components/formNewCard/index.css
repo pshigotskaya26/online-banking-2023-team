@@ -25,3 +25,13 @@
 .select-background {
 	@apply w-full border;
 }
+
+.button-create-card,
+.button-cancel {
+	cursor: pointer;
+	@apply bg-amber-400 hover:bg-amber-500;
+}
+
+.new-card__buttons {
+	@apply flex gap-x-5;
+}

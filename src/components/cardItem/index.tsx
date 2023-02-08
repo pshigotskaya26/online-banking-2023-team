@@ -8,6 +8,12 @@ import { getStringCardNumber } from "../../utils/formateCardData";
 import { getIdUser } from '../../utils/formateCardData';
 import users from "../../data/users";
 
+import imgBlue from "../../assets/cardBackground/card-bg-blue.png";
+import imgGreen from "../../assets/cardBackground/card-bg-green.png";
+import imgOrange from "../../assets/cardBackground/card-bg-orange.png";
+import imgViolett from "../../assets/cardBackground/card-bg-violett.png";
+import imgRed from "../../assets/cardBackground/card-bg-red.png";
+
 interface CardItemProps {
 	card: ICard;
 }
@@ -16,8 +22,32 @@ const CardItem: React.FC<CardItemProps> = (props) => {
 	let cardUser = getIdUser(users, props.card.userid);
 	console.log('cardUser: ', cardUser);
 
+	let imageBackground;
+
+	switch(props.card.background) {
+		case "blue":
+			imageBackground = imgBlue;
+			break;
+
+		case "green":
+			imageBackground = imgGreen;
+			break;
+		
+		case "orange":
+			imageBackground = imgOrange;
+			break;
+
+		case "violett":
+			imageBackground = imgViolett;
+			break;
+
+		case "red":
+			imageBackground = imgRed;
+			break;
+	}
+
 	return (
-		<div className='card-item' style={{background: `url(/card-bg-${props.card.background}.png)`}}>
+		<div className='card-item' style={{background: `url(${imageBackground})`}}>
 			<div className='card-logo flex'>
 				<FontAwesomeIcon icon={faBuildingShield} size={"2x"} className={"text-blue-600"} />
 				<span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white ml-1">Online-bank</span>
@@ -39,8 +69,6 @@ const CardItem: React.FC<CardItemProps> = (props) => {
 				<div className='card-balance__value'>{props.card.balance} {props.card.currency}</div>
 				<div className='card_balance__icon-eye'>1</div>
 			</div>
-			
-			
 		</div>
 	);
 };

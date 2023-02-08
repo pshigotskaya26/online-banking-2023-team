@@ -6,11 +6,19 @@ import CardBackgroundEnum from '../../types/enums/CardBackgroundEnum';
 import OptionItemCurrency from "../optionItemCurrency";
 import OptionItemExpiration from '../optionItemExpiration';
 import OptionItemBackground from '../optionItemBackground';
+import CardItem from '../cardItem';
+import cardsData from '../../data/cards';
+import { generateCardNumber } from "../../utils/formateCardData";
+import { createObjectNewCard } from "../../utils/formateCardData"
 
 const FormNewCard: React.FC = () => {
 	const [currency, setCurrency] = useState<string>(CardCurrencyEnum.USD);
 	const [expiration, setExpiration] = useState<string>(CardExpiryDateEnum.year_1);
 	const [background, setBackground] = useState<string>(CardBackgroundEnum.blue);
+
+	let startBalance = 0;
+
+	const objNewCard = createObjectNewCard((cardsData.length + 1), 1, 'BY134678484000000154501', currency, Number(expiration), generateCardNumber(), startBalance, background);
 
 	const changeCurrency =(newCurrency: string): void => {
 		console.log(newCurrency);
@@ -71,11 +79,14 @@ const FormNewCard: React.FC = () => {
 									</select>
 								</div>
 							</div>
-							<div className='new-card__view-card'></div>
+							<div className='new-card__view-card'>
+								<p className='mb-4 text-sm font-medium text-gray-900 dark:text-white'>A view of our card:</p>
+								<CardItem card={objNewCard} />
+							</div>
 						</div>
 						<div className='new-card__buttons'>
-							<input type="submit" value="Create new card" />
-							<button>Cancel</button>
+							<input className='button button-create-card' type="submit" value="Create new card" />
+							<button className='button button-cancel'>Cancel</button>
 						</div>
 					</div>
 					{/*<input className="input-create-card" type="submit" onClick={handleCreateNewCard} />*/}
