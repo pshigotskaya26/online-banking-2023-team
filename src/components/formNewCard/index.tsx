@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import './index.css';
 import CardCurrencyEnum from "../../types/enums/CardCurrencyEnum";
 import CardExpiryDateEnum from '../../types/enums/CardExpiryDateEnum';
@@ -18,6 +18,7 @@ const FormNewCard: React.FC = () => {
 	const [currency, setCurrency] = useState<string>(CardCurrencyEnum.USD);
 	const [expiration, setExpiration] = useState<string>(CardExpiryDateEnum.year_1);
 	const [background, setBackground] = useState<string>(CardBackgroundEnum.blue);
+	const navigate = useNavigate();
 	
 	let startBalance = 0;
 
@@ -38,9 +39,12 @@ const FormNewCard: React.FC = () => {
 		setBackground(newBackground);
 	};
 
-	const changeCards = (objNewCard: ICard) => {
-		cards.push(objNewCard);
+	const changeCards = (NewCard: ICard = objNewCard) => {
+		cards.push(NewCard);
 		setCards(cards);
+		navigate('/dashboard');
+
+		console.log('cards: ', cards);
 	};
 
 	const handleSelectCurrency = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -57,7 +61,7 @@ const FormNewCard: React.FC = () => {
 
 	return (
 			<div className="new-card__form">
-				<form>
+				
 					<h5 className="mb-5 text-base font-semibold text-gray-900 md:text-xl dark:text-white">Add a new card:</h5>
 					<div className='new-card__container'>
 						<div className='new-card__content'>
@@ -93,12 +97,12 @@ const FormNewCard: React.FC = () => {
 							</div>
 						</div>
 						<div className='new-card__buttons'>
-							<input className='button button-create-card' type="submit" value="Create new card" />
+							<input className='button button-create-card' type="submit" onClick={(event)=> {changeCards()}} value="Create new card" />
 							<button className='button button-cancel'><Link to={'/dashboard'}>Cancel</Link></button>
 						</div>
 					</div>
 					{/*<input className="input-create-card" type="submit" onClick={handleCreateNewCard} />*/}
-				</form>
+				
 			</div>
 	);
 };
