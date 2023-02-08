@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './index.css';
 import ICard from '../../types/interfaces/ICard';
 import { getStringTerm } from "../../utils/formateDateTime";
@@ -7,6 +7,7 @@ import {faBuildingShield} from "@fortawesome/free-solid-svg-icons";
 import { getStringCardNumber } from "../../utils/formateCardData";
 import { getIdUser } from '../../utils/formateCardData';
 import users from "../../data/users";
+import CardIconEye from '../cardIconEye';
 
 import imgBlue from "../../assets/cardBackground/card-bg-blue.png";
 import imgGreen from "../../assets/cardBackground/card-bg-green.png";
@@ -19,9 +20,9 @@ interface CardItemProps {
 }
 
 const CardItem: React.FC<CardItemProps> = (props) => {
-	let cardUser = getIdUser(users, props.card.userid);
-	console.log('cardUser: ', cardUser);
+	const [isShownData, setShownData] = useState<boolean>(props.card.isShown);
 
+	let cardUser = getIdUser(users, props.card.userid);
 	let imageBackground;
 
 	switch(props.card.background) {
@@ -46,6 +47,15 @@ const CardItem: React.FC<CardItemProps> = (props) => {
 			break;
 	}
 
+	const changeIconEye = () => {
+		if (isShownData === true) {
+			setShownData(false);
+		}
+		else {
+			setShownData(true);
+		}
+	}
+
 	return (
 		<div className='card-item' style={{background: `url(${imageBackground})`}}>
 			<div className='card-logo flex'>
@@ -67,7 +77,11 @@ const CardItem: React.FC<CardItemProps> = (props) => {
 			<div className='card-balance'>
 				<div className='card-balance__text'>Balance:</div>
 				<div className='card-balance__value'>{props.card.balance} {props.card.currency}</div>
-				<div className='card_balance__icon-eye'>1</div>
+				<div className='card_balance__icon-eye'>
+					<div className='icon-eye'onClick={changeIconEye}>
+						<CardIconEye isShownData={isShownData} />
+					</div>
+				</div>
 			</div>
 		</div>
 	);

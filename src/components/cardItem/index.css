@@ -31,3 +31,6 @@
 .card-balance {
 	@apply justify-between;
 }
+.icon-eye {
+	cursor: pointer;
+}

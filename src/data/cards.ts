@@ -10,7 +10,8 @@ const cardsData: ICard[] = [{
 	expired: 1738357200000, //2025-01-01
 	number: 5454123412341234,
 	balance: 0,
-	background: CardBackgroundEnum.blue
+	background: CardBackgroundEnum.blue,
+	isShown: true
 },
 {
 	id: 2,
@@ -20,7 +21,8 @@ const cardsData: ICard[] = [{
 	expired: 1738357200000, //2025-01-01
 	number: 5454123412341234,
 	balance: 0,
-	background: CardBackgroundEnum.green
+	background: CardBackgroundEnum.green,
+	isShown: true
 }];
 
 export default cardsData;

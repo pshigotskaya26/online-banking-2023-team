@@ -15,10 +15,10 @@ const FormNewCard: React.FC = () => {
 	const [currency, setCurrency] = useState<string>(CardCurrencyEnum.USD);
 	const [expiration, setExpiration] = useState<string>(CardExpiryDateEnum.year_1);
 	const [background, setBackground] = useState<string>(CardBackgroundEnum.blue);
-
+	
 	let startBalance = 0;
 
-	const objNewCard = createObjectNewCard((cardsData.length + 1), 1, 'BY134678484000000154501', currency, Number(expiration), generateCardNumber(), startBalance, background);
+	const objNewCard = createObjectNewCard((cardsData.length + 1), 1, 'BY134678484000000154501', currency, Number(expiration), generateCardNumber(), startBalance, background, true);
 
 	const changeCurrency =(newCurrency: string): void => {
 		console.log(newCurrency);

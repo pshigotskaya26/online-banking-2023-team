@@ -1,4 +1,6 @@
 import IUser from "../types/interfaces/IUser";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export const getStringCardNumber = (cardNumber: number) => {
 	let resultStringCardNumber = '';
@@ -31,7 +33,7 @@ export const generateCardNumber = () => {
 	return Number(startStr);
 };
 
-export const createObjectNewCard = (idCard: number, idUser: number, accountUser: string, currencyCard: string, expiredCard: number, numberCard: number, balancaCard: number, backgroundCard: string) => {
+export const createObjectNewCard = (idCard: number, idUser: number, accountUser: string, currencyCard: string, expiredCard: number, numberCard: number, balancaCard: number, backgroundCard: string, isShownValue: boolean) => {
 	return {
 		id: idCard,
 		number: numberCard,
@@ -40,6 +42,19 @@ export const createObjectNewCard = (idCard: number, idUser: number, accountUser:
 		account: accountUser,
 		userid: idUser,
 		balance: balancaCard,
-		background: backgroundCard
+		background: backgroundCard,
+		isShown: isShownValue
 	};
 };
+
+export const changeIconEyeInCard = (isShownValue: boolean) => {
+	let iconEye;
+
+	if (isShownValue) {
+		iconEye = faEye;
+	}
+	else {
+		iconEye = faEyeSlash;
+	}
+	return iconEye;
+}

@@ -8,4 +8,5 @@ export default interface ICard {
   userid: number;
   balance: number;
   background: string;
+  isShown: boolean;
 }
