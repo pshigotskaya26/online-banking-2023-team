@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Link} from "react-router-dom";
 import './index.css';
 import CardCurrencyEnum from "../../types/enums/CardCurrencyEnum";
 import CardExpiryDateEnum from '../../types/enums/CardExpiryDateEnum';
@@ -86,7 +87,7 @@ const FormNewCard: React.FC = () => {
 						</div>
 						<div className='new-card__buttons'>
 							<input className='button button-create-card' type="submit" value="Create new card" />
-							<button className='button button-cancel'>Cancel</button>
+							<button className='button button-cancel'><Link to={'/dashboard'}>Cancel</Link></button>
 						</div>
 					</div>
 					{/*<input className="input-create-card" type="submit" onClick={handleCreateNewCard} />*/}
