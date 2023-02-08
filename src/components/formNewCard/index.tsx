@@ -9,10 +9,12 @@ import OptionItemExpiration from '../optionItemExpiration';
 import OptionItemBackground from '../optionItemBackground';
 import CardItem from '../cardItem';
 import cardsData from '../../data/cards';
+import ICard from '../../types/interfaces/ICard';
 import { generateCardNumber } from "../../utils/formateCardData";
 import { createObjectNewCard } from "../../utils/formateCardData"
 
 const FormNewCard: React.FC = () => {
+	const [cards, setCards] = useState<ICard[]>(cardsData);
 	const [currency, setCurrency] = useState<string>(CardCurrencyEnum.USD);
 	const [expiration, setExpiration] = useState<string>(CardExpiryDateEnum.year_1);
 	const [background, setBackground] = useState<string>(CardBackgroundEnum.blue);
@@ -34,6 +36,11 @@ const FormNewCard: React.FC = () => {
 	const changeBackground =(newBackground: string): void => {
 		console.log(newBackground);
 		setBackground(newBackground);
+	};
+
+	const changeCards = (objNewCard: ICard) => {
+		cards.push(objNewCard);
+		setCards(cards);
 	};
 
 	const handleSelectCurrency = (event: React.ChangeEvent<HTMLSelectElement>) => {
