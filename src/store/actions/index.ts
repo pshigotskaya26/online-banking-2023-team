@@ -1,7 +1,11 @@
-import * as ServicesActionCreators from './services'
+import * as ServicesActionCreators from './services';
+import * as AuthActions from './authorization';
+import * as RegisterActions from './registration';
 
-const ServicesActions = {
+const ApplicationActions = {
   ...ServicesActionCreators,
-}
+  ...AuthActions,
+  ...RegisterActions,
+};
 
-export default ServicesActions
+export default ApplicationActions;

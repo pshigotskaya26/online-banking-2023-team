@@ -1,5 +1,5 @@
 import ClientLayout from '../../layouts/client';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import ICard from '../../types/interfaces/ICard';
 import ITransaction from '../../types/interfaces/ITransaction';
 import cardsData from '../../data/cards';
@@ -9,13 +9,12 @@ import TransactionList from '../../components/transactionList';
 import PageTitle from '../../components/pageTitle';
 
 const DashboardPage = () => {
-  const [cards, setCards] = useState<ICard[]>(cardsData);
-  const [transactions, setTransactions] =
-    useState<ITransaction[]>(transactionsData);
+  const [cards] = useState<ICard[]>(cardsData);
+  const [transactions] = useState<ITransaction[]>(transactionsData);
 
   return (
     <ClientLayout>
-      <PageTitle title={"Dashboard"}/>
+      <PageTitle title={'Dashboard'} />
       <CardList cards={cards}></CardList>
       <TransactionList transactions={transactions}></TransactionList>
     </ClientLayout>
