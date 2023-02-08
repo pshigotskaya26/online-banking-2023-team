@@ -58,3 +58,27 @@ export const changeIconEyeInCard = (isShownValue: boolean) => {
 	}
 	return iconEye;
 }
+
+export const changeNumberToStar = (stringNumber: string) => {
+	let resultStr = '';
+
+	for (let i = 0; i < stringNumber.length - 5; i++) {
+		if (stringNumber[i] !== ' ') {
+			resultStr += '*';
+		}
+		else {
+			resultStr += stringNumber[i];
+		}
+	}
+	return resultStr + stringNumber.slice(-5);
+};
+
+export const changeCardNumber = (isShownValue: boolean, stringNumber: string) => {
+
+	if (isShownValue) {
+		return stringNumber;
+	}
+	else {
+		return changeNumberToStar(stringNumber);
+	}
+}

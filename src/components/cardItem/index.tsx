@@ -8,6 +8,7 @@ import { getStringCardNumber } from "../../utils/formateCardData";
 import { getIdUser } from '../../utils/formateCardData';
 import users from "../../data/users";
 import CardIconEye from '../cardIconEye';
+import CardNumber from '../cardNumber';
 
 import imgBlue from "../../assets/cardBackground/card-bg-blue.png";
 import imgGreen from "../../assets/cardBackground/card-bg-green.png";
@@ -64,7 +65,7 @@ const CardItem: React.FC<CardItemProps> = (props) => {
 			</div>
 
 			<div className='card-number'>
-				<div className='card-number__value'>{getStringCardNumber(props.card.number)}</div>
+				<CardNumber isShownData={isShownData} cardNumber={props.card.number} />
 			</div>
 			<div className='card-term'>
 				<div className='card-term__text'>VALID<br/>THRU</div>
