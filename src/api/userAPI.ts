@@ -35,6 +35,10 @@ class UserAPI {
     localStorage.setItem('users', JSON.stringify(existUsers));
     return userInfo;
   }
+
+  logoutSystem(): null {
+    return null;
+  }
 }
 
 const authUserAPI = new UserAPI();

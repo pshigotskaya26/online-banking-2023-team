@@ -18,6 +18,7 @@ export const AuthReducer = (
     case AuthActionTypes.FETCH_USERINFO:
       return { ...state, loadingUserInfo: true };
     case AuthActionTypes.FETCH_USERINFO_SUCCESS:
+    case AuthActionTypes.LOGUOT_SYSTEM:
       return { ...state, loadingUserInfo: false, user: action.payload };
     case AuthActionTypes.FETCH_USERINFO_ERROR:
       return {
