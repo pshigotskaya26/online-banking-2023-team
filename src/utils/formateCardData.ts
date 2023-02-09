@@ -57,17 +57,7 @@ export const changeIconEyeInCard = (isShownValue: boolean) => {
 }
 
 export const changeNumberToStar = (stringNumber: string) => {
-	let resultStr = '';
-
-	for (let i = 0; i < stringNumber.length - 5; i++) {
-		if (stringNumber[i] !== ' ') {
-			resultStr += '*';
-		}
-		else {
-			resultStr += stringNumber[i];
-		}
-	}
-	return resultStr + stringNumber.slice(-5);
+	return `**** **** **** ${stringNumber.slice(-4)}`;
 };
 
 export const changeBalanceToStar = (stringNumber: string) => {
