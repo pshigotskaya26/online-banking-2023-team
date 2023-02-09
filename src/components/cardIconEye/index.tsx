@@ -7,8 +7,10 @@ interface CardIconEyeProps {
 }
 
 const CardIconEye: React.FC<CardIconEyeProps> = (props) => {
+	const iconEye = changeIconEyeInCard(props.isShownData);
+
 	return (
-		<FontAwesomeIcon icon={changeIconEyeInCard(props.isShownData)} size={"1x"} className={"text-white-600"} />
+		<FontAwesomeIcon icon={iconEye} size={"1x"} className={"text-white-600"} />
 	);
 };
 
