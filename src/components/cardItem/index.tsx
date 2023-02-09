@@ -23,12 +23,7 @@ const CardItem: React.FC<CardItemProps> = (props) => {
 	let imageBackground = getBackgroundImageByColor(props.card.background);
 
 	const changeIconEye = () => {
-		if (isShownData === true) {
-			setShownData(false);
-		}
-		else {
-			setShownData(true);
-		}
+		setShownData(!isShownData);
 	}
 
 	return (
