@@ -19,8 +19,8 @@ interface CardItemProps {
 const CardItem: React.FC<CardItemProps> = (props) => {
 	const [isShownData, setShownData] = useState<boolean>(props.card.isShown);
 
-	let cardUser = getCardUserById(users, props.card.userid);
-	let imageBackground = getBackgroundImageByColor(props.card.background);
+	const cardUser = getCardUserById(users, props.card.userid);
+	const imageBackground = getBackgroundImageByColor(props.card.background);
 
 	const changeIconEye = () => {
 		setShownData(!isShownData);

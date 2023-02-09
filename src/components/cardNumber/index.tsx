@@ -8,9 +8,8 @@ interface CardNumberProps {
 }
 
 const CardNumber: React.FC<CardNumberProps> = (props) => {
-	let stringCardNumber = getStringCardNumber(props.cardNumber);
-
-	let changedCardNumber = changeCardNumber(props.isShownData, stringCardNumber);
+	const stringCardNumber = getStringCardNumber(props.cardNumber);
+	const changedCardNumber = changeCardNumber(props.isShownData, stringCardNumber);
 	
 	return (
 		<div className='card-number__value'>{changedCardNumber}</div>

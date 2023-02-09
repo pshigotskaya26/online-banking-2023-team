@@ -9,8 +9,8 @@ interface CardBalanceProps {
 }
 
 const CardBalance: React.FC<CardBalanceProps> = (props) => {
-	let stringCardBalance = getStringCardBalance(props.cardBalance);
-	let changedCardBalance = changeCardBalance(props.isShownData, stringCardBalance);
+	const stringCardBalance = getStringCardBalance(props.cardBalance);
+	const changedCardBalance = changeCardBalance(props.isShownData, stringCardBalance);
 
 	return (
 		<div className='card-balance__value'>{changedCardBalance} {props.cardCurrency}</div>
