@@ -1,123 +1,152 @@
 import { FC, useState } from 'react';
+import CalculatorDisplay from '../calculatorDisplay';
+import CalculatorPad from '../calculatorPad';
 
 interface CalculatorProps {
   value: number,
   setValue: (n: number) => void
 }
 
-const Calculator: FC<CalculatorProps> = ({ value= 0, setValue }) => {
-  const [result, setResult] = useState(value);
+export type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+export type Operator = '+' | '-' | '×' | '÷'
+
+const Calculator: FC<CalculatorProps> = ({ value = 0, setValue }) => {
+  const [memory] = useState<number>(0);
+  const [result, setResult] = useState<number>(value);
+  const [waitingForOperand, setWaitingForOperand] = useState<boolean>(true);
+  const [pendingOperator, setPendingOperator] = useState<Operator>();
+  const [display, setDisplay] = useState<string>(String(value));
+
+  const calculate = (rightOperand: number, pendingOperator: Operator): boolean => {
+    let newResult = result;
+
+    switch (pendingOperator) {
+      case '+':
+        newResult += rightOperand;
+        break;
+      case '-':
+        newResult -= rightOperand;
+        break;
+      case '×':
+        newResult *= rightOperand;
+        break;
+      case '÷':
+        if (rightOperand === 0) {
+          return false;
+        }
+
+        newResult /= rightOperand;
+    }
+
+    setResult(newResult);
+    setDisplay(newResult.toString().toString().slice(0, 12));
+
+    return true;
+  };
+
+  const onDigitButtonClick = (digit: Digit) => {
+    let newDisplay = display;
+
+    if ((display === '0' && digit === 0) || display.length > 12) {
+      return;
+    }
+
+    if (waitingForOperand) {
+      newDisplay = '';
+      setWaitingForOperand(false);
+    }
+
+    if (display !== '0') {
+      newDisplay = newDisplay + digit.toString();
+    } else {
+      newDisplay = digit.toString();
+    }
+
+    setDisplay(newDisplay);
+  };
+
+  const onPointButtonClick = () => {
+    let newDisplay = display;
+
+    if (waitingForOperand) {
+      newDisplay = '0';
+    }
+
+    if (newDisplay.indexOf('.') === -1) {
+      newDisplay = newDisplay + '.';
+    }
+
+    setDisplay(newDisplay);
+    setWaitingForOperand(false);
+  };
+
+  const onOperatorButtonClick = (operator: Operator) => {
+    const operand = Number(display);
+
+    if (typeof pendingOperator !== 'undefined' && !waitingForOperand) {
+      if (!calculate(operand, pendingOperator)) {
+        return;
+      }
+    } else {
+      setResult(operand);
+    }
+
+    setPendingOperator(operator);
+    setWaitingForOperand(true);
+  };
+
+  const onChangeSignButtonClick = () => {
+    const value = Number(display);
+
+    if (value > 0) {
+      setDisplay('-' + display);
+    } else if (value < 0) {
+      setDisplay(display.slice(1));
+    }
+  };
+
+  const onEqualButtonClick = () => {
+    const operand = Number(display);
+
+    if (typeof pendingOperator !== 'undefined' && !waitingForOperand) {
+      if (!calculate(operand, pendingOperator)) {
+        return;
+      }
+
+      setPendingOperator(undefined);
+    } else {
+      setDisplay(operand.toString());
+    }
+
+    setResult(operand);
+    setWaitingForOperand(true);
+  };
+
+  const onClearEntryButtonClick = () => {
+    setDisplay('0');
+    setWaitingForOperand(true);
+  };
+
+  const onSaveValue = () => {
+    setValue(Number(display));
+  };
+
+
   return <div
     className='w-full mx-auto rounded-xl bg-gray-100 shadow-xl text-gray-800 relative overflow-hidden max-w-[300px]'>
-    <div className='w-full bg-gradient-to-b from-gray-800 to-gray-700 flex items-end text-right'>
-      <div className='w-full py-5 px-6 text-6xl text-white font-thin'>{result}</div>
-    </div>
-    <div className='w-full bg-gradient-to-b from-indigo-400 to-indigo-500'>
-      <div className='flex w-full'>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-opacity-50 text-xl font-light'>C
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-opacity-50 text-xl font-light'>+/-
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-opacity-50 text-xl font-light'>%
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none bg-indigo-700 bg-opacity-10 hover:bg-opacity-20 text-white text-2xl font-light'>÷
-          </button>
-        </div>
-      </div>
-      <div className='flex w-full'>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>7
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button onClick={() => setResult(result => result + 8) }
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>8
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>9
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none bg-indigo-700 bg-opacity-10 hover:bg-opacity-20 text-white text-xl font-light'>⨉
-          </button>
-        </div>
-      </div>
-      <div className='flex w-full'>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>4
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>5
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>6
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none bg-indigo-700 bg-opacity-10 hover:bg-opacity-20 text-white text-xl font-light'>-
-          </button>
-        </div>
-      </div>
-      <div className='flex w-full'>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>1
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>2
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>3
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-b border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none bg-indigo-700 bg-opacity-10 hover:bg-opacity-20 text-white text-xl font-light'>+
-          </button>
-        </div>
-      </div>
-      <div className='flex w-full'>
-        <div className='w-1/4 border-r border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>0
-          </button>
-        </div>
-        <div className='w-1/4 border-r border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none hover:bg-indigo-700 hover:bg-opacity-20 text-white text-xl font-light'>.
-          </button>
-        </div>
-        <div className='w-2/4 border-r border-indigo-400'>
-          <button
-            className='w-full h-16 outline-none focus:outline-none bg-indigo-700 bg-opacity-30 hover:bg-opacity-40 text-white text-xl font-light'>=
-          </button>
-        </div>
-      </div>
+    <CalculatorDisplay value={display} hasMemory={memory !== 0}
+                       expression={typeof pendingOperator !== 'undefined'
+                         ? `${result}${pendingOperator}${waitingForOperand ? '' : display}` : ''} />
+    <div className='w-full bg-indigo-600'>
+      <CalculatorPad
+        onDigitButtonClick={onDigitButtonClick}
+        onClearEntryButtonClick={onClearEntryButtonClick}
+        onChangeSignButtonClick={onChangeSignButtonClick}
+        onEqualButtonClick={onEqualButtonClick}
+        onOperatorButtonClick={onOperatorButtonClick}
+        onPointButtonClick={onPointButtonClick}
+        onSaveValue={onSaveValue}
+      />
     </div>
   </div>;
 };

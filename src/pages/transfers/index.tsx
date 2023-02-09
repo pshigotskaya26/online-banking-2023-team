@@ -84,7 +84,7 @@ const TransfersPage = () => {
                             focus:ring-blue-500 rounded-lg p-2.5 text-sm'
                  id='amount' type='number' />
           <button onClick={() => setIsVisibleCalculator(!isVisibleCalculator)}>X</button>
-          {isVisibleCalculator && <div className={'border absolute min-w-[320px]'}>
+          {isVisibleCalculator && <div className={'border bg-gray-100 p-2 absolute min-w-[320px]'}>
             <Calculator value={0} setValue={(v) => console.log(v)  }/>
           </div>}
 
