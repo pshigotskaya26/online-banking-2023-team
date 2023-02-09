@@ -37,20 +37,6 @@ export const generateCardNumber = () => {
 	return Number(startStr);
 };
 
-export const createObjectNewCard = (idCard: number, idUser: number, accountUser: string, currencyCard: string, expiredCard: number, numberCard: number, balancaCard: number, backgroundCard: string, isShownValue: boolean) => {
-	return {
-		id: idCard,
-		number: numberCard,
-		expired: Date.now() + expiredCard * 31622400000,
-		currency: currencyCard,
-		account: accountUser,
-		userid: idUser,
-		balance: balancaCard,
-		background: backgroundCard,
-		isShown: isShownValue
-	};
-};
-
 export const changeIconEyeInCard = (isShownValue: boolean) => {
 	let iconEye = (isShownValue) ? faEye : faEyeSlash;
 	return iconEye;

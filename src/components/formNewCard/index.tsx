@@ -11,7 +11,6 @@ import CardItem from '../cardItem';
 import cardsData from '../../data/cards';
 import ICard from '../../types/interfaces/ICard';
 import { generateCardNumber } from "../../utils/formateCardData";
-import { createObjectNewCard } from "../../utils/formateCardData"
 
 const FormNewCard: React.FC = () => {
 	const [cards, setCards] = useState<ICard[]>(cardsData);
@@ -22,20 +21,27 @@ const FormNewCard: React.FC = () => {
 	
 	let startBalance = 0;
 
-	const objNewCard = createObjectNewCard((cardsData.length + 1), 1, 'BY134678484000000154501', currency, Number(expiration), generateCardNumber(), startBalance, background, true);
+	const objNewCard = {
+		id: cardsData.length + 1,
+		number: generateCardNumber(),
+		expired: Date.now() + Number(expiration) * 31622400000,
+		currency: currency,
+		account: 'BY134678484000000154501',
+		userid: 1,
+		balance: startBalance,
+		background: background,
+		isShown: true
+	};
 
 	const changeCurrency =(newCurrency: string): void => {
-		console.log(newCurrency);
 		setCurrency(newCurrency);
 	};
 
 	const changeExpiration =(newExpiration: string): void => {
-		console.log(newExpiration);
 		setExpiration(newExpiration);
 	};
 
 	const changeBackground =(newBackground: string): void => {
-		console.log(newBackground);
 		setBackground(newBackground);
 	};
 
@@ -43,8 +49,6 @@ const FormNewCard: React.FC = () => {
 		cards.push(NewCard);
 		setCards(cards);
 		navigate('/dashboard');
-
-		console.log('cards: ', cards);
 	};
 
 	const handleSelectCurrency = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -101,7 +105,6 @@ const FormNewCard: React.FC = () => {
 							<button className='button button-cancel'><Link to={'/dashboard'}>Cancel</Link></button>
 						</div>
 					</div>
-					{/*<input className="input-create-card" type="submit" onClick={handleCreateNewCard} />*/}
 				
 			</div>
 	);
