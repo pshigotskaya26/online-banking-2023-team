@@ -15,7 +15,7 @@ const DashboardPage = () => {
 
   return (
     <ClientLayout>
-      <PageTitle title={"Dashboard"}/>
+      <PageTitle title={'Dashboard'} />
       <CardList cards={cards}></CardList>
       <TransactionList transactions={transactions}></TransactionList>
     </ClientLayout>
