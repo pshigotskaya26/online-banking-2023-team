@@ -5,6 +5,7 @@ import { ServicesPage } from '../pages/services';
 import AuthorizationPage from '../pages/authorization';
 import RegistrationPage from '../pages/registration';
 import MainPage from '../pages/main';
+import TransfersPage from '../pages/transfers';
 
 const routes = [
   {
@@ -46,6 +47,11 @@ const routes = [
     path: '/registration',
     element: <RegistrationPage />,
     name: 'Registration',
+  },
+  {
+    path: '/transfers',
+    element: <TransfersPage />,
+    name: 'Transfers',
   },
 ];
 
