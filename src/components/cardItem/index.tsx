@@ -6,16 +6,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuildingShield} from "@fortawesome/free-solid-svg-icons";
 import { getStringCardNumber } from "../../utils/formateCardData";
 import { getCardUserById } from '../../utils/formateCardData';
+import { getBackgroundImageByColor } from "../../utils/getBackgroundImageByColor";
 import users from "../../data/users";
 import CardIconEye from '../cardIconEye';
 import CardNumber from '../cardNumber';
 import CardBalance from '../cardBalance';
-
-import imgBlue from "../../assets/cardBackground/card-bg-blue.png";
-import imgGreen from "../../assets/cardBackground/card-bg-green.png";
-import imgOrange from "../../assets/cardBackground/card-bg-orange.png";
-import imgViolett from "../../assets/cardBackground/card-bg-violett.png";
-import imgRed from "../../assets/cardBackground/card-bg-red.png";
 
 interface CardItemProps {
 	card: ICard;
@@ -25,30 +20,7 @@ const CardItem: React.FC<CardItemProps> = (props) => {
 	const [isShownData, setShownData] = useState<boolean>(props.card.isShown);
 
 	let cardUser = getCardUserById(users, props.card.userid);
-
-	let imageBackground;
-
-	switch(props.card.background) {
-		case "blue":
-			imageBackground = imgBlue;
-			break;
-
-		case "green":
-			imageBackground = imgGreen;
-			break;
-		
-		case "orange":
-			imageBackground = imgOrange;
-			break;
-
-		case "violett":
-			imageBackground = imgViolett;
-			break;
-
-		case "red":
-			imageBackground = imgRed;
-			break;
-	}
+	let imageBackground = getBackgroundImageByColor(props.card.background);
 
 	const changeIconEye = () => {
 		if (isShownData === true) {
