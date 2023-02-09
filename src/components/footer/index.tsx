@@ -27,7 +27,7 @@ const Footer: FC = () => {
 
         {
           footerRoutes.map((route) => {
-            return <li>
+            return <li key={route.path}>
               <Link to={route.path} key={route.path} className="mr-4 hover:underline md:mr-6 ">{route.title}</Link>
             </li>
           })

@@ -9,41 +9,34 @@ import Button from "../button";
 interface ServicesListProps {
   services: IService[],
   loadingServices: boolean,
-  setActiveComponent: (service?: IService) => void,
-  isActiveFormNewProduct: boolean
+  handleButtonNewService: () => void,
+  handleServiceItem: (service: IService) => void,
+  activeService?: IService
 }
 
-const ServicesList: React.FC<ServicesListProps> = ({
-                                                     services,
-                                                     loadingServices,
-                                                     setActiveComponent,
-                                                     isActiveFormNewProduct
-                                                   }) => {
+const ServicesList: React.FC<ServicesListProps> = (props) => {
+  const {
+    services,
+    loadingServices,
+    handleButtonNewService,
+    handleServiceItem,
+    activeService
+  } = props
   const [servicesItems, setServicesItems] = useState<IService[]>(services)
-
   useEffect(() => {
     setServicesItems(services)
   }, [services])
 
-  const handleButtonNewService = () => {
-    setActiveComponent()
-  }
 
-  const handleServiceItem = (service: IService) => {
-    const servicesNew = servicesItems.map(el => el.id === service.id ? {...el, isActive: true} : {
-      ...el,
-      isActive: false
-    })
-    setServicesItems(servicesNew)
-    setActiveComponent(service)
-  }
   const servicesArr = servicesItems.map(service => {
-    return <ServicesItem service={service} key={service.id} handleServiceItem={handleServiceItem}/>
+    return <ServicesItem
+      service={service} isActive={service.id === activeService?.id} key={service.id}
+      handleServiceItem={() => handleServiceItem(service)}/>
   })
 
   return <div
-    className="w-full flex flex-col p-4 bg-gray-50 border min-h-[300px] border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
-    <h5 className="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white">
+    className="w-full p-4 flex flex-col bg-gray-50 border min-h-[300px] border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <h5 className="text-base font-semibold text-gray-900 md:text-xl dark:text-white">
       Services List
     </h5>
 
@@ -56,7 +49,7 @@ const ServicesList: React.FC<ServicesListProps> = ({
             : <EmptyBox/>
       }
     </div>
-    <Button text={"Add Service"} handleButton={handleButtonNewService} isDisable={isActiveFormNewProduct}/>
+    <Button text={"Add Service"} handleButton={handleButtonNewService} isDisable={false}/>
   </div>
 }
 

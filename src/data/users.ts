@@ -1,18 +1,17 @@
-import IUser from "../types/interfaces/IUser";
+import { IClientUser } from '../types/interfaces/IUser';
+import UserRolesEnum from '../types/enums/UserRolesEnum';
 
-const users: IUser[] = [
+const users: IClientUser[] = [
   {
     id: 1,
     name: 'Pavel Bazhenov',
-    email: 'p.bazhenov@mail.ru',
+    email: 'user@mail.ru',
     phone: '+357291324567',
     photo: '',
-    secret: '',
-    password: 'User1234',
-    cards: [
-      1
-    ]
-  }
+    cards: [1],
+    role: UserRolesEnum.CLIENT,
+    password: '123456',
+  },
 ];
 
 export default users;
