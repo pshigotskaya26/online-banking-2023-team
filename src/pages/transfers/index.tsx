@@ -3,8 +3,48 @@ import ClientLayout from '../../layouts/client';
 import { useState } from 'react';
 import Button from '../../components/button';
 import Calculator from '../../components/calculator';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
+import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
+// import ICard from '../../types/interfaces/ICard';
+interface ICard {
+  id: number; // internal
+  number: number; // 5454 1234 1234 1234
+  expired: number; // Date.now() 08/25
+  currency: string; // BYN/RUB/USD
+  account: string; // IBAN BY134678484000000154501
+  userid: number;
+  balance: number;
+  background: string;
+  isShown: boolean;
+}
 const TransfersPage = () => {
+  // https://github.com/tuanpham-dev/calculator-react-typescript/blob/master/src/components/App/App.tsx
+  const cards: ICard[] = [
+    {
+      id: 1,
+      number: 5454123412341234,
+      expired: Date.now(),
+      currency: CardCurrencyEnum.BYN,
+      account: "IBAN BY134678484000000154501",
+      userid: 1,
+      balance: 200,
+      background: "",
+      isShown: false
+    },
+    {
+      id: 2,
+      number: 5454123412341234,
+      expired: Date.now(),
+      currency: CardCurrencyEnum.USD,
+      account: "IBAN BY134678484000000154501",
+      userid: 1,
+      balance: 200,
+      background: "",
+      isShown: false
+    },
+  ]
+
   const [isVisibleCalculator, setIsVisibleCalculator] = useState<boolean>(false);
   // FROM
   const [numberCardFrom, setNUmberCardFrom] = useState<number>(0);
@@ -25,7 +65,11 @@ const TransfersPage = () => {
     // Проверить остаток на карте
     // Если существует такая карта , то перевод
     // Иначе выдать ошибку
-    //
+  };
+
+  const handleValueCalculator = (n: number) => {
+    setSum(n);
+    setIsVisibleCalculator(false);
   };
 
 
@@ -81,11 +125,14 @@ const TransfersPage = () => {
         <h3 className={'font-bold mr-2'}>Сумма перевода</h3>
         <div className='relative justify-center content-center items-center'>
           <input className='border bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500
-                            focus:ring-blue-500 rounded-lg p-2.5 text-sm'
+                            focus:ring-blue-500 rounded-lg p-2.5 text-sm' value={sum}
+                 onChange={(e) => setSum(+e.target.value)}
                  id='amount' type='number' />
-          <button onClick={() => setIsVisibleCalculator(!isVisibleCalculator)}>X</button>
+          <button onClick={() => setIsVisibleCalculator(!isVisibleCalculator)}>
+            <FontAwesomeIcon icon={faKeyboard} />
+          </button>
           {isVisibleCalculator && <div className={'border bg-gray-100 p-2 absolute min-w-[320px]'}>
-            <Calculator value={0} setValue={(v) => console.log(v)  }/>
+            <Calculator value={sum} setValue={handleValueCalculator} />
           </div>}
 
         </div>
