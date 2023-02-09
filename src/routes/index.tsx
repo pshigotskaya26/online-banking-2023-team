@@ -6,7 +6,6 @@ import { ServicesPage } from '../pages/services';
 const routes = [
   {
     path: '/',
-    element: <MainPage />,
     name: 'Home',
   },
   {

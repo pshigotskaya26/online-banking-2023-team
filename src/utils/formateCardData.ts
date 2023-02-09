@@ -1,4 +1,4 @@
-import IUser from "../types/interfaces/IUser";
+import { IClientUser } from "../types/interfaces/IUser";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
@@ -22,8 +22,8 @@ export const getStringCardBalance = (cardBalance: number) => {
 	return cardBalance.toString();
 };
 
-export const getCardUserById = (arrUsers: IUser[], idProps: number) => {
-	return arrUsers.filter((user: IUser) => user.id === idProps)[0];
+export const getCardUserById = (arrUsers: IClientUser[], idProps: number) => {
+	return arrUsers.filter((user: IClientUser) => user.id === idProps)[0];
 };
 
 export const generateCardNumber = () => {
