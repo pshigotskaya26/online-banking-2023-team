@@ -3,7 +3,7 @@
 }
 
 .cardList__content {
-	@apply flex gap-x-5 gap-y-5 pb-5;
+	@apply flex flex-wrap gap-x-5 gap-y-5 pb-5;
 }
 
 .cardList__title {
