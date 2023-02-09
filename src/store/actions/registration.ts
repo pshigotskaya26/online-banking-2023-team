@@ -5,11 +5,9 @@ import { RegisterActionTypes, RegisterUserActions } from '../types/register';
 
 export const createUserInfo = (userInfo: IAdminUser | IClientUser) => {
   return (dispatch: Dispatch<RegisterUserActions>) => {
-    console.log(userInfo);
     try {
       dispatch({ type: RegisterActionTypes.CREATE_USERINFO });
       const updatedInfo = authUserAPI.createUserInfo(userInfo);
-      console.log(updatedInfo);
       dispatch({
         type: RegisterActionTypes.CREATE_USERINFO_SUCCESS,
         payload: updatedInfo,

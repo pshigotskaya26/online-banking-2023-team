@@ -10,6 +10,7 @@ export enum AuthActionTypes {
   FETCH_USERINFO = 'FETCH_USERINFO',
   FETCH_USERINFO_SUCCESS = 'FETCH_USERINFO_SUCCESS',
   FETCH_USERINFO_ERROR = 'FETCH_USERINFO_ERROR',
+  LOGUOT_SYSTEM = 'LOGOUT_SYSTEM',
 }
 
 interface FetchUserInfo {
@@ -26,7 +27,13 @@ interface FetchUserInfoError {
   payload: string;
 }
 
+interface LoguotSystem {
+  type: AuthActionTypes.LOGUOT_SYSTEM;
+  payload: null;
+}
+
 export type AuthUserActions =
   | FetchUserInfo
   | FetchUserInfoSuccess
-  | FetchUserInfoError;
+  | FetchUserInfoError
+  | LoguotSystem;
