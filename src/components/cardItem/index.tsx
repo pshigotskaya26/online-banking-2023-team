@@ -5,7 +5,7 @@ import { getStringTerm } from "../../utils/formateDateTime";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBuildingShield} from "@fortawesome/free-solid-svg-icons";
 import { getStringCardNumber } from "../../utils/formateCardData";
-import { getIdUser } from '../../utils/formateCardData';
+import { getCardUserById } from '../../utils/formateCardData';
 import users from "../../data/users";
 import CardIconEye from '../cardIconEye';
 import CardNumber from '../cardNumber';
@@ -24,7 +24,8 @@ interface CardItemProps {
 const CardItem: React.FC<CardItemProps> = (props) => {
 	const [isShownData, setShownData] = useState<boolean>(props.card.isShown);
 
-	let cardUser = getIdUser(users, props.card.userid);
+	let cardUser = getCardUserById(users, props.card.userid);
+
 	let imageBackground;
 
 	switch(props.card.background) {

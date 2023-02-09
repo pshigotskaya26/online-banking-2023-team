@@ -22,7 +22,7 @@ export const getStringCardBalance = (cardBalance: number) => {
 	return cardBalance.toString();
 };
 
-export const getIdUser = (arrUsers: IUser[], idProps: number) => {
+export const getCardUserById = (arrUsers: IUser[], idProps: number) => {
 	return arrUsers.filter((user: IUser) => user.id === idProps)[0];
 };
 
