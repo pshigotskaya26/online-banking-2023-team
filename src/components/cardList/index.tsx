@@ -1,7 +1,7 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 import './index.css';
 import ICard from "../../types/interfaces/ICard";
-
 import CardItem from '../cardItem';
 
 interface CardListProps {
@@ -18,7 +18,7 @@ const CardList: React.FC<CardListProps> = (props) => {
 				))}
 			</div>
 			<div className='cardList__button'>
-				<button className='button button-add'>Add card</button>
+				<button className='button button-add'><Link to={'/new-card'}>Add card</Link></button>
 			</div>
 		</div>
 	);

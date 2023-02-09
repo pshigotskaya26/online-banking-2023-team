@@ -9,8 +9,9 @@ import TransactionList from '../../components/transactionList';
 import PageTitle from '../../components/pageTitle';
 
 const DashboardPage = () => {
-  const [cards] = useState<ICard[]>(cardsData);
-  const [transactions] = useState<ITransaction[]>(transactionsData);
+  const [cards, setCards] = useState<ICard[]>(cardsData);
+  const [transactions, setTransactions] =
+    useState<ITransaction[]>(transactionsData);
 
   return (
     <ClientLayout>
