@@ -52,14 +52,7 @@ export const createObjectNewCard = (idCard: number, idUser: number, accountUser:
 };
 
 export const changeIconEyeInCard = (isShownValue: boolean) => {
-	let iconEye;
-
-	if (isShownValue) {
-		iconEye = faEye;
-	}
-	else {
-		iconEye = faEyeSlash;
-	}
+	let iconEye = (isShownValue) ? faEye : faEyeSlash;
 	return iconEye;
 }
 
