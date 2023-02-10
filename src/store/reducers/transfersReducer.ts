@@ -1,13 +1,22 @@
-import { ServicesActions, ServicesActionTypes, ServicesState } from '../types/services';
-import { ModesServicesPage } from '../../types/enums/ModesServicesPage';
-import { TransfersState } from '../types/transfers';
+import { TransfersActions, TransfersActionTypes, TransfersState } from '../types/transfers';
 
-const initialState: TransfersState = {};
+const initialState: TransfersState = {
+  cardTo: null,
+  loadingCardTo: false,
+  cardToErrorLoading: '',
 
-export const ServicesReducer = (state = initialState, action: ServicesActions): TransfersState => {
+  isTransactionInProcess: false,
+
+};
+
+export const TransfersReducer = (state = initialState, action: TransfersActions): TransfersState => {
   switch (action.type) {
-    case ServicesActionTypes.FETCH_SERVICES:
-      return { ...state, loadingServices: true };
+    case TransfersActionTypes.FETCH_CARD_INFO:
+      return { ...state, loadingCardTo: true, cardToErrorLoading: '' };
+    case TransfersActionTypes.FETCH_CARD_SUCCESS:
+      return { ...state, loadingCardTo: false, cardTo: action.payload };
+    case TransfersActionTypes.FETCH_CARD_ERROR:
+      return { ...state, loadingCardTo: false, cardTo: null, cardToErrorLoading: action.payload };
     default:
       return state;
   }
