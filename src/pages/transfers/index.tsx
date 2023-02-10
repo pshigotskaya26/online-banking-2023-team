@@ -1,6 +1,6 @@
 import PageTitle from '../../components/pageTitle';
 import ClientLayout from '../../layouts/client';
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Button from '../../components/button';
 import Calculator from '../../components/calculator';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +8,11 @@ import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
 import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
 import SelectCard from '../../components/selectCard';
 import InputCard from '../../components/inputCard';
+import { getCardInfo, makeATransactionByNumberCard } from '../../store/actions/transfers';
+import { useActions } from '../../hooks/useActions';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { ITransactionData } from '../../types/interfaces/ITransaction';
+import ErrorMessage from '../../components/errorMessage';
 
 interface ICard {
   id: number; // internal
@@ -45,18 +50,31 @@ const TransfersPage = () => {
       background: 'blue',
       isShown: false,
     },
-
   ];
+  const { getCardInfo, makeATransactionByNumberCard } = useActions();
+  const { cardTo } = useAppSelector(state => state.transfers);
 
   const [isVisibleCalculator, setIsVisibleCalculator] = useState<boolean>(false);
-
   const [activeCardFrom, setActiveCardFrom] = useState<ICard>(cards[0] || {});
   const [numberCardTo, setNUmberCardTo] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
 
 
   const handleButtonTransfer = () => {
-    console.log(`Перевод с карты ${activeCardFrom.number}  на карту ${numberCardTo} с суммой ${amount}`);
+    const transactionData: ITransactionData = {
+      cardFrom: activeCardFrom.number,
+      cardTo: numberCardTo,
+      amount: amount,
+    };
+    makeATransactionByNumberCard(transactionData);
+
+  };
+
+  const handleNumberCardTo = (n: number) => {
+    setNUmberCardTo(n);
+    if (n.toString().length === 16) {
+      getCardInfo(n);
+    }
   };
 
   const handleValueCalculator = (n: number) => {
@@ -67,6 +85,12 @@ const TransfersPage = () => {
   const handleAmountValue = (e: ChangeEvent<HTMLInputElement>) => {
     setAmount(+e.target.value);
   };
+
+  const isDisableButton =
+    activeCardFrom.number?.toString().length === 16 &&
+    cardTo?.number.toString().length === 16 &&
+    amount !== 0 &&
+    (cardTo?.currency === activeCardFrom.currency && cardTo)
 
   return (
     <ClientLayout>
@@ -89,9 +113,13 @@ const TransfersPage = () => {
             <h2 className='font-light mb-2 font-bold '>
               Введите карту получателя
             </h2>
-            <InputCard value={numberCardTo} handleInputValue={setNUmberCardTo} />
+            <InputCard value={numberCardTo} handleInputValue={handleNumberCardTo} canTransfer={!!(cardTo?.number)} />
           </div>
         </div>
+        {
+          (cardTo?.currency !== activeCardFrom.currency && cardTo) &&
+          <ErrorMessage text={"We are sorry, transfers to cards with other currencies are not available at the moment"} />
+        }
         <div className='flex justify-center align-middle items-center mb-4'>
           <h3 className={'font-bold mr-2'}>Сумма перевода</h3>
           <div className='relative justify-center content-center items-center'>
@@ -117,17 +145,12 @@ const TransfersPage = () => {
             <Button
               text={'Send'}
               handleButton={handleButtonTransfer}
-              isDisable={false}
+              isDisable={!isDisableButton}
             />
           </div>
         </div>
 
-        {/*<div*/}
-        {/*  className='p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400'*/}
-        {/*  role='alert'*/}
-        {/*>*/}
-        {/*  Danger alert! Change a few things up and try submitting again.*/}
-        {/*</div>*/}
+
       </div>
     </ClientLayout>
   );

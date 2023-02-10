@@ -1,7 +1,7 @@
-import TransactionsTypesEnum from "../enums/TransactionsTypesEnum";
-import TransactionStatusEnum from "../enums/TransactionStatusEnum";
+import TransactionsTypesEnum from '../enums/TransactionsTypesEnum';
+import TransactionStatusEnum from '../enums/TransactionStatusEnum';
 
-export default interface ITransaction {
+export interface ITransaction {
   id: number;
   userid: number;
   cardid: number;
@@ -11,4 +11,10 @@ export default interface ITransaction {
   entitytype: TransactionsTypesEnum;
   targetid: number;
   status: TransactionStatusEnum;
+}
+
+export interface ITransactionData {
+  cardFrom: number,
+  cardTo: number,
+  amount: number
 }
