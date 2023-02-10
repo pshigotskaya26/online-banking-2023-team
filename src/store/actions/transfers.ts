@@ -20,8 +20,8 @@ export const getCardInfo = (number: number) => {
 export const makeATransactionByNumberCard = (transaction: ITransactionData) => {
   return (dispatch: Dispatch<TransfersActions>) => {
     try {
-      console.log(transaction)
-      // dispatch({ type: TransfersActionTypes.FETCH_CARD_INFO });
+      dispatch({type: TransfersActionTypes.TRANSACTION_START})
+      const response = transfersAPI.makeATransactionByNumberCard(transaction);
 
       // const response = transfersAPI.fetchCardInfo(number);
       // dispatch({ type: TransfersActionTypes.FETCH_CARD_SUCCESS, payload: response });

@@ -1,6 +1,6 @@
 import PageTitle from '../../components/pageTitle';
 import ClientLayout from '../../layouts/client';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Button from '../../components/button';
 import Calculator from '../../components/calculator';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,37 +27,18 @@ interface ICard {
 }
 
 const TransfersPage = () => {
-  const cards: ICard[] = [
-    {
-      id: 2,
-      number: 5454123412341234,
-      expired: Date.now(),
-      currency: CardCurrencyEnum.USD,
-      account: 'IBAN BY134678484000000154501',
-      userid: 1,
-      balance: 200,
-      background: 'green',
-      isShown: false,
-    },
-    {
-      id: 1,
-      number: 5454123412341234,
-      expired: Date.now(),
-      currency: CardCurrencyEnum.BYN,
-      account: 'IBAN BY134678484000000154501',
-      userid: 1,
-      balance: 200,
-      background: 'blue',
-      isShown: false,
-    },
-  ];
-  const { getCardInfo, makeATransactionByNumberCard } = useActions();
   const { cardTo } = useAppSelector(state => state.transfers);
-
+  // const { user } = useAppSelector(state => state.authuser);
+  const [cards, setCards] = useState<ICard[]>([]);
+  const { getCardInfo, makeATransactionByNumberCard } = useActions();
   const [isVisibleCalculator, setIsVisibleCalculator] = useState<boolean>(false);
   const [activeCardFrom, setActiveCardFrom] = useState<ICard>(cards[0] || {});
   const [numberCardTo, setNUmberCardTo] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
+  //
+  // useEffect(() => {
+  //
+  // }, [])
 
 
   const handleButtonTransfer = () => {
@@ -90,7 +71,7 @@ const TransfersPage = () => {
     activeCardFrom.number?.toString().length === 16 &&
     cardTo?.number.toString().length === 16 &&
     amount !== 0 &&
-    (cardTo?.currency === activeCardFrom.currency && cardTo)
+    (cardTo?.currency === activeCardFrom.currency && cardTo);
 
   return (
     <ClientLayout>
@@ -118,7 +99,8 @@ const TransfersPage = () => {
         </div>
         {
           (cardTo?.currency !== activeCardFrom.currency && cardTo) &&
-          <ErrorMessage text={"We are sorry, transfers to cards with other currencies are not available at the moment"} />
+          <ErrorMessage
+            text={'We are sorry, transfers to cards with other currencies are not available at the moment'} />
         }
         <div className='flex justify-center align-middle items-center mb-4'>
           <h3 className={'font-bold mr-2'}>Сумма перевода</h3>

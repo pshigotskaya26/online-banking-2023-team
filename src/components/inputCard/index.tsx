@@ -38,7 +38,7 @@ const InputCard: FC<InputCardProps> = ({ value, handleInputValue, canTransfer = 
               <div className={`w-2 h-2 ${canTransfer ? 'bg-green-500' : 'bg-red-500'} rounded mr-2`}></div>
               <div className={'text-gray-400'}>
                 {
-                  canTransfer ? 'Card exist' : 'Card is not exist'
+                  canTransfer ? 'Card exists' : 'Card does not exist'
                 }
               </div>
 
