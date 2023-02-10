@@ -10,6 +10,7 @@ import PageTitle from '../../components/pageTitle';
 
 const DashboardPage = () => {
   const [cards, setCards] = useState<ICard[]>(cardsData);
+  console.log(cards)
   const [transactions, setTransactions] =
     useState<ITransaction[]>(transactionsData);
 
