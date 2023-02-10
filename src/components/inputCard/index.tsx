@@ -1,11 +1,12 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 
 interface InputCardProps {
   value: number,
-  handleInputValue: (n: number) => void
+  handleInputValue: (n: number) => void,
+  canTransfer?: boolean
 }
 
-const InputCard: FC<InputCardProps> = ({ value, handleInputValue }) => {
+const InputCard: FC<InputCardProps> = ({ value, handleInputValue, canTransfer = false }) => {
 
   const nameInputClass = () => {
     if (value === 0) return 'input-default';
@@ -16,7 +17,8 @@ const InputCard: FC<InputCardProps> = ({ value, handleInputValue }) => {
 
   return (
     <div
-      className='w-[340px] h-[213px] m-auto bg-gray-100 rounded-xl relative shadow transition-transform transform hover:scale-105'>
+      className='w-[340px] h-[213px] m-auto bg-gray-100 rounded-xl relative shadow transition-transform transform hover:scale-105'
+    >
       <div className='w-full px-8 absolute top-8'>
         <div className='pt-1'>
 
@@ -31,6 +33,17 @@ const InputCard: FC<InputCardProps> = ({ value, handleInputValue }) => {
               />
             </div>
           </div>
+          {
+            value.toString().length === 16 && <div className={'flex items-center mt-16'}>
+              <div className={`w-2 h-2 ${canTransfer ? 'bg-green-500' : 'bg-red-500'} rounded mr-2`}></div>
+              <div className={'text-gray-400'}>
+                {
+                  canTransfer ? 'Card exist' : 'Card is not exist'
+                }
+              </div>
+
+            </div>
+          }
         </div>
       </div>
     </div>
