@@ -5,7 +5,9 @@ import { ServicesPage } from '../pages/services';
 import AuthorizationPage from '../pages/authorization';
 import RegistrationPage from '../pages/registration';
 import MainPage from '../pages/main';
+
 import TransfersPage from '../pages/transfers';
+import NewCardPage from '../pages/newcard';
 
 const routes = [
   {
@@ -49,10 +51,15 @@ const routes = [
     name: 'Registration',
   },
   {
-    path: '/transfers',
+      path: '/transfers',
     element: <TransfersPage />,
     name: 'Transfers',
-  },
+    },
+    {
+        path: '/new-card',
+    element: <NewCardPage />,
+    name: 'NewCard',
+    }
 ];
 
 export default routes;
