@@ -1,6 +1,7 @@
 import React from 'react';
 import { IArticle } from '../../types/interfaces/IArticle';
 import ArticleItem from '../../components/articleItem';
+import './index.css';
 
 interface NewsProps {
   articles: IArticle[];
