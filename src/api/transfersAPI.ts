@@ -2,6 +2,13 @@ import ICard from '../types/interfaces/ICard';
 import { ITransactionData } from '../types/interfaces/ITransaction';
 
 class TransfersAPI {
+
+  private findCardsByUserID(id: number): ICard[] | undefined {
+    const data = localStorage.getItem('cards') ?? '[]';
+    const existCards: ICard[] = JSON.parse(data);
+    return existCards.filter(el => el.id === id);
+  }
+
   private findCardByNumber(number: number): ICard | undefined {
     const data = localStorage.getItem('cards') ?? '[]';
     const existCards: ICard[] = JSON.parse(data);
@@ -38,6 +45,11 @@ class TransfersAPI {
       localStorage.setItem('cards', JSON.stringify(cards));
     }
   };
+
+  fetchCardsByUserId(id: number): ICard[] {
+    const cards = this.findCardsByUserID(id);
+    return cards ? cards : [];
+  }
 
 }
 

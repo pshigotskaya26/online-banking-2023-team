@@ -1,6 +1,9 @@
 import ICard from '../../types/interfaces/ICard';
 
 export interface TransfersState {
+  isLoadingCards: boolean;
+  cards: ICard[];
+  isLoadingCardsError: string;
   cardTo: ICard | null;
   loadingCardTo: boolean;
   cardToErrorLoading: string;
@@ -8,6 +11,10 @@ export interface TransfersState {
 }
 
 export enum TransfersActionTypes {
+  FETCH_CARDS = 'FETCH_CARDS',
+  FETCH_CARDS_SUCCESS = 'FETCH_CARDS_SUCCESS',
+  FETCH_CARDS_ERROR = 'FETCH_CARDS_ERROR',
+
   FETCH_CARD_INFO = 'FETCH_CARD_INFO',
   FETCH_CARD_SUCCESS = 'FETCH_CARD_SUCCESS',
   FETCH_CARD_ERROR = 'FETCH_CARD_ERROR',
@@ -15,8 +22,20 @@ export enum TransfersActionTypes {
   TRANSACTION_START = 'TRANSACTION_START',
   TRANSACTION_SUCCESS = 'TRANSACTION_SUCCESS',
   TRANSACTION_ERROR = 'TRANSACTION_ERROR',
+}
 
+interface FetchCardsAction {
+  type: TransfersActionTypes.FETCH_CARDS,
+}
 
+interface FetchCardsActionSuccess {
+  type: TransfersActionTypes.FETCH_CARDS_SUCCESS,
+  payload: ICard[]
+}
+
+interface FetchCardsActionError {
+  type: TransfersActionTypes.FETCH_CARDS_ERROR,
+  payload: string
 }
 
 interface FetchCardInfoAction {
@@ -52,3 +71,6 @@ export type TransfersActions = FetchCardInfoAction
   | TransactionStartAction
   | TransactionActionSuccess
   | TransactionActionError
+  | FetchCardsAction
+  | FetchCardsActionSuccess
+  | FetchCardsActionError

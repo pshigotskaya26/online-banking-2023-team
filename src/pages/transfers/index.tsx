@@ -5,7 +5,6 @@ import Button from '../../components/button';
 import Calculator from '../../components/calculator';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
-import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
 import SelectCard from '../../components/selectCard';
 import InputCard from '../../components/inputCard';
 import { getCardInfo, makeATransactionByNumberCard } from '../../store/actions/transfers';
@@ -13,32 +12,22 @@ import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { ITransactionData } from '../../types/interfaces/ITransaction';
 import ErrorMessage from '../../components/errorMessage';
-
-interface ICard {
-  id: number; // internal
-  number: number; // 5454 1234 1234 1234
-  expired: number; // Date.now() 08/25
-  currency: string; // BYN/RUB/USD
-  account: string; // IBAN BY134678484000000154501
-  userid: number;
-  balance: number;
-  background: string;
-  isShown: boolean;
-}
+import ICard from '../../types/interfaces/ICard';
 
 const TransfersPage = () => {
-  const { cardTo } = useAppSelector(state => state.transfers);
-  // const { user } = useAppSelector(state => state.authuser);
-  const [cards, setCards] = useState<ICard[]>([]);
-  const { getCardInfo, makeATransactionByNumberCard } = useActions();
+  const { cards, cardTo } = useAppSelector(state => state.transfers);
+  const { user } = useAppSelector(state => state.authuser);
+  const { getCardInfo, makeATransactionByNumberCard, fetchCardsByUserId } = useActions();
   const [isVisibleCalculator, setIsVisibleCalculator] = useState<boolean>(false);
   const [activeCardFrom, setActiveCardFrom] = useState<ICard>(cards[0] || {});
   const [numberCardTo, setNUmberCardTo] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
-  //
-  // useEffect(() => {
-  //
-  // }, [])
+
+  useEffect(() => {
+    if (user) {
+      fetchCardsByUserId(user.id);
+    }
+  }, []);
 
 
   const handleButtonTransfer = () => {
@@ -71,7 +60,8 @@ const TransfersPage = () => {
     activeCardFrom.number?.toString().length === 16 &&
     cardTo?.number.toString().length === 16 &&
     amount !== 0 &&
-    (cardTo?.currency === activeCardFrom.currency && cardTo);
+    (cardTo?.currency === activeCardFrom.currency && cardTo) &&
+    (cardTo?.number !== activeCardFrom.number && cardTo);
 
   return (
     <ClientLayout>
