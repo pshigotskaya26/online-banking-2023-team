@@ -48,12 +48,15 @@ const TransfersPage = () => {
 
   ];
 
-
   const [isVisibleCalculator, setIsVisibleCalculator] = useState<boolean>(false);
-  const [numberCardTo, setNUmberCardTo] = useState<number>(0);
 
+  const [activeCardFrom, setActiveCardFrom] = useState<ICard>(cards[0] || {});
+  const [numberCardTo, setNUmberCardTo] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
+
+
   const handleButtonTransfer = () => {
+    console.log(`Перевод с карты ${activeCardFrom.number}  на карту ${numberCardTo} с суммой ${amount}`);
   };
 
   const handleValueCalculator = (n: number) => {
@@ -80,7 +83,7 @@ const TransfersPage = () => {
             <h2 className='font-light mb-2 font-bold '>
               Выбрать карту отправителя
             </h2>
-            <SelectCard cards={cards} />
+            <SelectCard cards={cards} activeCardData={activeCardFrom} setActiveCard={setActiveCardFrom} />
           </div>
           <div>
             <h2 className='font-light mb-2 font-bold '>
@@ -113,11 +116,12 @@ const TransfersPage = () => {
           <div className={'ml-2'}>
             <Button
               text={'Send'}
-              handleButton={() => console.log('value')}
+              handleButton={handleButtonTransfer}
               isDisable={false}
             />
           </div>
         </div>
+
         {/*<div*/}
         {/*  className='p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400'*/}
         {/*  role='alert'*/}
