@@ -1,7 +1,7 @@
 enum CardExpiryDateEnum {
-	year_1 = '1',
-	year_2 = '2',
-	year_3 = '3'
+  ONE_YEAR = '1',
+  TWO_YEARS = '2',
+  THREE_YEARS = '3',
 }
 
 export default CardExpiryDateEnum;
