@@ -23,14 +23,35 @@ export const getCardsByUserId = (userid: number) => {
   };
 };
 
-export const updateUserCards = (userid: number, userCards: ICard[]) => {
+export const updateCards = (userCards: ICard[]) => {
   return (dispatch: Dispatch<CardsManagementActions>) => {
     try {
       dispatch({ type: CardsActionTypes.UPDATE_CARDS });
-      const response = cardsAPI.updateUserCards(userid, userCards);
+      const response = cardsAPI.updateCards(userCards);
       dispatch({
         type: CardsActionTypes.UPDATE_CARDS_SUCCESS,
-        payload: userCards,
+        payload: response,
+      });
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e.message);
+        dispatch({
+          type: CardsActionTypes.UPDATE_CARDS_ERROR,
+          payload: e.message,
+        });
+      }
+    }
+  };
+};
+
+export const addUserCard = (newCard: ICard) => {
+  return (dispatch: Dispatch<CardsManagementActions>) => {
+    try {
+      dispatch({ type: CardsActionTypes.UPDATE_CARDS });
+      const response = cardsAPI.addUserCard(newCard);
+      dispatch({
+        type: CardsActionTypes.UPDATE_CARDS_SUCCESS,
+        payload: response,
       });
     } catch (e: unknown) {
       if (e instanceof Error) {
