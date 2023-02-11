@@ -25,7 +25,7 @@ const routes = [
     element: (
       <div>
         <h1>Hello World</h1>
-        <Link to="about">About Us</Link>
+        <Link to='about'>About Us</Link>
       </div>
     ),
     name: 'Example',
@@ -51,15 +51,15 @@ const routes = [
     name: 'Registration',
   },
   {
-      path: '/transfers',
+    path: '/transfers',
     element: <TransfersPage />,
     name: 'Transfers',
-    },
-    {
-        path: '/new-card',
+  },
+  {
+    path: '/new-card',
     element: <NewCardPage />,
     name: 'NewCard',
-    }
+  },
 ];
 
 export default routes;

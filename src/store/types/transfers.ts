@@ -1,4 +1,5 @@
 import ICard from '../../types/interfaces/ICard';
+import { TransferStatus } from '../../types/enums/TransferStatus';
 
 export interface TransfersState {
   isLoadingCards: boolean;
@@ -7,7 +8,8 @@ export interface TransfersState {
   cardTo: ICard | null;
   loadingCardTo: boolean;
   cardToErrorLoading: string;
-  isTransactionInProcess: boolean;
+  transferStatus: TransferStatus;
+  errorTransfer: string;
 }
 
 export enum TransfersActionTypes {
@@ -19,9 +21,11 @@ export enum TransfersActionTypes {
   FETCH_CARD_SUCCESS = 'FETCH_CARD_SUCCESS',
   FETCH_CARD_ERROR = 'FETCH_CARD_ERROR',
 
-  TRANSACTION_START = 'TRANSACTION_START',
-  TRANSACTION_SUCCESS = 'TRANSACTION_SUCCESS',
-  TRANSACTION_ERROR = 'TRANSACTION_ERROR',
+  TRANSFER_START = 'TRANSFER_START',
+  TRANSFER_SUCCESS = 'TRANSFER_SUCCESS',
+  TRANSFER_ERROR = 'TRANSFER_ERROR',
+
+  CREATE_NEW_TRANSFER = 'CREATE_NEW_TRANSFER'
 }
 
 interface FetchCardsAction {
@@ -52,25 +56,30 @@ interface FetchCardInfoActionError {
   payload: string
 }
 
-interface TransactionStartAction {
-  type: TransfersActionTypes.TRANSACTION_START;
+interface TransferStartAction {
+  type: TransfersActionTypes.TRANSFER_START;
 }
 
-interface TransactionActionSuccess {
-  type: TransfersActionTypes.TRANSACTION_SUCCESS;
+interface TransferActionSuccess {
+  type: TransfersActionTypes.TRANSFER_SUCCESS;
 }
 
-interface TransactionActionError {
-  type: TransfersActionTypes.TRANSACTION_ERROR,
+interface TransferActionError {
+  type: TransfersActionTypes.TRANSFER_ERROR,
   payload: string
+}
+
+interface CreateNewTransferAction {
+  type: TransfersActionTypes.CREATE_NEW_TRANSFER,
 }
 
 export type TransfersActions = FetchCardInfoAction
   | FetchCardInfoActionSuccess
   | FetchCardInfoActionError
-  | TransactionStartAction
-  | TransactionActionSuccess
-  | TransactionActionError
+  | TransferStartAction
+  | TransferActionSuccess
+  | TransferActionError
   | FetchCardsAction
   | FetchCardsActionSuccess
   | FetchCardsActionError
+  | CreateNewTransferAction

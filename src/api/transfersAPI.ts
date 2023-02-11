@@ -1,12 +1,12 @@
 import ICard from '../types/interfaces/ICard';
-import { ITransactionData } from '../types/interfaces/ITransaction';
+import { ITransferData } from '../types/interfaces/ITransaction';
 
 class TransfersAPI {
 
   private findCardsByUserID(id: number): ICard[] | undefined {
     const data = localStorage.getItem('cards') ?? '[]';
     const existCards: ICard[] = JSON.parse(data);
-    return existCards.filter(el => el.id === id);
+    return existCards.filter(el => el.userid === id);
   }
 
   private findCardByNumber(number: number): ICard | undefined {
@@ -15,7 +15,7 @@ class TransfersAPI {
     return existCards.find((card) => card.number === number);
   }
 
-  private getCardsWithUpdatedBalance({ cardTo, cardFrom, amount }: ITransactionData) {
+  private getCardsWithUpdatedBalance({ cardTo, cardFrom, amount }: ITransferData) {
     const data = localStorage.getItem('cards') ?? '[]';
     const existCards: ICard[] = JSON.parse(data);
     const cardsUpdated = existCards.map((card) => {
@@ -38,12 +38,46 @@ class TransfersAPI {
     return card;
   };
 
-  makeATransactionByNumberCard = (transactionData: ITransactionData) => {
-    const cardToDB = this.findCardByNumber(transactionData.cardTo);
+  makeATransferByNumberCard = (transferData: ITransferData) => {
+    const cardFrom = this.findCardByNumber(transferData.cardFrom);
+    const cardToDB = this.findCardByNumber(transferData.cardTo);
+    if (cardFrom && cardFrom.balance < transferData.amount) {
+      throw new Error('Insufficient funds to transfer');
+    }
+
     if (cardToDB) {
-      let cards = this.getCardsWithUpdatedBalance(transactionData);
+      let cards = this.getCardsWithUpdatedBalance(transferData);
       localStorage.setItem('cards', JSON.stringify(cards));
     }
+
+    // if (cardFrom) {
+    //   return {
+    //     id: Date.now(),
+    //     userid: cardFrom.userid,
+    //     cardid: cardFrom.id,
+    //     timestamp: Date.now(),
+    //     value: transferData.amount,
+    //     entityid: 1,
+    //     entitytype: TransactionsTypesEnum.TRANSFER,
+    //     targetid: 1,
+    //     status: TransactionStatusEnum.SUCCESS,
+    //   };
+    // } else if (cardToDB) {
+    //   return {
+    //     id: Date.now(),
+    //     userid: cardToDB.userid,
+    //     cardid: cardToDB.id,
+    //     timestamp: Date.now(),
+    //     value: transferData.amount,
+    //     entityid: 1,
+    //     entitytype: TransactionsTypesEnum.TRANSFER,
+    //     targetid: 1,
+    //     status: TransactionStatusEnum.SUCCESS,
+    //   };
+    // } else {
+    //   return {} as ITransaction;
+    // }
+
   };
 
   fetchCardsByUserId(id: number): ICard[] {

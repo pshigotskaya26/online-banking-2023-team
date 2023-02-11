@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Button from '../button';
 import { getBackgroundImageByColor } from '../../utils/getBackgroundImageByColor';
 import { getStringCardNumber } from '../../utils/formateCardData';
@@ -8,13 +8,11 @@ import ICard from '../../types/interfaces/ICard';
 interface SelectCardProps {
   cards: ICard[];
   activeCardData: ICard;
-  setActiveCard: (card: ICard) => void
+  setActiveCard: (card: ICard) => void;
 }
 
-const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData , setActiveCard}) => {
-  // const [activeCard, setActiveCard] = useState<ICard>(activeCardData);
-  const imageBackground = getBackgroundImageByColor(activeCardData.background);
-
+const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData, setActiveCard }) => {
+  const imageBackground = getBackgroundImageByColor(activeCardData?.background || '');
 
   const handleActiveCard = (e: ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value;
@@ -26,7 +24,7 @@ const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData , setActi
 
   return (
     <div className='card-item bg-gray-100 relative shadow transition-transform transform hover:scale-105'
-         style={activeCardData.background ? { background: `url(${imageBackground})` } : {}}
+         style={activeCardData?.background ? { background: `url(${imageBackground})` } : {}}
     >
       <div className='w-full px-8 absolute top-8'>
         <div className='pt-1'>

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { TransfersActions, TransfersActionTypes } from '../types/transfers';
 import transfersAPI from '../../api/transfersAPI';
-import { ITransactionData } from '../../types/interfaces/ITransaction';
+import { ITransferData } from '../../types/interfaces/ITransaction';
 
 export const getCardInfo = (number: number) => {
   return (dispatch: Dispatch<TransfersActions>) => {
@@ -17,17 +17,15 @@ export const getCardInfo = (number: number) => {
   };
 };
 
-export const makeATransactionByNumberCard = (transaction: ITransactionData) => {
+export const makeATransferByNumberCard = (transaction: ITransferData) => {
   return (dispatch: Dispatch<TransfersActions>) => {
     try {
-      dispatch({ type: TransfersActionTypes.TRANSACTION_START });
-      const response = transfersAPI.makeATransactionByNumberCard(transaction);
-
-      // const response = transfersAPI.fetchCardInfo(number);
-      // dispatch({ type: TransfersActionTypes.FETCH_CARD_SUCCESS, payload: response });
+      dispatch({ type: TransfersActionTypes.TRANSFER_START });
+      transfersAPI.makeATransferByNumberCard(transaction);
+      dispatch({ type: TransfersActionTypes.TRANSFER_SUCCESS });
     } catch (e: unknown) {
       if (e instanceof Error) {
-        // dispatch({ type: TransfersActionTypes.FETCH_CARD_ERROR, payload: e.message });
+        dispatch({ type: TransfersActionTypes.TRANSFER_ERROR, payload: e.message });
       }
     }
   };
@@ -38,7 +36,6 @@ export const fetchCardsByUserId = (id: number) => {
     try {
       dispatch({ type: TransfersActionTypes.FETCH_CARDS });
       const response = transfersAPI.fetchCardsByUserId(id);
-      console.log(response)
       dispatch({ type: TransfersActionTypes.FETCH_CARDS_SUCCESS, payload: response });
 
     } catch (e: unknown) {
@@ -49,3 +46,8 @@ export const fetchCardsByUserId = (id: number) => {
   };
 };
 
+export const createNewTransfer = () => {
+  return (dispatch: Dispatch<TransfersActions>) => {
+    dispatch({ type: TransfersActionTypes.CREATE_NEW_TRANSFER });
+  };
+};

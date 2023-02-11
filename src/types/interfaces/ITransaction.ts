@@ -13,7 +13,7 @@ export interface ITransaction {
   status: TransactionStatusEnum;
 }
 
-export interface ITransactionData {
+export interface ITransferData {
   cardFrom: number,
   cardTo: number,
   amount: number
