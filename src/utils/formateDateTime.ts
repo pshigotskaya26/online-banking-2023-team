@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
 
 export const getStringDate = (time: number) => {
-	return dayjs(time).format('DD-MM-YYYY');
+  return dayjs(time).format('DD-MM-YYYY');
 };
 
 export const getStringTerm = (time: number) => {
-	return dayjs(time).format('MM/YY');
+  return dayjs.unix(time).format('MM/YY');
 };
 
 export const getStringTime = (time: number) => {
-	return dayjs(time).format('hh:mm:ss');
+  return dayjs(time).format('hh:mm:ss');
 };
