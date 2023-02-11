@@ -1,0 +1,29 @@
+.article-item {
+  @apply flex gap-x-5;
+}
+
+.article-item__image {
+  width: 200px;
+  height: 130px;
+}
+
+.article-image {
+  @apply flex gap-x-5 w-full h-full object-cover rounded;
+}
+
+.article-item__title {
+  color: #60a5fa;
+  @apply text-xl text-justify;
+}
+
+.article-item__description {
+  @apply text-justify text-slate-500;
+}
+
+.article-item__content {
+  @apply flex flex-col gap-y-1.5 w-full;
+}
+
+.article-link {
+  @apply font-bold text-slate-500 hover:text-blue-500;
+}
