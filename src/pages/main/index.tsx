@@ -4,9 +4,6 @@ import axios from 'axios';
 import PageTitle from '../../components/pageTitle';
 import News from '../../components/news';
 import { generateQueryString } from '../../utils/generateQueryString';
-import { getArticles } from '../../utils/getArticles';
-import { IArticle } from '../../types/interfaces/IArticle';
-import { IResponseDataNews } from '../../types/interfaces/IResponseDataNews';
 
 export const baseUrlServer = 'https://newsapi.org';
 
