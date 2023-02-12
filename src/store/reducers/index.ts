@@ -7,6 +7,6 @@ import { CardsReducer } from './cardsReducer';
 export const rootReducer = combineReducers({
   services: ServicesReducer,
   authuser: AuthReducer,
-  transfers: TransfersReducer
+  transfers: TransfersReducer,
   usercards: CardsReducer,
 });
