@@ -8,7 +8,7 @@ const ApplicationActions = {
   ...ServicesActionCreators,
   ...AuthActions,
   ...RegisterActions,
-  ...TransfersActions
+  ...TransfersActions,
   ...CardManagement,
 };
 

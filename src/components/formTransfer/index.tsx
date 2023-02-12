@@ -70,14 +70,13 @@ const FormTransfer: FC<FormTransferProps> = ({ cards, handleTransfer, idUser }) 
     activeCardFrom?.number?.toString().length === 16 &&
     cardTo?.number.toString().length === 16 &&
     amount !== 0 &&
-    (cardTo?.number !== activeCardFrom.number && cardTo);
-
+    !isSimilarCards
 
   const handleButtonTransfer = () => {
     const transferData: ITransferData = {
       cardFrom: activeCardFrom.number,
       cardTo: numberCardTo,
-      amount: amount,
+      amountFrom: amount,
     };
     handleTransfer(transferData);
   };
@@ -133,7 +132,7 @@ const FormTransfer: FC<FormTransferProps> = ({ cards, handleTransfer, idUser }) 
         />
       </div>
     </div>
-  </>
+  </>;
 };
 
 export default FormTransfer;
