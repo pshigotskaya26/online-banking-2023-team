@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PageTitle from '../../components/pageTitle';
 import News from '../../components/news';
+import CurrencyRates from '../../components/currencyRates';
 import { generateQueryString } from '../../utils/generateQueryString';
 
 export const baseUrlServer = 'https://newsapi.org';
@@ -38,6 +39,7 @@ const MainPage = () => {
   return (
     <ClientLayout>
       <PageTitle title={'Main Page'} />
+      <CurrencyRates />
       <News articles={responseObject} />
     </ClientLayout>
   );
