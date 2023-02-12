@@ -14,7 +14,6 @@ export const createUserInfo = (userInfo: IAdminUser | IClientUser) => {
       });
     } catch (e: unknown) {
       if (e instanceof Error) {
-        console.log(e.message);
         dispatch({
           type: RegisterActionTypes.CREATE_USERINFO_ERROR,
           payload: e.message,

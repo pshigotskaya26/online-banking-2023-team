@@ -1,6 +1,6 @@
 import React from "react";
 import './index.css';
-import ITransaction from "../../types/interfaces/ITransaction";
+import { ITransaction } from "../../types/interfaces/ITransaction";
 import TransactionItem from "../transactionItem";
 
 interface TransitionListProps {

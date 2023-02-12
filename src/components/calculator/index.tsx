@@ -133,7 +133,7 @@ const Calculator: FC<CalculatorProps> = ({ value = 0, setValue }) => {
 
 
   return <div
-    className='w-full mx-auto rounded-xl bg-gray-100 shadow-xl text-gray-800 relative overflow-hidden max-w-[300px]'>
+    className='w-full mx-auto rounded-xl bg-gray-100 shadow-xl text-gray-800 relative overflow-hidden'>
     <CalculatorDisplay value={display} hasMemory={memory !== 0}
                        expression={typeof pendingOperator !== 'undefined'
                          ? `${result}${pendingOperator}${waitingForOperand ? '' : display}` : ''} />

@@ -1,47 +1,36 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Button from '../button';
+import { getBackgroundImageByColor } from '../../utils/getBackgroundImageByColor';
+import { getStringCardNumber } from '../../utils/formateCardData';
+import ICard from '../../types/interfaces/ICard';
 
-interface ICard {
-  id: number; // internal
-  number: number; // 5454 1234 1234 1234
-  expired: number; // Date.now() 08/25
-  currency: string; // BYN/RUB/USD
-  account: string; // IBAN BY134678484000000154501
-  userid: number;
-  balance: number;
-  background: string;
-  isShown: boolean;
-}
-
-enum CardBackgroundEnum {
-  blue = 'blue',
-  green = 'green',
-  orange = 'orange',
-  violett = 'violett',
-  red = 'red',
-}
 
 interface SelectCardProps {
   cards: ICard[];
+  activeCardData: ICard;
+  setActiveCard: (card: ICard) => void;
 }
 
-const SelectCard: React.FC<SelectCardProps> = ({ cards }) => {
-  const [activeCard, setActiveCard] = useState<ICard | null>(null);
-  const [background, setBackground] = useState<string>(CardBackgroundEnum.blue);
+const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData, setActiveCard }) => {
+  const imageBackground = getBackgroundImageByColor(activeCardData?.background || '');
 
   const handleActiveCard = (e: ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value;
     const selectedCard = cards.find((el) => el.id === Number(id));
-    setActiveCard(selectedCard ? selectedCard : null);
+    if (selectedCard) {
+      setActiveCard(selectedCard);
+    }
   };
 
   return (
-    <div className="w-96 h-56 bg-gray-100 rounded-xl relative shadow transition-transform transform hover:scale-105">
-      <div className="w-full px-8 absolute top-8">
-        <div className="pt-1">
+    <div className='card-item bg-gray-100 relative shadow transition-transform transform hover:scale-105'
+         style={activeCardData?.background ? { background: `url(${imageBackground})` } : {}}
+    >
+      <div className='w-full px-8 absolute top-8'>
+        <div className='pt-1'>
           {!cards.length ? (
             <div>
-              <div>Карт нет</div>
+              <div className={'text-black'}>Карт нет</div>
               <Button
                 text={'Create'}
                 handleButton={() => console.log('создать карту')}
@@ -50,27 +39,25 @@ const SelectCard: React.FC<SelectCardProps> = ({ cards }) => {
             </div>
           ) : (
             <>
-              <h2 className="font-light mb-2 font-bold ">
-                Выбрать карту отправителя
-              </h2>
-              <div className="flex justify-center">
+
+              <div className='flex justify-center mt-20'>
                 <select
-                  id="countries"
+                  id='countries'
                   onChange={handleActiveCard}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className='bg-gray-50 border bg-opacity-60 text-lg border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                  focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
+                  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                 >
                   {cards.map((card) => {
                     return (
-                      <option value={card.id}>
-                        <div className={'w-24 h-24 bg-blue-600'}></div>
-                        {card.number}
+                      <option value={card.id} key={card.id}>
+                        {getStringCardNumber(card.number)} [{card.currency}]
                       </option>
                     );
                   })}
                 </select>
               </div>
-              <div>Currency: {activeCard?.currency}</div>
-              <div>Balance: {activeCard?.balance}</div>
+              <div className={'mt-2'}>Balance:<span className={'font-medium'}> {activeCardData.balance}</span></div>
             </>
           )}
         </div>
