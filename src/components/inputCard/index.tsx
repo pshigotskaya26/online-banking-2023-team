@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 interface InputCardProps {
   value: number,
   handleInputValue: (n: number) => void,
-  canTransfer?: boolean
+  canTransfer?: boolean,
 }
 
 const InputCard: FC<InputCardProps> = ({ value, handleInputValue, canTransfer = false }) => {
@@ -12,6 +12,11 @@ const InputCard: FC<InputCardProps> = ({ value, handleInputValue, canTransfer = 
     if (value === 0) return 'input-default';
     if (value.toString().length === 16) return 'input-valid';
     return 'input-invalid';
+  };
+  const handlePastValue = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const newValue = e.clipboardData.getData('Text').replace(/\D+/g,"")
+    handleInputValue(+newValue)
   };
 
 
@@ -28,6 +33,7 @@ const InputCard: FC<InputCardProps> = ({ value, handleInputValue, canTransfer = 
                 type='text'
                 className={`${nameInputClass()} text-xl`}
                 value={value === 0 ? '' : value}
+                onPaste={handlePastValue}
                 onChange={(e) => handleInputValue(+e.target.value)}
                 placeholder={'XXXX XXXX XXXX XXXX'}
               />

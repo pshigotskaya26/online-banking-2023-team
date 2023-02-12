@@ -44,11 +44,11 @@ const TransfersPage = () => {
         }
         {
           transferStatus === TransferStatus.RESULT_SUCCESS &&
-          <FormTransferResult icon={faCheck} text={'Перевод выполнен успешно'} handlerResult={createNewTransfer} />
+          <FormTransferResult icon={faCheck} text={'Translation completed successfully'} handlerResult={createNewTransfer} />
         }
         {
           transferStatus === TransferStatus.RESULT_ERROR &&
-          <FormTransferResult icon={faXmark} text={'Перевод не выполнен'} handlerResult={createNewTransfer}
+          <FormTransferResult icon={faXmark} text={'Translation failed'} handlerResult={createNewTransfer}
                               description={errorTransfer} />
         }
       </div>
