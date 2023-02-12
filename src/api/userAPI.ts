@@ -20,6 +20,9 @@ class UserAPI {
     if (user.password !== credentials.password) {
       throw new Error('Incorrect email or password');
     }
+
+    localStorage.setItem('activeUserID', JSON.stringify(user.id));
+
     return user;
   }
 
@@ -37,8 +40,14 @@ class UserAPI {
   }
 
   logoutSystem(): null {
+    localStorage.removeItem('activeUserID');
     return null;
   }
+
+  checkAuth() {
+
+  }
+
 }
 
 const authUserAPI = new UserAPI();

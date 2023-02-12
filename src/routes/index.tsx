@@ -8,6 +8,8 @@ import MainPage from '../pages/main';
 
 import TransfersPage from '../pages/transfers';
 import NewCardPage from '../pages/newcard';
+import ProtectedRoute from './protected-route';
+import UserRolesEnum from '../types/enums/UserRolesEnum';
 
 const routes: RouteObject[] = [
   {
@@ -17,22 +19,16 @@ const routes: RouteObject[] = [
   },
   {
     path: '/services',
-    element: <ServicesPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+      <ServicesPage />
+    </ProtectedRoute>,
     id: 'Services',
   },
   {
-    path: '/example',
-    element: (
-      <div>
-        <h1>Hello World</h1>
-        <Link to="about">About Us</Link>
-      </div>
-    ),
-    id: 'Example',
-  },
-  {
     path: '/dashboard',
-    element: <DashboardPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+      <DashboardPage />
+    </ProtectedRoute>,
     id: 'Dashboard',
   },
   {
@@ -52,12 +48,16 @@ const routes: RouteObject[] = [
   },
   {
     path: '/transfers',
-    element: <TransfersPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+      <TransfersPage />
+    </ProtectedRoute>,
     id: 'Transfers',
   },
   {
     path: '/new-card',
-    element: <NewCardPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+      <NewCardPage />
+    </ProtectedRoute>,
     id: 'NewCard',
   },
 ];
