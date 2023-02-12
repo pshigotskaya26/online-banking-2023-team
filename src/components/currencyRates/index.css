@@ -1,0 +1,7 @@
+.currency-rates__wrapper {
+  @apply pb-6;
+}
+
+.currency-rates__title {
+  @apply pb-6 text-xl text-blue-800;
+}

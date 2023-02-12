@@ -3,9 +3,9 @@ import './style.css';
 import { useActions } from '../../hooks/useActions';
 import { useNavigate } from 'react-router-dom';
 import UserRolesEnum from '../../types/enums/UserRolesEnum';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faImagePortrait} from "@fortawesome/free-solid-svg-icons";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImagePortrait } from '@fortawesome/free-solid-svg-icons';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 const MAX_FILE_SIZE = 204800;
 const MIN_PASS_LENGTH = 6;
@@ -94,7 +94,11 @@ const RegistrationForm: React.FC = () => {
     return 'input-invalid';
   };
 
-  const formSubmit = (e: React.MouseEvent) => {
+  const { user, errorLoadingUser } = useAppSelector(
+    (state) => state.registeredUser,
+  );
+
+  const formSubmit = (role: UserRolesEnum) => {
     const userInfo = {
       id: 0,
       name,
@@ -102,12 +106,17 @@ const RegistrationForm: React.FC = () => {
       password,
       phone: '' + phone,
       photo,
-      role: UserRolesEnum.CLIENT,
+      role,
       cards: [],
     };
     createUserInfo(userInfo);
-    navigate('/');
   };
+
+  useEffect(() => {
+    if (user !== null) {
+      navigate('/');
+    }
+  }, [user]);
 
   return (
     <div className="relative flex flex-col justify-center min-h-max overflow-hidden p-3">
@@ -115,7 +124,7 @@ const RegistrationForm: React.FC = () => {
         <h1 className="text-3xl font-semibold text-center text-purple-700 uppercase">
           Create account
         </h1>
-        <form className="mt-6">
+        <div className="mt-6">
           <div className="mb-2">
             <label
               htmlFor="email"
@@ -217,7 +226,16 @@ const RegistrationForm: React.FC = () => {
                 aria-describedby="user_avatar_help"
                 onClick={showDialog}
               >
-                {photo.length === 0 && <div><FontAwesomeIcon icon={faImagePortrait} title={"Add photo"} size={"6x"} /><p>Add photo</p></div>}
+                {photo.length === 0 && (
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faImagePortrait}
+                      title={'Add photo'}
+                      size={'6x'}
+                    />
+                    <p>Add photo</p>
+                  </div>
+                )}
                 {photo.length > 0 && (
                   <img src={photo} className="w-full h-full rounded" />
                 )}
@@ -238,13 +256,28 @@ const RegistrationForm: React.FC = () => {
             <button
               type="button"
               className={isFormValid ? 'submit-active' : 'submit-inactive'}
-              onClick={formSubmit}
+              onClick={() => formSubmit(UserRolesEnum.CLIENT)}
               disabled={!isFormValid}
             >
-              Create account
+              Create client account
             </button>
           </div>
-        </form>
+          <div className="mt-6">
+            <button
+              type="button"
+              className={isFormValid ? 'submit-active' : 'submit-inactive'}
+              onClick={() => formSubmit(UserRolesEnum.ADMIN)}
+              disabled={!isFormValid}
+            >
+              Create admin account
+            </button>
+          </div>
+        </div>
+        {errorLoadingUser && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-3 rounded">
+            Registration error: {errorLoadingUser}
+          </div>
+        )}
       </div>
     </div>
   );

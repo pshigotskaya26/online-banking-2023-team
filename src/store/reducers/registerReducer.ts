@@ -10,7 +10,7 @@ const initialState: RegisterState = {
   loadingUserInfo: false,
 };
 
-export const AuthReducer = (
+export const RegisterReducer = (
   state = initialState,
   action: RegisterUserActions,
 ): RegisterState => {

@@ -3,6 +3,7 @@ import './style.css';
 import { useActions } from '../../hooks/useActions';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import UserRolesEnum from '../../types/enums/UserRolesEnum';
 
 const LoginForm: React.FC = () => {
   const { user, errorLoadingUser } = useAppSelector((state) => state.authuser);
@@ -22,7 +23,12 @@ const LoginForm: React.FC = () => {
   };
 
   useEffect(() => {
-    if (user !== null) navigate('/dashboard');
+    if (user !== null && user.role === UserRolesEnum.ADMIN) {
+      navigate('/services');
+    }
+    if (user !== null && user.role === UserRolesEnum.CLIENT) {
+      navigate('/dashboard');
+    }
   }, [user]);
 
   return (
@@ -31,7 +37,7 @@ const LoginForm: React.FC = () => {
         <h1 className="text-3xl font-semibold text-center text-purple-700 uppercase">
           Sign in
         </h1>
-        <form className="mt-6">
+        <div className="mt-6">
           <div className="mb-2">
             <label
               htmlFor="email"
@@ -73,8 +79,12 @@ const LoginForm: React.FC = () => {
               Login
             </button>
           </div>
-        </form>
-        {errorLoadingUser && <div>Login error: {errorLoadingUser}</div>}
+        </div>
+        {errorLoadingUser && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-3 rounded">
+            Login error: {errorLoadingUser}
+          </div>
+        )}
 
         <div className="relative flex items-center justify-center w-full mt-6 border border-t">
           <div className="absolute px-5 bg-white">Or</div>
