@@ -15,7 +15,7 @@ const DashboardPage = () => {
   const { user } = useAppSelector((state) => state.authuser);
   const { cards: userCards } = useAppSelector((state) => state.usercards);
 
- const [cards, setCards] = useState<ICard[]>(cardsData);
+  const [cards, setCards] = useState<ICard[]>(cardsData);
   const [transactions, setTransactions] =
     useState<ITransaction[]>(transactionsData);
 
