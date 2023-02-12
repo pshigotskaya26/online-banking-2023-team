@@ -94,7 +94,11 @@ const CalculatorPad: FC<CalculatorPadProps> = ({
       </div>
       <div className='w-1/4 border-r border-b border-indigo-400'>
         <CalculatorButton children={<FontAwesomeIcon icon={faCheck} />}
-                          handlerButton={onSaveValue}></CalculatorButton>
+                          handlerButton={() => {
+                            onEqualButtonClick();
+                            onSaveValue();
+                          }
+                          }></CalculatorButton>
       </div>
     </div>
 

@@ -70,14 +70,13 @@ const FormTransfer: FC<FormTransferProps> = ({ cards, handleTransfer, idUser }) 
     activeCardFrom?.number?.toString().length === 16 &&
     cardTo?.number.toString().length === 16 &&
     amount !== 0 &&
-    (cardTo?.number !== activeCardFrom.number && cardTo);
-
+    !isSimilarCards;
 
   const handleButtonTransfer = () => {
     const transferData: ITransferData = {
       cardFrom: activeCardFrom.number,
       cardTo: numberCardTo,
-      amount: amount,
+      amountFrom: amount,
     };
     handleTransfer(transferData);
   };
@@ -86,25 +85,25 @@ const FormTransfer: FC<FormTransferProps> = ({ cards, handleTransfer, idUser }) 
     <div className={'flex justify-evenly mb-12'}>
       <div>
         <h2 className='font-light mb-2 font-bold '>
-          Выбрать карту отправителя
+          Select sender's card
         </h2>
         <SelectCard cards={cards} activeCardData={activeCardFrom} setActiveCard={setActiveCardFrom} />
       </div>
       <div>
         <h2 className='font-light mb-2 font-bold '>
-          Введите карту получателя
+          Enter recipient's card
         </h2>
         <InputCard value={numberCardTo} handleInputValue={handleNumberCardTo} canTransfer={!!(cardTo?.number)} />
       </div>
     </div>
 
-    {isSimilarCards && <Message type={TypeMessage.WARNING} text={'Одинаковые карты'} />}
+    {isSimilarCards && <Message type={TypeMessage.WARNING} text={'Identical cards'} />}
 
     {(cardTo?.currency !== activeCardFrom?.currency && cardTo) &&
-      <Message type={TypeMessage.WARNING} text={'Перевод будет выполнен по курсу банка'} />
+      <Message type={TypeMessage.WARNING} text={'The transfer will be made at the rate of the bank'} />
     }
     <div className='flex justify-center align-middle items-center mb-4'>
-      <h3 className={'font-bold mr-2'}>Сумма перевода</h3>
+      <h3 className={'font-bold mr-2'}>Amount</h3>
       <div className='relative justify-center content-center items-center'>
         <input
           className='border bg-gray-50 max-w-[100px] border-gray-300 text-gray-900 focus:border-blue-500
@@ -119,7 +118,10 @@ const FormTransfer: FC<FormTransferProps> = ({ cards, handleTransfer, idUser }) 
         </button>
         {isVisibleCalculator && (
           <div className={'border bg-gray-100 p-2 absolute min-w-[250px]'}>
-            <Calculator value={amount} setValue={handleValueCalculator} />
+            <Calculator value={amount}
+                        setValue={handleValueCalculator}
+                        closeCalculator={() => setIsVisibleCalculator(false)}
+            />
           </div>
         )}
       </div>
@@ -129,11 +131,10 @@ const FormTransfer: FC<FormTransferProps> = ({ cards, handleTransfer, idUser }) 
           text={'Send'}
           handleButton={handleButtonTransfer}
           isDisable={!isDisableButton}
-          // isLoading={isTransactionInProcess}
         />
       </div>
     </div>
-  </>
+  </>;
 };
 
 export default FormTransfer;

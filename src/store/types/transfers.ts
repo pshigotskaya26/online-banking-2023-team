@@ -2,9 +2,6 @@ import ICard from '../../types/interfaces/ICard';
 import { TransferStatus } from '../../types/enums/TransferStatus';
 
 export interface TransfersState {
-  isLoadingCards: boolean;
-  cards: ICard[];
-  isLoadingCardsError: string;
   cardTo: ICard | null;
   loadingCardTo: boolean;
   cardToErrorLoading: string;

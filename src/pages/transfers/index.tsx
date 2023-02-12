@@ -13,13 +13,14 @@ import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { TransferStatus } from '../../types/enums/TransferStatus';
 
 const TransfersPage = () => {
-  const { cards, transferStatus, errorTransfer } = useAppSelector(state => state.transfers);
+  const { transferStatus, errorTransfer } = useAppSelector(state => state.transfers);
+  const { cards } = useAppSelector(state => state.usercards);
   const { user } = useAppSelector(state => state.authuser);
   const { makeATransferByNumberCard, createNewTransfer } = useActions();
 
   useEffect(() => {
-    createNewTransfer()
-  }, [])
+    createNewTransfer();
+  }, []);
 
   const handleTransfer = (transferData: ITransferData) => {
     makeATransferByNumberCard(transferData);
@@ -44,11 +45,12 @@ const TransfersPage = () => {
         }
         {
           transferStatus === TransferStatus.RESULT_SUCCESS &&
-          <FormTransferResult icon={faCheck} text={'Перевод выполнен успешно'} handlerResult={createNewTransfer} />
+          <FormTransferResult icon={faCheck} text={'Translation completed successfully'}
+                              handlerResult={createNewTransfer} />
         }
         {
           transferStatus === TransferStatus.RESULT_ERROR &&
-          <FormTransferResult icon={faXmark} text={'Перевод не выполнен'} handlerResult={createNewTransfer}
+          <FormTransferResult icon={faXmark} text={'Translation failed'} handlerResult={createNewTransfer}
                               description={errorTransfer} />
         }
       </div>

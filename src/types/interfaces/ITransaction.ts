@@ -16,5 +16,6 @@ export interface ITransaction {
 export interface ITransferData {
   cardFrom: number,
   cardTo: number,
-  amount: number
+  amountFrom: number,
+  amountTo?: number
 }

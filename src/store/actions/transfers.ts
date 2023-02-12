@@ -18,10 +18,10 @@ export const getCardInfo = (number: number) => {
 };
 
 export const makeATransferByNumberCard = (transaction: ITransferData) => {
-  return (dispatch: Dispatch<TransfersActions>) => {
+  return async (dispatch: Dispatch<TransfersActions>) => {
     try {
       dispatch({ type: TransfersActionTypes.TRANSFER_START });
-      transfersAPI.makeATransferByNumberCard(transaction);
+      await transfersAPI.makeATransferByNumberCard(transaction);
       dispatch({ type: TransfersActionTypes.TRANSFER_SUCCESS });
     } catch (e: unknown) {
       if (e instanceof Error) {
