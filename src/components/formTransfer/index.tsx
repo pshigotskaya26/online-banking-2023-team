@@ -70,7 +70,7 @@ const FormTransfer: FC<FormTransferProps> = ({ cards, handleTransfer, idUser }) 
     activeCardFrom?.number?.toString().length === 16 &&
     cardTo?.number.toString().length === 16 &&
     amount !== 0 &&
-    !isSimilarCards
+    !isSimilarCards;
 
   const handleButtonTransfer = () => {
     const transferData: ITransferData = {
@@ -118,7 +118,10 @@ const FormTransfer: FC<FormTransferProps> = ({ cards, handleTransfer, idUser }) 
         </button>
         {isVisibleCalculator && (
           <div className={'border bg-gray-100 p-2 absolute min-w-[250px]'}>
-            <Calculator value={amount} setValue={handleValueCalculator} />
+            <Calculator value={amount}
+                        setValue={handleValueCalculator}
+                        closeCalculator={() => setIsVisibleCalculator(false)}
+            />
           </div>
         )}
       </div>
