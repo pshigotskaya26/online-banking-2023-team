@@ -3,10 +3,12 @@ import { ServicesReducer } from './servicesReducer';
 import { AuthReducer } from './authReducer';
 import { TransfersReducer } from './transfersReducer';
 import { CardsReducer } from './cardsReducer';
+import { RegisterReducer } from './registerReducer';
 
 export const rootReducer = combineReducers({
   services: ServicesReducer,
   authuser: AuthReducer,
-  transfers: TransfersReducer
+  registeredUser: RegisterReducer,
+  transfers: TransfersReducer,
   usercards: CardsReducer,
 });

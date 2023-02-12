@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, RouteObject } from 'react-router-dom';
 import DashboardPage from '../pages/dashboard';
 import { ServicesPage } from '../pages/services';
 import AuthorizationPage from '../pages/authorization';
@@ -9,56 +9,56 @@ import MainPage from '../pages/main';
 import TransfersPage from '../pages/transfers';
 import NewCardPage from '../pages/newcard';
 
-const routes = [
+const routes: RouteObject[] = [
   {
     path: '/',
     element: <MainPage />,
-    name: 'Home',
+    id: 'Home',
   },
   {
     path: '/services',
     element: <ServicesPage />,
-    name: 'Services',
+    id: 'Services',
   },
   {
     path: '/example',
     element: (
       <div>
         <h1>Hello World</h1>
-        <Link to='about'>About Us</Link>
+        <Link to="about">About Us</Link>
       </div>
     ),
-    name: 'Example',
+    id: 'Example',
   },
   {
     path: '/dashboard',
     element: <DashboardPage />,
-    name: 'Dashboard',
+    id: 'Dashboard',
   },
   {
     path: '/login',
     element: <AuthorizationPage isLogin={true} />,
-    name: 'Login',
+    id: 'Login',
   },
   {
     path: '/logout',
     element: <AuthorizationPage isLogin={false} />,
-    name: 'Login',
+    id: 'Loguot',
   },
   {
     path: '/registration',
     element: <RegistrationPage />,
-    name: 'Registration',
+    id: 'Registration',
   },
   {
     path: '/transfers',
     element: <TransfersPage />,
-    name: 'Transfers',
+    id: 'Transfers',
   },
   {
     path: '/new-card',
     element: <NewCardPage />,
-    name: 'NewCard',
+    id: 'NewCard',
   },
 ];
 

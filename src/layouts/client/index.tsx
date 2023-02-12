@@ -1,7 +1,7 @@
 import './index.css';
+import React from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-import React from 'react';
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -16,7 +16,6 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
           {children}
         </div>
       </main>
-
       <Footer />
     </>
   );
