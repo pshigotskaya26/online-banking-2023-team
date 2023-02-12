@@ -29,6 +29,8 @@ export const CardsReducer = (
         loadingCardsInfo: false,
         errorLoadingCards: action.payload,
       };
+
+
     default:
       return state;
   }

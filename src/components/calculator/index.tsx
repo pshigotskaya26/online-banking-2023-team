@@ -1,16 +1,19 @@
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
 import CalculatorDisplay from '../calculatorDisplay';
 import CalculatorPad from '../calculatorPad';
 
 interface CalculatorProps {
   value: number,
-  setValue: (n: number) => void
+  setValue: (n: number) => void,
+  closeCalculator: () => void
 }
 
 export type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 export type Operator = '+' | '-' | '×' | '÷'
 
-const Calculator: FC<CalculatorProps> = ({ value = 0, setValue }) => {
+const Calculator: FC<CalculatorProps> = ({ value = 0, setValue, closeCalculator }) => {
+  const ref = useRef(null)
   const [memory] = useState<number>(0);
   const [result, setResult] = useState<number>(value);
   const [waitingForOperand, setWaitingForOperand] = useState<boolean>(true);
@@ -131,9 +134,10 @@ const Calculator: FC<CalculatorProps> = ({ value = 0, setValue }) => {
     setValue(Number(display));
   };
 
+  useOnClickOutside(ref, closeCalculator)
 
   return <div
-    className='w-full mx-auto rounded-xl bg-gray-100 shadow-xl text-gray-800 relative overflow-hidden'>
+    className='w-full mx-auto rounded-xl bg-gray-100 shadow-xl text-gray-800 relative overflow-hidden' ref={ref}>
     <CalculatorDisplay value={display} hasMemory={memory !== 0}
                        expression={typeof pendingOperator !== 'undefined'
                          ? `${result}${pendingOperator}${waitingForOperand ? '' : display}` : ''} />

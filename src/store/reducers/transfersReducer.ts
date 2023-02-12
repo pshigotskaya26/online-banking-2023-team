@@ -2,10 +2,6 @@ import { TransfersActions, TransfersActionTypes, TransfersState } from '../types
 import { TransferStatus } from '../../types/enums/TransferStatus';
 
 const initialState: TransfersState = {
-  isLoadingCards: false,
-  cards: [],
-  isLoadingCardsError: '',
-
   cardTo: null,
   loadingCardTo: false,
   cardToErrorLoading: '',
@@ -16,12 +12,6 @@ const initialState: TransfersState = {
 
 export const TransfersReducer = (state = initialState, action: TransfersActions): TransfersState => {
   switch (action.type) {
-    case TransfersActionTypes.FETCH_CARDS:
-      return { ...state, isLoadingCards: true, isLoadingCardsError: '' };
-    case TransfersActionTypes.FETCH_CARDS_SUCCESS:
-      return { ...state, cards: action.payload, isLoadingCards: false };
-    case TransfersActionTypes.FETCH_CARDS_ERROR:
-      return { ...state, cards: [], isLoadingCards: false, isLoadingCardsError: action.payload };
     case TransfersActionTypes.FETCH_CARD_INFO:
       return { ...state, loadingCardTo: true, cardToErrorLoading: '' };
     case TransfersActionTypes.FETCH_CARD_SUCCESS:
@@ -38,8 +28,6 @@ export const TransfersReducer = (state = initialState, action: TransfersActions)
       return { ...state, transferStatus: TransferStatus.RESULT_SUCCESS };
     case TransfersActionTypes.TRANSFER_ERROR:
       return { ...state, transferStatus: TransferStatus.RESULT_ERROR, errorTransfer: action.payload };
-
-
     default:
       return state;
   }

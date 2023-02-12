@@ -1,8 +1,9 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import Button from '../button';
 import { getBackgroundImageByColor } from '../../utils/getBackgroundImageByColor';
 import { getStringCardNumber } from '../../utils/formateCardData';
 import ICard from '../../types/interfaces/ICard';
+import { useNavigate } from 'react-router-dom';
 
 
 interface SelectCardProps {
@@ -13,7 +14,7 @@ interface SelectCardProps {
 
 const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData, setActiveCard }) => {
   const imageBackground = getBackgroundImageByColor(activeCardData?.background || '');
-
+  const navigate = useNavigate()
   const handleActiveCard = (e: ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value;
     const selectedCard = cards.find((el) => el.id === Number(id));
@@ -33,7 +34,7 @@ const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData, setActiv
               <div className={'text-black'}>Карт нет</div>
               <Button
                 text={'Create'}
-                handleButton={() => console.log('создать карту')}
+                handleButton={() => navigate("/new-card")}
                 isDisable={false}
               />
             </div>
