@@ -3,6 +3,7 @@ import './style.css';
 import { useActions } from '../../hooks/useActions';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import UserRolesEnum from '../../types/enums/UserRolesEnum';
 
 const LoginForm: React.FC = () => {
   const { user, errorLoadingUser } = useAppSelector((state) => state.authuser);
@@ -22,7 +23,12 @@ const LoginForm: React.FC = () => {
   };
 
   useEffect(() => {
-    if (user !== null) navigate('/dashboard');
+    if (user !== null && user.role === UserRolesEnum.ADMIN) {
+      navigate('/services');
+    }
+    if (user !== null && user.role === UserRolesEnum.CLIENT) {
+      navigate('/dashboard');
+    }
   }, [user]);
 
   return (
