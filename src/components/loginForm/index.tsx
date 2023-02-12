@@ -31,7 +31,7 @@ const LoginForm: React.FC = () => {
         <h1 className="text-3xl font-semibold text-center text-purple-700 uppercase">
           Sign in
         </h1>
-        <form className="mt-6">
+        <div className="mt-6">
           <div className="mb-2">
             <label
               htmlFor="email"
@@ -73,8 +73,12 @@ const LoginForm: React.FC = () => {
               Login
             </button>
           </div>
-        </form>
-        {errorLoadingUser && <div>Login error: {errorLoadingUser}</div>}
+        </div>
+        {errorLoadingUser && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-3 rounded">
+            Login error: {errorLoadingUser}
+          </div>
+        )}
 
         <div className="relative flex items-center justify-center w-full mt-6 border border-t">
           <div className="absolute px-5 bg-white">Or</div>
