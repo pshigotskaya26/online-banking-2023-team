@@ -34,6 +34,11 @@ const clientRoutes = [
     isAuth: false,
   },
   {
+    path: '/payments',
+    title: 'Payments',
+    isAuth: false,
+  },
+  {
     path: '/logout',
     title: 'Logout',
     isAuth: true,
