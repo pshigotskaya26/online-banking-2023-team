@@ -10,6 +10,7 @@ import TransfersPage from '../pages/transfers';
 import NewCardPage from '../pages/newcard';
 import ProtectedRoute from './protected-route';
 import UserRolesEnum from '../types/enums/UserRolesEnum';
+import ErrorPage from '../pages/error';
 
 const routes: RouteObject[] = [
   {
@@ -39,7 +40,7 @@ const routes: RouteObject[] = [
   {
     path: '/logout',
     element: <AuthorizationPage isLogin={false} />,
-    id: 'Loguot',
+    id: 'Logout',
   },
   {
     path: '/registration',
@@ -62,7 +63,7 @@ const routes: RouteObject[] = [
   },
   {
     path: '*',
-    element: <div> 404 </div>,
+    element: <ErrorPage />,
     id: '404',
   },
 ];
