@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import DashboardPage from '../pages/dashboard';
 import { ServicesPage } from '../pages/services';
 import AuthorizationPage from '../pages/authorization';
@@ -26,7 +26,7 @@ const routes: RouteObject[] = [
   },
   {
     path: '/dashboard',
-    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
       <DashboardPage />
     </ProtectedRoute>,
     id: 'Dashboard',
@@ -48,17 +48,22 @@ const routes: RouteObject[] = [
   },
   {
     path: '/transfers',
-    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
       <TransfersPage />
     </ProtectedRoute>,
     id: 'Transfers',
   },
   {
     path: '/new-card',
-    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
       <NewCardPage />
     </ProtectedRoute>,
     id: 'NewCard',
+  },
+  {
+    path: '*',
+    element: <div> 404 </div>,
+    id: '404',
   },
 ];
 
