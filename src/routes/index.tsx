@@ -11,6 +11,7 @@ import NewCardPage from '../pages/newcard';
 import ProtectedRoute from './protected-route';
 import UserRolesEnum from '../types/enums/UserRolesEnum';
 import ErrorPage from '../pages/error';
+import UsersPage from '../pages/users';
 
 const routes: RouteObject[] = [
   {
@@ -24,6 +25,13 @@ const routes: RouteObject[] = [
       <ServicesPage />
     </ProtectedRoute>,
     id: 'Services',
+  },
+  {
+    path: '/users',
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+      <UsersPage />
+    </ProtectedRoute>,
+    id: 'Users',
   },
   {
     path: '/dashboard',
