@@ -1,6 +1,7 @@
 import UserRolesEnum from '../../types/enums/UserRolesEnum';
 import React, { FC } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 interface ProtectedRouteProps {
   expectedRoles: UserRolesEnum[],
@@ -8,16 +9,19 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ expectedRoles, children }) => {
-  const isAuth = true;
+
+  const { user } = useAppSelector(state => state.authuser);
+
+  const isAuth = !!user;
   const arrRolesRequired = !!expectedRoles?.length;
-  const roles = [UserRolesEnum.ADMIN];
+  const roles = [user?.role];
 
   const rolesMatch = arrRolesRequired
     ? expectedRoles.some(r => roles.indexOf(r) >= 0)
     : 0;
 
   if (!isAuth || !rolesMatch) {
-    return <Navigate to={'/'} replace />;
+    return <Navigate to={'/'} />;
   }
 
   return <>
