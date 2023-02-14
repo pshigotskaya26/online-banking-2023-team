@@ -27,16 +27,17 @@ const CardList: React.FC<CardListProps> = (props) => {
 
   return (
     <div className="cardList-container">
-      <h2 className="cardList__title">Card list:</h2>
+      <div className="cardList__head">
+        <h2 className="cardList__title">Card list:</h2>
+        <button className="button button-add">
+          <Link to={'/new-card'}>Add card</Link>
+        </button>
+      </div>
+
       <div className="cardList__content">
         {cards.map((cardItem: ICard) => (
           <CardItem key={cardItem.id} card={cardItem} />
         ))}
-      </div>
-      <div className="cardList__button">
-        <button className="button button-add">
-          <Link to={'/new-card'}>Add card</Link>
-        </button>
       </div>
     </div>
   );
