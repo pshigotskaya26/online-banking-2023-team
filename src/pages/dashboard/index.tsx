@@ -17,6 +17,7 @@ const DashboardPage = () => {
     <ClientLayout>
       <PageTitle title={'Dashboard'} />
       {user?.isDisabledOperations
+
         ? <>
           <CardList></CardList>
           <TransactionList transactions={transactions}></TransactionList>
