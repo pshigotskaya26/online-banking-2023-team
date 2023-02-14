@@ -16,3 +16,16 @@ export const fetchUsers = () => {
     }
   };
 };
+
+export const handleDisableOperationUser = (id: number) => {
+  return (dispatch: Dispatch<UsersActions>) => {
+    try {
+      usersAPI.handleDisableOperationUser(id);
+      dispatch({ type: UsersActionTypes.SET_IS_DISABLED_OPERATIONS, payload: id})
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        // dispatch({ type: UsersActionTypes.FETCH_USERS_ERROR, payload: e.message });
+      }
+    }
+  };
+};
