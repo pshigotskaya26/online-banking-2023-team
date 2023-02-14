@@ -14,7 +14,7 @@ const UsersPage = () => {
   }, []);
 
   return <ClientLayout>
-    <UsersList users={[]} />
+    <UsersList users={users} />
   </ClientLayout>;
 };
 
