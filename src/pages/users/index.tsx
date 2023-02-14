@@ -2,7 +2,7 @@ import ClientLayout from '../../layouts/client';
 import React, { useEffect } from 'react';
 import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import UsersList from './components/usersList';
+import UsersList from '../../components/usersList';
 
 const UsersPage = () => {
 
@@ -14,7 +14,7 @@ const UsersPage = () => {
   }, []);
 
   return <ClientLayout>
-    <UsersList users={users} />
+    <UsersList users={[]} />
   </ClientLayout>;
 };
 

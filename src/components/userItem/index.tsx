@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FC, useState } from 'react';
-import { IAdminUser, IClientUser } from '../../../../types/interfaces/IUser';
+import { IAdminUser, IClientUser } from '../../types/interfaces/IUser';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import UserRolesEnum from '../../../../types/enums/UserRolesEnum';
+import UserRolesEnum from '../../types/enums/UserRolesEnum';
 
 export interface UserItemProps {
   user: IAdminUser | IClientUser;
