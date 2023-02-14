@@ -8,6 +8,7 @@ interface IUser {
   photo: string; // base64
   role: UserRolesEnum;
   password: string;
+  favoriteServices: number[];
 }
 
 export interface UserCredentials {
