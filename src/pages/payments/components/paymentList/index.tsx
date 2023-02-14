@@ -1,9 +1,50 @@
 import { FC } from 'react';
+import IService from '../../../../types/interfaces/IService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 interface PaymentListProps {
-  items: string[];
+  services: IService[];
 }
 
-export const PaymentList: FC<PaymentListProps> = () => {
-  return <></>;
+export const PaymentList: FC<PaymentListProps> = ({ services }) => {
+  if (services.length === 0) {
+    return <div>There is no services for display.</div>;
+  }
+
+  return (
+    <ul>
+      {services.map((service) => (
+        <li
+          key={service.id}
+          className={`my-3 bg-blue-200 rounded-2xl ${
+            service.isAvailable ? '' : 'opacity-50'
+          }`}
+        >
+          <Link
+            to={`${service.code}`}
+            className={`flex p-3 ${
+              service.isAvailable ? 'cursor-pointer' : 'cursor-not-allowed'
+            }`}
+            onClick={(e: React.MouseEvent) => {
+              if (!service.isAvailable) e.preventDefault();
+            }}
+          >
+            <div className={'mx-3 flex items-center justify-center w-1/12'}>
+              {service.icon && (
+                <FontAwesomeIcon
+                  icon={service.icon}
+                  size={'4x'}
+                ></FontAwesomeIcon>
+              )}
+            </div>
+            <div className={'mx-3 text-xl flex items-center'}>
+              {service.title}
+            </div>
+            <div className={'mx-3'}></div>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
 };
