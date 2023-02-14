@@ -1,36 +1,44 @@
-
 .card-item {
-	width: 340px;
-	height: 213px;
-	background-repeat: no-repeat;
-	@apply flex flex-col p-2.5 text-white rounded-lg; /*320px*/
+  @apply flex flex-col gap-y-4;
+}
+
+.card {
+  width: 340px;
+  height: 213px;
+  background-repeat: no-repeat;
+  @apply flex flex-col p-2.5 text-white rounded-lg; /*320px*/
 }
 
 .card-number,
 .card-term,
 .card-balance {
-	@apply flex;
+  @apply flex;
 }
 
 .card-logo {
-	padding-bottom: 2rem;
+  padding-bottom: 2rem;
 }
 
 .card-number {
-	@apply justify-center p-1.5;
+  @apply justify-center p-1.5;
 }
 
 .card-term {
-	@apply justify-center gap-x-2.5 p-1.5;
+  @apply justify-center gap-x-2.5 p-1.5;
 }
 
 .card-term__text {
-	font-size: 10px;
+  font-size: 10px;
 }
 
 .card-balance {
-	@apply justify-between;
+  @apply justify-between;
 }
+
 .icon-eye {
-	cursor: pointer;
+  cursor: pointer;
+}
+
+.button-replenish {
+  @apply w-max bg-amber-400 hover:bg-amber-500;
 }

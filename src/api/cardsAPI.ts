@@ -22,6 +22,18 @@ class CardsAPI {
     localStorage.setItem('cards', JSON.stringify(cards));
     return cards.filter((card) => card.userid === newCard.userid);
   }
+
+  replenishBalance(cardId: number): ICard[] {
+    const cards: ICard[] = JSON.parse(localStorage.getItem('cards') ?? '[]');
+
+    for (let i = 0; i < cards.length; i++) {
+      if (cards[i].id === cardId) {
+        cards[i].balance += 200;
+      }
+    }
+    localStorage.setItem('cards', JSON.stringify(cards));
+    return cards;
+  }
 }
 
 const cardsAPI = new CardsAPI();
