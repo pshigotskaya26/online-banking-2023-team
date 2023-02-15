@@ -22,7 +22,7 @@ const DashboardPage = () => {
           <CardList></CardList>
           <TransactionList transactions={transactions}></TransactionList>
         </>
-        : <EmptyBox text={"Operations for this user are disabled"}/>
+        : <EmptyBox text={'Operations for this user are disabled'} />
       }
 
     </ClientLayout>

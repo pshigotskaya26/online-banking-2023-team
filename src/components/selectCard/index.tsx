@@ -13,8 +13,9 @@ interface SelectCardProps {
 }
 
 const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData, setActiveCard }) => {
+
   const imageBackground = getBackgroundImageByColor(activeCardData?.background || '');
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleActiveCard = (e: ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value;
     const selectedCard = cards.find((el) => el.id === Number(id));
@@ -34,7 +35,7 @@ const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData, setActiv
               <div className={'text-black'}>Карт нет</div>
               <Button
                 text={'Create'}
-                handleButton={() => navigate("/new-card")}
+                handleButton={() => navigate('/new-card')}
                 isDisable={false}
               />
             </div>
@@ -48,6 +49,7 @@ const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData, setActiv
                   className='bg-gray-50 border bg-opacity-60 text-lg border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
                   focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
                   dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  value={activeCardData.id}
                 >
                   {cards.map((card) => {
                     return (
