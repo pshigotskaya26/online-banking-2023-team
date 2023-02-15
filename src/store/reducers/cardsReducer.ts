@@ -30,6 +30,8 @@ export const CardsReducer = (
         errorLoadingCards: action.payload,
       };
 
+    case CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS:
+      return { ...state, loadingCardsInfo: false, cards: action.payload };
 
     default:
       return state;
