@@ -4,6 +4,7 @@ import { AuthReducer } from './authReducer';
 import { TransfersReducer } from './transfersReducer';
 import { CardsReducer } from './cardsReducer';
 import { RegisterReducer } from './registerReducer';
+import { CreditReducer } from './creditReducer';
 
 export const rootReducer = combineReducers({
   services: ServicesReducer,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   registeredUser: RegisterReducer,
   transfers: TransfersReducer,
   usercards: CardsReducer,
+  usercredits: CreditReducer,
 });
