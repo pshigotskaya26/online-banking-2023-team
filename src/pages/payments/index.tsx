@@ -54,7 +54,7 @@ const PaymentsPage = () => {
             </>
           }
         ></Route>
-        <Route path={'/:id'} element={<PaymentForm />}></Route>
+        <Route path={'/:code'} element={<PaymentForm />}></Route>
       </Routes>
     </ClientLayout>
   );

@@ -9,6 +9,7 @@ import MainPage from '../pages/main';
 import TransfersPage from '../pages/transfers';
 import NewCardPage from '../pages/newcard';
 import PaymentsPage from '../pages/payments';
+import { PaymentForm } from '../pages/payments/components/paymentForm';
 
 const routes: RouteObject[] = [
   {
@@ -20,16 +21,6 @@ const routes: RouteObject[] = [
     path: '/services',
     element: <ServicesPage />,
     id: 'Services',
-  },
-  {
-    path: '/example',
-    element: (
-      <div>
-        <h1>Hello World</h1>
-        <Link to="about">About Us</Link>
-      </div>
-    ),
-    id: 'Example',
   },
   {
     path: '/dashboard',
@@ -60,6 +51,13 @@ const routes: RouteObject[] = [
     path: '/payments',
     element: <PaymentsPage />,
     id: 'Payments',
+    children: [
+      {
+        path: ':code',
+        element: <PaymentForm />,
+        id: 'PaymentForm',
+      },
+    ],
   },
   {
     path: '/new-card',
