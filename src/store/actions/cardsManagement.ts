@@ -65,13 +65,13 @@ export const addUserCard = (newCard: ICard) => {
   };
 };
 
-export const replenishBalance = (cardId: number) => {
-  return (dispatch: Dispatch<CardsManagementActions>) => {
+export const replenishBalance = (cardId: number, cardCurrency: string) => {
+  return async (dispatch: Dispatch<CardsManagementActions>) => {
     try {
       dispatch({ type: CardsActionTypes.UPDATE_CARDS });
-      const response = cardsAPI.replenishBalance(cardId);
+      const response = await cardsAPI.replenishBalance(cardId, cardCurrency);
       dispatch({
-        type: CardsActionTypes.UPDATE_CARDS_SUCCESS,
+        type: CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS,
         payload: response,
       });
     } catch (e: unknown) {

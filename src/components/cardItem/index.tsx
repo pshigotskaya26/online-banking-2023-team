@@ -20,9 +20,9 @@ const CardItem: React.FC<CardItemProps> = (props) => {
   const { user } = useAppSelector((state) => state.authuser);
   const { replenishBalance } = useActions();
 
-  const changeBalance = () => {
+  const changeBalance = async () => {
     if (user !== null) {
-      replenishBalance(props.card.id);
+      replenishBalance(props.card.id, props.card.currency);
     }
   };
 
