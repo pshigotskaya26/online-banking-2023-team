@@ -1,7 +1,7 @@
 import ICredit from '../../types/interfaces/ICredit';
 import { IAdminUser, IClientUser } from '../../types/interfaces/IUser';
 
-export interface CreditState {
+export interface CreditsState {
   user: IClientUser | IAdminUser | null;
   credits: ICredit[];
   loadingCreditsInfo: boolean;
