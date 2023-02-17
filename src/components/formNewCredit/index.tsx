@@ -25,7 +25,7 @@ const FormNewCredit: React.FC = () => {
     id: 0,
     summOfCredit: creditSum,
     term: creditTerm,
-    dateStart: dayjs(new Date()),
+    dateStart: dayjs(Date.now()),
     summPaid: 0,
     remainder: creditSum,
     fine: 0,
