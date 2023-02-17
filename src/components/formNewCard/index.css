@@ -1,37 +1,37 @@
 .new-card__form {
-	@apply w-full p-4 bg-gray-50 border min-h-[300px] border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700;
+  @apply w-full p-4 bg-gray-50 border min-h-[300px] border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700;
 }
 
 .new-card__content {
-	@apply flex;
+  @apply flex;
 }
 
 .new-card__card-data {
-	@apply flex justify-between gap-x-2.5 w-3/5 pr-5;
+  @apply flex justify-between gap-x-2.5 w-3/5 pr-5;
 }
 
 .card-data__currency,
 .card-data__expiration,
 .card-data__bg {
-	@apply w-2/5;
+  @apply w-2/5;
 }
 
 .new-card__view-card {
-	@apply w-2/5;
+  @apply w-2/5;
 }
 
 .select-currency,
 .select-expiration,
 .select-background {
-	@apply w-full border;
+  @apply w-full border;
 }
 
 .button-create-card,
 .button-cancel {
-	cursor: pointer;
-	@apply bg-amber-400 hover:bg-amber-500;
+  cursor: pointer;
+  @apply bg-amber-400 hover:bg-amber-500;
 }
 
 .new-card__buttons {
-	@apply flex gap-x-5;
+  @apply flex gap-x-5;
 }
