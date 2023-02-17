@@ -8,6 +8,7 @@ import MainPage from '../pages/main';
 
 import TransfersPage from '../pages/transfers';
 import NewCardPage from '../pages/newcard';
+import NewCreditPage from '../pages/newcredit';
 
 const routes: RouteObject[] = [
   {
@@ -59,6 +60,11 @@ const routes: RouteObject[] = [
     path: '/new-card',
     element: <NewCardPage />,
     id: 'NewCard',
+  },
+  {
+    path: '/take-credit',
+    element: <NewCreditPage />,
+    id: 'NewCredit',
   },
 ];
 

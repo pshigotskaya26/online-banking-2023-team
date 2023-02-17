@@ -13,7 +13,7 @@ import { useActions } from '../../hooks/useActions';
 
 const FormNewCard: React.FC = () => {
   const { user } = useAppSelector((state) => state.authuser);
-  console.log('user: ', user);
+  //console.log('user: ', user);
   const [currency, setCurrency] = useState<string>(CardCurrencyEnum.USD);
   const [expiration, setExpiration] = useState<string>(
     CardExpiryDateEnum.ONE_YEAR,
