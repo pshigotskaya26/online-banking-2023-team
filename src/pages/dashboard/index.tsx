@@ -1,7 +1,5 @@
 import ClientLayout from '../../layouts/client';
-import React, { useState } from 'react';
-import { ITransaction } from '../../types/interfaces/ITransaction';
-import transactionsData from '../../data/transactions';
+import React from 'react';
 import CardList from '../../components/cardList';
 import TransactionList from '../../components/transactionList';
 import PageTitle from '../../components/pageTitle';
@@ -10,8 +8,7 @@ import EmptyBox from '../../components/enptyBox';
 
 const DashboardPage = () => {
   const { user } = useAppSelector(state => state.authuser);
-  const [transactions, setTransactions] =
-    useState<ITransaction[]>(transactionsData);
+
 
   return (
     <ClientLayout>
@@ -19,8 +16,8 @@ const DashboardPage = () => {
       {!user?.isDisabledOperations
 
         ? <>
-          <CardList></CardList>
-          <TransactionList transactions={transactions}></TransactionList>
+          <CardList />
+          <TransactionList />
         </>
         : <EmptyBox text={'Operations for this user are disabled'} />
       }

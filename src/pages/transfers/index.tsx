@@ -23,7 +23,9 @@ const TransfersPage = () => {
   }, []);
 
   const handleTransfer = (transferData: ITransferData) => {
-    makeATransferByNumberCard(transferData);
+    if (user) {
+      makeATransferByNumberCard(transferData, user.id);
+    }
   };
   return (
     <ClientLayout>

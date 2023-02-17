@@ -20,28 +20,39 @@ export const getCardInfo = (number: number) => {
   };
 };
 
-export const makeATransferByNumberCard = (transferData: ITransferData) => {
+export const makeATransferByNumberCard = (transferData: ITransferData, userId: number) => {
   return async (dispatch: Dispatch<TransfersActions>) => {
     try {
       dispatch({ type: TransfersActionTypes.TRANSFER_START });
       await transfersAPI.makeATransferByNumberCard(transferData);
-      const transaction: ITransaction = {
+      const transactionFrom: ITransaction = {
         cardid: 3666,
         id: Date.now(),
-        entityid: 12,
         status: TransactionStatusEnum.SUCCESS,
-        userid: 225,
-        targetid: 122,
-        value: 222,
+        userid: userId,
+        targetid: 122, //?
+        value: -transferData.amountFrom,
+        entityid: 12, //?
         entitytype: TransactionsTypesEnum.TRANSFER,
-        timestamp: Date.now()
-      }
-
-      transactionsAPI.addTransaction(transaction)
+        timestamp: Date.now(),
+      };
+      transactionsAPI.addTransaction(transactionFrom);
       dispatch({ type: TransfersActionTypes.TRANSFER_SUCCESS });
     } catch (e: unknown) {
       if (e instanceof Error) {
         dispatch({ type: TransfersActionTypes.TRANSFER_ERROR, payload: e.message });
+        const transactionFrom: ITransaction = {
+          cardid: 3666,
+          id: Date.now(),
+          status: TransactionStatusEnum.DECLINED,
+          userid: userId,
+          targetid: 122, //?
+          value: -transferData.amountFrom,
+          entityid: 12, //?
+          entitytype: TransactionsTypesEnum.TRANSFER,
+          timestamp: Date.now(),
+        };
+        transactionsAPI.addTransaction(transactionFrom);
       }
     }
   };

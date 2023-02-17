@@ -17,7 +17,7 @@ const TransactionItem: React.FC<TransactionItemProps> = (props) => {
 			<td className="transaction-item__service">{props.transaction.entityid}</td>
 			<td className="transaction-item__type">{props.transaction.entitytype}</td>
 			<td className="transaction-item__status">{props.transaction.status}</td>
-			<td className="transaction-item__value">- {props.transaction.value}</td>
+			<td className="transaction-item__value">{props.transaction.value}</td>
 		</tr>
 	);
 };

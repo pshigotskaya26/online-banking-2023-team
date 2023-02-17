@@ -2,14 +2,14 @@ import { ITransaction } from '../types/interfaces/ITransaction';
 
 class TransactionsAPI {
 
-  private findTransactions(): Array<ITransaction> | undefined {
+  private findTransactionsByID(id: number): Array<ITransaction> | undefined {
     const data = localStorage.getItem('transactions') ?? '[]';
     const existTransactions: Array<ITransaction> = JSON.parse(data);
-    return existTransactions;
+    return existTransactions.filter(el => el.userid === id);
   }
 
-  fetchTransactions(): ITransaction[] {
-    const transactions = this.findTransactions();
+  fetchTransactions(id: number): ITransaction[] {
+    const transactions = this.findTransactionsByID(id);
     if (!transactions) {
       throw new Error('Transactions not exist');
     }
@@ -17,14 +17,14 @@ class TransactionsAPI {
   }
 
   addTransaction(transaction: ITransaction): ITransaction[] {
-    const transactions = this.findTransactions();
+    const transactions = this.findTransactionsByID(transaction.userid);
     let newTransactions = [];
     if (transactions?.length) {
       newTransactions = [...transactions, transaction];
     } else {
       newTransactions = [transaction];
     }
-
+    localStorage.setItem('transactions', JSON.stringify(newTransactions));
     return newTransactions;
   }
 

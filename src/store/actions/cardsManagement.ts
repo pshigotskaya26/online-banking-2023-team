@@ -2,6 +2,10 @@ import { Dispatch } from 'redux';
 import { CardsActionTypes, CardsManagementActions } from '../types/cards';
 import cardsAPI from '../../api/cardsAPI';
 import ICard from '../../types/interfaces/ICard';
+import { ITransaction } from '../../types/interfaces/ITransaction';
+import TransactionStatusEnum from '../../types/enums/TransactionStatusEnum';
+import TransactionsTypesEnum from '../../types/enums/TransactionsTypesEnum';
+import transactionsAPI from '../../api/transactionsAPI';
 
 export const getCardsByUserId = (userid: number) => {
   return (dispatch: Dispatch<CardsManagementActions>) => {
@@ -65,7 +69,7 @@ export const addUserCard = (newCard: ICard) => {
   };
 };
 
-export const replenishBalance = (cardId: number, cardCurrency: string) => {
+export const replenishBalance = (cardId: number, cardCurrency: string, userId: number) => {
   return async (dispatch: Dispatch<CardsManagementActions>) => {
     try {
       dispatch({ type: CardsActionTypes.UPDATE_CARDS });
@@ -74,9 +78,35 @@ export const replenishBalance = (cardId: number, cardCurrency: string) => {
         type: CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS,
         payload: { cardId: cardId, amount: response },
       });
+
+
+      const transactionFrom: ITransaction = {
+        cardid: cardId,
+        id: Date.now(),
+        status: TransactionStatusEnum.SUCCESS,
+        userid: userId,
+        targetid: 122, //?
+        value: +1000,
+        entityid: 12, //?
+        entitytype: TransactionsTypesEnum.DRAWBACK,
+        timestamp: Date.now(),
+      };
+      transactionsAPI.addTransaction(transactionFrom);
+
     } catch (e: unknown) {
       if (e instanceof Error) {
-        console.log(e.message);
+        const transactionFrom: ITransaction = {
+          cardid: cardId,
+          id: Date.now(),
+          status: TransactionStatusEnum.DECLINED,
+          userid: userId,
+          targetid: 122, //?
+          value: -1000,
+          entityid: 12, //?
+          entitytype: TransactionsTypesEnum.DRAWBACK,
+          timestamp: Date.now(),
+        };
+        transactionsAPI.addTransaction(transactionFrom);
         dispatch({
           type: CardsActionTypes.UPDATE_CARDS_ERROR,
           payload: e.message,
