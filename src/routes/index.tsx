@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import DashboardPage from '../pages/dashboard';
 import { ServicesPage } from '../pages/services';
 import AuthorizationPage from '../pages/authorization';
@@ -8,6 +8,10 @@ import MainPage from '../pages/main';
 
 import TransfersPage from '../pages/transfers';
 import NewCardPage from '../pages/newcard';
+import ProtectedRoute from './protected-route';
+import UserRolesEnum from '../types/enums/UserRolesEnum';
+import ErrorPage from '../pages/error';
+import UsersPage from '../pages/users';
 import PaymentsPage from '../pages/payments';
 import { PaymentForm } from '../pages/payments/components/paymentForm';
 
@@ -19,12 +23,23 @@ const routes: RouteObject[] = [
   },
   {
     path: '/services',
-    element: <ServicesPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+      <ServicesPage />
+    </ProtectedRoute>,
     id: 'Services',
   },
   {
+    path: '/users',
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+      <UsersPage />
+    </ProtectedRoute>,
+    id: 'Users',
+  },
+  {
     path: '/dashboard',
-    element: <DashboardPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+      <DashboardPage />
+    </ProtectedRoute>,
     id: 'Dashboard',
   },
   {
@@ -35,7 +50,7 @@ const routes: RouteObject[] = [
   {
     path: '/logout',
     element: <AuthorizationPage isLogin={false} />,
-    id: 'Loguot',
+    id: 'Logout',
   },
   {
     path: '/registration',
@@ -44,25 +59,38 @@ const routes: RouteObject[] = [
   },
   {
     path: '/transfers',
-    element: <TransfersPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+      <TransfersPage />
+    </ProtectedRoute>,
     id: 'Transfers',
   },
   {
     path: '/payments',
-    element: <PaymentsPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+      <PaymentsPage />
+    </ProtectedRoute>,
     id: 'Payments',
     children: [
       {
         path: ':code',
-        element: <PaymentForm />,
+        element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+          <PaymentForm />
+        </ProtectedRoute>,
         id: 'PaymentForm',
       },
     ],
   },
   {
     path: '/new-card',
-    element: <NewCardPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+      <NewCardPage />
+    </ProtectedRoute>,
     id: 'NewCard',
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
+    id: '404',
   },
 ];
 

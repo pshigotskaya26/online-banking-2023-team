@@ -41,8 +41,8 @@ class TransfersAPI {
       if (card.number === cardTo) {
         return {
           ...card, balance: amountTo
-            ? card.balance + amountTo
-            : card.balance + amountFrom,
+            ? +(card.balance + amountTo).toFixed(2)
+            : +(card.balance + amountFrom).toFixed(2),
         };
       } else if (card.number === cardFrom) {
         return { ...card, balance: card.balance - amountFrom };

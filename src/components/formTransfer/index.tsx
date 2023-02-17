@@ -1,5 +1,4 @@
 import SelectCard from '../selectCard';
-import InputCard from '../inputCard';
 import Message from '../message';
 import { TypeMessage } from '../../types/enums/TypeMessage';
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
@@ -7,10 +6,12 @@ import ICard from '../../types/interfaces/ICard';
 import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
+import { faKeyboard, faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import Calculator from '../calculator';
 import { ITransferData } from '../../types/interfaces/ITransaction';
 import Button from '../button';
+import SelectCardTo from '../selectCardTo';
+import recipientsViewEnum from '../../types/enums/recipientsViewEnum';
 
 interface FormTransferProps {
   cards: ICard[];
@@ -25,6 +26,7 @@ const FormTransfer: FC<FormTransferProps> = ({ cards, handleTransfer, idUser }) 
   const [isSimilarCards, setIsSimilarCards] = useState<boolean>(false);
 
   const [activeCardFrom, setActiveCardFrom] = useState<ICard>({} as ICard);
+  const [viewRecipient, setViewRecipient] = useState<recipientsViewEnum | null>(null);
   const [numberCardTo, setNUmberCardTo] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
 
@@ -91,9 +93,21 @@ const FormTransfer: FC<FormTransferProps> = ({ cards, handleTransfer, idUser }) 
       </div>
       <div>
         <h2 className='font-light mb-2 font-bold '>
+          {viewRecipient !== null && <FontAwesomeIcon
+            icon={faArrowAltCircleLeft}
+            onClick={() => setViewRecipient(null) }
+            className={"mr-1 cursor-pointer"}
+          />}
           Enter recipient's card
         </h2>
-        <InputCard value={numberCardTo} handleInputValue={handleNumberCardTo} canTransfer={!!(cardTo?.number)} />
+        <SelectCardTo
+          cards={cards}
+          cardTo={cardTo}
+          numberCardTo={numberCardTo}
+          handleNumberCardTo={handleNumberCardTo}
+          viewRecipient={viewRecipient}
+          setViewRecipient={setViewRecipient}
+        />
       </div>
     </div>
 

@@ -8,6 +8,7 @@ interface IUser {
   photo: string; // base64
   role: UserRolesEnum;
   password: string;
+  isDisabledOperations: boolean;
   favoriteServices: number[];
 }
 

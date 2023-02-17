@@ -64,3 +64,24 @@ export const addUserCard = (newCard: ICard) => {
     }
   };
 };
+
+export const replenishBalance = (cardId: number, cardCurrency: string) => {
+  return async (dispatch: Dispatch<CardsManagementActions>) => {
+    try {
+      dispatch({ type: CardsActionTypes.UPDATE_CARDS });
+      const response = await cardsAPI.replenishBalance(cardId, cardCurrency);
+      dispatch({
+        type: CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS,
+        payload: response,
+      });
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e.message);
+        dispatch({
+          type: CardsActionTypes.UPDATE_CARDS_ERROR,
+          payload: e.message,
+        });
+      }
+    }
+  };
+};

@@ -15,6 +15,7 @@ export enum CardsActionTypes {
   UPDATE_CARDS = 'UPDATE_CARDS',
   UPDATE_CARDS_SUCCESS = 'UPDATE_CARDS_SUCCESS',
   UPDATE_CARDS_ERROR = 'UPDATE_CARDS_ERROR',
+  UPDATE_CARDS_WITH_SALARY_SUCCESS = 'UPDATE_CARDS_WITH_SALARY_SUCCESS',
 }
 
 interface FetchCards {
@@ -43,10 +44,16 @@ interface UpdateUserCardsError {
   payload: string;
 }
 
+interface UpdateUserCardsWithSalarySuccess {
+  type: CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS;
+  payload: ICard[];
+}
+
 export type CardsManagementActions =
   | FetchCards
   | FetchCardsSuccess
   | FetchCardsError
   | UpdateUserCards
   | UpdateUserCardsSuccess
-  | UpdateUserCardsError;
+  | UpdateUserCardsError
+  | UpdateUserCardsWithSalarySuccess;

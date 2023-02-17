@@ -23,6 +23,26 @@ export const fetchUserInfo = (credentials: AuthUserData) => {
   };
 };
 
+export const fetchUserInfoByID = (id: number) => {
+  return (dispatch: Dispatch<AuthUserActions>) => {
+    try {
+      dispatch({ type: AuthActionTypes.FETCH_USERINFO });
+      const response = authUserAPI.fetchUserInfoByID(id);
+      dispatch({
+        type: AuthActionTypes.FETCH_USERINFO_SUCCESS,
+        payload: response,
+      });
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch({
+          type: AuthActionTypes.FETCH_USERINFO_ERROR,
+          payload: e.message,
+        });
+      }
+    }
+  };
+};
+
 export const logoutSystem = () => {
   return (dispatch: Dispatch<AuthUserActions>) => {
     try {
