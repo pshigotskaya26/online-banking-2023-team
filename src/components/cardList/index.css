@@ -26,3 +26,7 @@
 .button-take-credit {
   @apply bg-amber-400 hover:bg-amber-500;
 }
+
+.button-take-credit.no-active {
+  @apply pointer-events-none bg-slate-300;
+}

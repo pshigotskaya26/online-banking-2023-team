@@ -1,11 +1,14 @@
 import './index.css';
 import React, { useState } from 'react';
-import { useAppSelector } from '../../hooks/useAppSelector';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import CreditTermEnum from '../../types/enums/CreditTermEnum';
 
 const FormNewCredit: React.FC = () => {
   const { user } = useAppSelector((state) => state.authuser);
   console.log('user: ', user);
+
+  const [creditTerm, setCreditTerm] = useState<string>(CreditTermEnum.TEN_DAYS);
 
   return (
     <div className="new-credit__form">

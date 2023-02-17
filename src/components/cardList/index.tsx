@@ -6,6 +6,7 @@ import ICredit from '../../types/interfaces/ICredit';
 import CardItem from '../cardItem';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useActions } from '../../hooks/useActions';
+import { toggleActiveCreditButton } from '../../utils/toggleActiveCreditButton';
 
 interface CardListProps {}
 
@@ -17,6 +18,12 @@ const CardList: React.FC<CardListProps> = (props) => {
   const { getCardsByUserId } = useActions();
   const [cards, setCards] = useState<ICard[]>([]);
   const [credits, setCredits] = useState<ICredit[]>([]);
+
+  if (cards.length) {
+    toggleActiveCreditButton(true);
+  } else {
+    toggleActiveCreditButton(false);
+  }
 
   useEffect(() => {
     if (user !== null) {
