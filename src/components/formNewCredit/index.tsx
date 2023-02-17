@@ -5,6 +5,9 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import CreditTermEnum from '../../types/enums/CreditTermEnum';
 import CreditThingEnum from '../../types/enums/CreditThingEnum';
 import CreditSumEnum from '../../types/enums/CreditSumEnum';
+import dayjs from 'dayjs';
+import { useActions } from '../../hooks/useActions';
+import ICredit from '../../types/interfaces/ICredit';
 
 const FormNewCredit: React.FC = () => {
   const { user } = useAppSelector((state) => state.authuser);
@@ -14,8 +17,42 @@ const FormNewCredit: React.FC = () => {
   const [creditThing, setCreditThing] = useState<string>(
     CreditThingEnum.BICYCLE,
   );
-
   const [creditSum, setCreditSum] = useState<string>(CreditSumEnum.SUM_10000);
+
+  const navigate = useNavigate();
+
+  const objNewCredit = {
+    id: 0,
+    summOfCredit: creditSum,
+    term: creditTerm,
+    dateStart: dayjs(new Date()),
+    summPaid: 0,
+    remainder: creditSum,
+    fine: 0,
+    userId: user?.id,
+    isAllPaid: false,
+  };
+
+  /*
+  const { addUserCredit } = useActions();
+
+  const changeCredits = (newCredit: ICredit = objNewCredit) => {
+    addUserCredit(newCredit);
+    navigate('/dashboard');
+  };
+
+  */
+  const handleSelectThing = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCreditThing(event.target.value);
+  };
+
+  const handleSelectSum = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCreditSum(event.target.value);
+  };
+
+  const handleSelectTerm = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCreditTerm(event.target.value);
+  };
 
   return (
     <div className="new-credit__form">
@@ -36,6 +73,7 @@ const FormNewCredit: React.FC = () => {
               Select a thing you want to take in credit:
             </p>
             <select
+              onChange={handleSelectThing}
               className="select-thing w-full"
               size={Object.keys(CreditThingEnum).length}
               value={creditThing}
@@ -53,6 +91,7 @@ const FormNewCredit: React.FC = () => {
               Enter sum you want to take in credit (BYN):
             </p>
             <select
+              onChange={handleSelectSum}
               className="select-sum w-full"
               size={Object.values(CreditSumEnum).length}
               value={creditSum}
@@ -70,6 +109,7 @@ const FormNewCredit: React.FC = () => {
               Select a term of the credit (DAYS):
             </p>
             <select
+              onChange={handleSelectTerm}
               className="select-term w-full"
               size={Object.values(CreditTermEnum).length}
               value={creditTerm}
