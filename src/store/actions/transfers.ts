@@ -1,7 +1,10 @@
 import { Dispatch } from 'redux';
 import { TransfersActions, TransfersActionTypes } from '../types/transfers';
 import transfersAPI from '../../api/transfersAPI';
-import { ITransferData } from '../../types/interfaces/ITransaction';
+import { ITransaction, ITransferData } from '../../types/interfaces/ITransaction';
+import transactionsAPI from '../../api/transactionsAPI';
+import TransactionStatusEnum from '../../types/enums/TransactionStatusEnum';
+import TransactionsTypesEnum from '../../types/enums/TransactionsTypesEnum';
 
 export const getCardInfo = (number: number) => {
   return (dispatch: Dispatch<TransfersActions>) => {
@@ -17,11 +20,24 @@ export const getCardInfo = (number: number) => {
   };
 };
 
-export const makeATransferByNumberCard = (transaction: ITransferData) => {
+export const makeATransferByNumberCard = (transferData: ITransferData) => {
   return async (dispatch: Dispatch<TransfersActions>) => {
     try {
       dispatch({ type: TransfersActionTypes.TRANSFER_START });
-      await transfersAPI.makeATransferByNumberCard(transaction);
+      await transfersAPI.makeATransferByNumberCard(transferData);
+      const transaction: ITransaction = {
+        cardid: 3666,
+        id: Date.now(),
+        entityid: 12,
+        status: TransactionStatusEnum.SUCCESS,
+        userid: 225,
+        targetid: 122,
+        value: 222,
+        entitytype: TransactionsTypesEnum.TRANSFER,
+        timestamp: Date.now()
+      }
+
+      transactionsAPI.addTransaction(transaction)
       dispatch({ type: TransfersActionTypes.TRANSFER_SUCCESS });
     } catch (e: unknown) {
       if (e instanceof Error) {
