@@ -1,10 +1,11 @@
 import { Dispatch } from 'redux';
 import { TransfersActions, TransfersActionTypes } from '../types/transfers';
 import transfersAPI from '../../api/transfersAPI';
-import { ITransaction, ITransferData } from '../../types/interfaces/ITransaction';
+import { ITransferData } from '../../types/interfaces/ITransaction';
 import transactionsAPI from '../../api/transactionsAPI';
 import TransactionStatusEnum from '../../types/enums/TransactionStatusEnum';
 import TransactionsTypesEnum from '../../types/enums/TransactionsTypesEnum';
+import { createObjectTransaction } from '../../utils/createObjectTransaction';
 
 export const getCardInfo = (number: number) => {
   return (dispatch: Dispatch<TransfersActions>) => {
@@ -20,28 +21,34 @@ export const getCardInfo = (number: number) => {
   };
 };
 
-export const makeATransferByNumberCard = (transferData: ITransferData) => {
+export const makeATransferByNumberCard = (transferData: ITransferData, userId: number) => {
   return async (dispatch: Dispatch<TransfersActions>) => {
     try {
       dispatch({ type: TransfersActionTypes.TRANSFER_START });
       await transfersAPI.makeATransferByNumberCard(transferData);
-      const transaction: ITransaction = {
-        cardid: 3666,
-        id: Date.now(),
-        entityid: 12,
-        status: TransactionStatusEnum.SUCCESS,
-        userid: 225,
-        targetid: 122,
-        value: 222,
-        entitytype: TransactionsTypesEnum.TRANSFER,
-        timestamp: Date.now()
-      }
 
-      transactionsAPI.addTransaction(transaction)
+      const transaction = createObjectTransaction(
+        userId,
+        TransactionStatusEnum.SUCCESS,
+        1111,
+        -transferData.amountFrom,
+        TransactionsTypesEnum.TRANSFER,
+      );
+
+      transactionsAPI.addTransaction(transaction);
       dispatch({ type: TransfersActionTypes.TRANSFER_SUCCESS });
     } catch (e: unknown) {
       if (e instanceof Error) {
         dispatch({ type: TransfersActionTypes.TRANSFER_ERROR, payload: e.message });
+
+        const transaction = createObjectTransaction(
+          userId,
+          TransactionStatusEnum.DECLINED,
+          1111,
+          -transferData.amountFrom,
+          TransactionsTypesEnum.TRANSFER,
+        );
+        transactionsAPI.addTransaction(transaction);
       }
     }
   };
@@ -53,7 +60,6 @@ export const fetchCardsByUserId = (id: number) => {
       dispatch({ type: TransfersActionTypes.FETCH_CARDS });
       const response = transfersAPI.fetchCardsByUserId(id);
       dispatch({ type: TransfersActionTypes.FETCH_CARDS_SUCCESS, payload: response });
-
     } catch (e: unknown) {
       if (e instanceof Error) {
         dispatch({ type: TransfersActionTypes.FETCH_CARDS_ERROR, payload: e.message });

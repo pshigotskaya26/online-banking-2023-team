@@ -21,8 +21,8 @@ const CardItem: React.FC<CardItemProps> = (props) => {
   const { replenishBalance } = useActions();
 
   const changeBalance = async () => {
-    if (user !== null) {
-      replenishBalance(props.card.id, props.card.currency);
+    if (user) {
+      replenishBalance(props.card.id, props.card.currency, user.id);
     }
   };
 
