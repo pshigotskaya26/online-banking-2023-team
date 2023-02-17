@@ -1,12 +1,15 @@
 .card-item {
-  @apply flex flex-col gap-y-4;
+  width: 340px;
+  height: 213px;
+  background-repeat: no-repeat;
+  @apply flex flex-col p-2.5 mb-20 text-white rounded-lg; /*320px*/
 }
 
 .card {
   width: 340px;
   height: 213px;
   background-repeat: no-repeat;
-  @apply flex flex-col p-2.5 text-white rounded-lg; /*320px*/
+  @apply flex flex-col p-2.5 mb-3 text-white rounded-lg; /*320px*/
 }
 
 .card-number,
