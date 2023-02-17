@@ -16,7 +16,7 @@ const DashboardPage = () => {
   return (
     <ClientLayout>
       <PageTitle title={'Dashboard'} />
-      {user?.isDisabledOperations
+      {!user?.isDisabledOperations
 
         ? <>
           <CardList></CardList>

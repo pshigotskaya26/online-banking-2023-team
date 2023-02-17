@@ -68,7 +68,7 @@ class CardsAPI {
       }
     }
     localStorage.setItem('cards', JSON.stringify(cards));
-    return cards;
+    return convertedSalary;
   };
 }
 

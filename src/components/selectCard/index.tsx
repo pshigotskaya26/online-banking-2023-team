@@ -22,14 +22,10 @@ const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData, setActiv
       setActiveCard(selectedCard);
     }
   };
-  //  width: 340px;
-  //   height: 213px;
-  //   background-repeat: no-repeat;
-
 
   return (
-    <div className='card-item bg-gray-100 relative shadow transition-transform transform hover:scale-105 bg-red-500'
-      style={activeCardData?.background ? { background: `url(${imageBackground})` } : {}}
+    <div className='card-item bg-gray-100 relative shadow transition-transform transform hover:scale-105'
+         style={activeCardData?.background ? { background: `url(${imageBackground})` } : {}}
     >
       <div className='w-full px-8 absolute top-8'>
         <div className='pt-1'>

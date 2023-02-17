@@ -2,7 +2,6 @@ import PageTitle from '../../components/pageTitle';
 import ClientLayout from '../../layouts/client';
 import React, { useEffect } from 'react';
 
-import { createNewTransfer, makeATransferByNumberCard } from '../../store/actions/transfers';
 import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import FormTransfer from '../../components/formTransfer';
@@ -11,8 +10,6 @@ import FormTransferSkeleton from '../../components/formTransferSkeleton';
 import FormTransferResult from '../../components/formTransferResult';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { TransferStatus } from '../../types/enums/TransferStatus';
-import CardList from '../../components/cardList';
-import TransactionList from '../../components/transactionList';
 import EmptyBox from '../../components/enptyBox';
 
 const TransfersPage = () => {
@@ -37,7 +34,7 @@ const TransfersPage = () => {
         }
       />
 
-      {user?.isDisabledOperations
+      {!user?.isDisabledOperations
         ? <>
           <div className='bg-white py-6 sm:py-8 lg:py-18'>
             {
@@ -60,7 +57,7 @@ const TransfersPage = () => {
             }
           </div>
         </>
-        : <EmptyBox text={"Operations for this user are disabled"}/>
+        : <EmptyBox text={'Operations for this user are disabled'} />
       }
 
 

@@ -31,7 +31,12 @@ export const CardsReducer = (
       };
 
     case CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS:
-      return { ...state, loadingCardsInfo: false, cards: action.payload };
+      return { ...state,
+        loadingCardsInfo: false,
+        cards: state.cards.map(card => card.id === action.payload.cardId
+          ? { ...card, balance: card.balance + action.payload.amount }
+          : card
+        ) }
 
     default:
       return state;
