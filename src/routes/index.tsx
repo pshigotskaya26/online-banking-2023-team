@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import DashboardPage from '../pages/dashboard';
 import { ServicesPage } from '../pages/services';
 import AuthorizationPage from '../pages/authorization';
@@ -8,6 +8,10 @@ import MainPage from '../pages/main';
 
 import TransfersPage from '../pages/transfers';
 import NewCardPage from '../pages/newcard';
+import ProtectedRoute from './protected-route';
+import UserRolesEnum from '../types/enums/UserRolesEnum';
+import ErrorPage from '../pages/error';
+import UsersPage from '../pages/users';
 
 const routes: RouteObject[] = [
   {
@@ -17,22 +21,23 @@ const routes: RouteObject[] = [
   },
   {
     path: '/services',
-    element: <ServicesPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+      <ServicesPage />
+    </ProtectedRoute>,
     id: 'Services',
   },
   {
-    path: '/example',
-    element: (
-      <div>
-        <h1>Hello World</h1>
-        <Link to="about">About Us</Link>
-      </div>
-    ),
-    id: 'Example',
+    path: '/users',
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+      <UsersPage />
+    </ProtectedRoute>,
+    id: 'Users',
   },
   {
     path: '/dashboard',
-    element: <DashboardPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+      <DashboardPage />
+    </ProtectedRoute>,
     id: 'Dashboard',
   },
   {
@@ -43,7 +48,7 @@ const routes: RouteObject[] = [
   {
     path: '/logout',
     element: <AuthorizationPage isLogin={false} />,
-    id: 'Loguot',
+    id: 'Logout',
   },
   {
     path: '/registration',
@@ -52,13 +57,22 @@ const routes: RouteObject[] = [
   },
   {
     path: '/transfers',
-    element: <TransfersPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+      <TransfersPage />
+    </ProtectedRoute>,
     id: 'Transfers',
   },
   {
     path: '/new-card',
-    element: <NewCardPage />,
+    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+      <NewCardPage />
+    </ProtectedRoute>,
     id: 'NewCard',
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
+    id: '404',
   },
 ];
 

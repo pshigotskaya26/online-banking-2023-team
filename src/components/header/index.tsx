@@ -51,6 +51,12 @@ const adminRoutes = [
     isAuth: false,
   },
   {
+    path: '/users',
+    title: "Users",
+    isAuth: false
+  },
+
+  {
     path: '/logout',
     title: 'Logout',
     isAuth: true,

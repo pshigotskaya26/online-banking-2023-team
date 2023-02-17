@@ -11,6 +11,13 @@ class UserAPI {
     return existUsers.find((user) => user.email === email);
   }
 
+  private findUserByID(id: number): IClientUser | IAdminUser | undefined {
+    const data = localStorage.getItem('users') ?? '[]';
+    const existUsers: Array<IClientUser | IAdminUser> = JSON.parse(data);
+    return existUsers.find((user) => user.id === id);
+  }
+
+
   fetchUserInfo(credentials: AuthUserData): IClientUser | IAdminUser {
     const user = this.findUserByEmail(credentials.login);
     if (!user) {
@@ -20,6 +27,9 @@ class UserAPI {
     if (user.password !== credentials.password) {
       throw new Error('Incorrect email or password');
     }
+
+    localStorage.setItem('activeUserID', JSON.stringify(user.id));
+
     return user;
   }
 
@@ -37,8 +47,18 @@ class UserAPI {
   }
 
   logoutSystem(): null {
+    localStorage.removeItem('activeUserID');
     return null;
   }
+
+  fetchUserInfoByID(id: number): IClientUser | IAdminUser {
+    const user = this.findUserByID(id);
+    if (!user) {
+      throw new Error('User not exist');
+    }
+    return user;
+  }
+
 }
 
 const authUserAPI = new UserAPI();
