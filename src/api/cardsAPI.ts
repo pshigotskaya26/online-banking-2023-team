@@ -1,6 +1,7 @@
 import ICard from '../types/interfaces/ICard';
 import axios from 'axios';
 import CardCurrencyEnum from '../types/enums/CardCurrencyEnum';
+import { API_LAYER_KEY } from '../consts';
 
 class CardsAPI {
   getCardsByUserId(userid: number): ICard[] {
@@ -32,7 +33,7 @@ class CardsAPI {
   ): Promise<number> {
     let config = {
       headers: {
-        apikey: 'iG4QESDWXjOp3Jb8Ya9zIAMwTgAN44wW',
+        apikey: API_LAYER_KEY,
       },
     };
     const res = await axios.get(

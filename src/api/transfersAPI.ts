@@ -1,6 +1,7 @@
 import ICard from '../types/interfaces/ICard';
 import { ITransferData } from '../types/interfaces/ITransaction';
 import axios from 'axios';
+import { API_LAYER_KEY } from '../consts';
 
 class TransfersAPI {
 
@@ -13,7 +14,7 @@ class TransfersAPI {
   private async getConvertedMoney(currencyFrom: string, currencyTo: string, amount: number): Promise<number> {
     let config = {
       headers: {
-        'apikey': 'iG4QESDWXjOp3Jb8Ya9zIAMwTgAN44wW',
+        'apikey': API_LAYER_KEY,
       },
     };
     const res = await axios.get(`https://api.apilayer.com/fixer/convert?to=${currencyTo}&from=${currencyFrom}&amount=${amount}`, config);

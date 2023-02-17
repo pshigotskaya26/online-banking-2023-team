@@ -1,0 +1,1 @@
+export const API_LAYER_KEY = 'iG4QESDWXjOp3Jb8Ya9zIAMwTgAN44wW'
