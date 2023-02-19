@@ -23,10 +23,12 @@
 }
 
 .button-add,
-.button-take-credit {
+.button-take-credit,
+.button-my-credits {
   @apply bg-amber-400 hover:bg-amber-500;
 }
 
-.button-take-credit.no-active {
+.button-take-credit.no-active,
+.button-my-credits.no-active {
   @apply pointer-events-none bg-slate-300;
 }

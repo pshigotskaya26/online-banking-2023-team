@@ -7,6 +7,7 @@ import CardItem from '../cardItem';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useActions } from '../../hooks/useActions';
 import { toggleActiveCreditButton } from '../../utils/toggleActiveCreditButton';
+import { toggleActiveMyCreditsButton } from '../../utils/toggleActiveMyCreditsButton';
 
 interface CardListProps {}
 
@@ -16,6 +17,7 @@ const CardList: React.FC<CardListProps> = (props) => {
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);
 
   const { getCardsByUserId } = useActions();
+  const { getCreditsByUserId } = useActions();
   const [cards, setCards] = useState<ICard[]>([]);
   const [credits, setCredits] = useState<ICredit[]>([]);
 
@@ -25,9 +27,21 @@ const CardList: React.FC<CardListProps> = (props) => {
     toggleActiveCreditButton(false);
   }
 
+  if (credits.length) {
+    toggleActiveMyCreditsButton(true);
+  } else {
+    toggleActiveMyCreditsButton(false);
+  }
+
   useEffect(() => {
     if (user !== null) {
       getCardsByUserId(user.id);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user !== null) {
+      getCreditsByUserId(user.id);
     }
   }, [user]);
 
@@ -49,6 +63,10 @@ const CardList: React.FC<CardListProps> = (props) => {
           </button>
           <button className="button button-take-credit">
             <Link to={'/take-credit'}>Take a credit</Link>
+          </button>
+
+          <button className="button button-my-credits">
+            <Link to={'/my-credits'}>My credits</Link>
           </button>
         </div>
       </div>
