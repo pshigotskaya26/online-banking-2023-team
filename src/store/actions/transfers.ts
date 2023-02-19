@@ -35,6 +35,7 @@ export const makeATransferByNumberCard = (transferData: ITransferData, userId: n
         TransactionsTypesEnum.TRANSFER,
       );
 
+
       transactionsAPI.addTransaction(transaction);
       dispatch({ type: TransfersActionTypes.TRANSFER_SUCCESS });
     } catch (e: unknown) {
