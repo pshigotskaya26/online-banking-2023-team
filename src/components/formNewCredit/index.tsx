@@ -33,7 +33,7 @@ const FormNewCredit: React.FC = () => {
     fine: 0,
     userId: user?.id,
     isAllPaid: false,
-    // arrOfPaymants: createCreditPayments(creditTerm, dayjs(Date.now())),
+    arrOfPaymants: createCreditPayments(Number(creditTerm), Date.now()),
   };
 
   /*
@@ -46,7 +46,7 @@ const FormNewCredit: React.FC = () => {
 
   */
 
-  console.log(createCreditPayments(5, Date.now()));
+  console.log('objNewCredit: ', objNewCredit);
   const handleSelectThing = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCreditThing(event.target.value);
   };

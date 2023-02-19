@@ -31,6 +31,7 @@ export const createCreditPayments = (
     arrayOfPayments.push(creditPayment);
 
     dateStart = dateStart + 86400000;
+    idPayment++;
   }
 
   return arrayOfPayments;
