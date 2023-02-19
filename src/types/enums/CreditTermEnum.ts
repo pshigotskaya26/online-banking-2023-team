@@ -1,7 +1,7 @@
 enum CreditTermEnum {
+  FIVE_DAYS = '5',
   TEN_DAYS = '10',
-  TWENTY_DAYS = '20',
-  THIRTY_DAYS = '30',
+  FIFTEEN_DAYS = '15',
 }
 
 export default CreditTermEnum;
