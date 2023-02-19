@@ -24,27 +24,24 @@ const FormNewCredit: React.FC = () => {
 
   const objNewCredit = {
     id: 0,
-    summOfCredit: creditSum,
-    term: creditTerm,
+    summOfCredit: Number(creditSum),
+    term: Number(creditTerm),
     dateStart: Date.now(),
     dateOfTheLastPayment: undefined,
     summPaid: 0,
-    remainder: creditSum,
+    remainder: Number(creditSum),
     fine: 0,
-    userId: user?.id,
+    userId: user?.id ?? 0,
     isAllPaid: false,
     arrOfPaymants: createCreditPayments(Number(creditTerm), Date.now()),
   };
 
-  /*
   const { addUserCredit } = useActions();
 
   const changeCredits = (newCredit: ICredit = objNewCredit) => {
     addUserCredit(newCredit);
-    navigate('/dashboard');
+    //navigate('/dashboard');
   };
-
-  */
 
   console.log('objNewCredit: ', objNewCredit);
   const handleSelectThing = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -131,6 +128,9 @@ const FormNewCredit: React.FC = () => {
           <input
             className="button button-create-credit"
             type="submit"
+            onClick={(event) => {
+              changeCredits();
+            }}
             value="Create a new credit"
           />
           <button className="button button-cancel">

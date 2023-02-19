@@ -11,6 +11,7 @@ const ApplicationActions = {
   ...RegisterActions,
   ...TransfersActions,
   ...CardManagement,
+  ...CreditActions,
 };
 
 export default ApplicationActions;
