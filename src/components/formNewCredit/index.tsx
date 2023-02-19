@@ -25,6 +25,7 @@ const FormNewCredit: React.FC = () => {
   const objNewCredit = {
     id: 0,
     summOfCredit: Number(creditSum),
+    entity: creditThing,
     term: Number(creditTerm),
     dateStart: Date.now(),
     dateOfTheLastPayment: undefined,
@@ -40,7 +41,7 @@ const FormNewCredit: React.FC = () => {
 
   const changeCredits = (newCredit: ICredit = objNewCredit) => {
     addUserCredit(newCredit);
-    //navigate('/dashboard');
+    navigate('/my-credits');
   };
 
   console.log('objNewCredit: ', objNewCredit);
