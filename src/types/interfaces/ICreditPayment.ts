@@ -3,4 +3,5 @@ export default interface ICreditPayment {
   dateOfContribution: number;
   fine: number;
   isPaid: boolean;
+  status: string;
 }

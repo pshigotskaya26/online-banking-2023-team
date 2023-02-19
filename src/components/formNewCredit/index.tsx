@@ -8,6 +8,7 @@ import CreditSumEnum from '../../types/enums/CreditSumEnum';
 import dayjs from 'dayjs';
 import { useActions } from '../../hooks/useActions';
 import ICredit from '../../types/interfaces/ICredit';
+import { createCreditPayments } from '../../utils/createCreditPayments';
 
 const FormNewCredit: React.FC = () => {
   const { user } = useAppSelector((state) => state.authuser);
@@ -25,12 +26,14 @@ const FormNewCredit: React.FC = () => {
     id: 0,
     summOfCredit: creditSum,
     term: creditTerm,
-    dateStart: dayjs(Date.now()),
+    dateStart: Date.now(),
+    dateOfTheLastPayment: undefined,
     summPaid: 0,
     remainder: creditSum,
     fine: 0,
     userId: user?.id,
     isAllPaid: false,
+    // arrOfPaymants: createCreditPayments(creditTerm, dayjs(Date.now())),
   };
 
   /*
@@ -42,6 +45,8 @@ const FormNewCredit: React.FC = () => {
   };
 
   */
+
+  console.log(createCreditPayments(5, Date.now()));
   const handleSelectThing = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCreditThing(event.target.value);
   };
