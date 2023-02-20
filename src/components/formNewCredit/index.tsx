@@ -27,7 +27,7 @@ const FormNewCredit: React.FC = () => {
     entity: creditThing,
     term: Number(creditTerm),
     dateStart: Date.now(),
-    dateOfTheLastPayment: undefined,
+    dateOfTheLastPayment: null,
     summPaid: 0,
     remainder: Number(creditSum),
     fine: 0,
