@@ -1,3 +1,7 @@
-.button-do-payment {
+.button-do-payment.active {
   @apply bg-indigo-500 hover:bg-indigo-600 pl-6 pr-6 pt-2 pb-2;
+}
+
+.button-do-payment.no-active {
+  @apply pointer-events-none bg-slate-200 pl-6 pr-6 pt-2 pb-2;
 }

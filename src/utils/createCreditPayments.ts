@@ -1,15 +1,8 @@
 import ICreditPayment from '../types/interfaces/ICreditPayment';
 import CreditPaymentStatusEnum from '../types/enums/CreditPaymentStatusEnum';
 import dayjs from 'dayjs';
-/*
-export default interface ICreditPayment {
-	id: number;
-	dateOfContribution: number;
-	fine: number;
-	isPaid: boolean;
-      }
+import CreditStatusButtonEnum from '../types/enums/CreditStatusButtonEnum';
 
-*/
 export const createCreditPayments = (
   termOfCredit: number,
   dateStart: number,
@@ -20,9 +13,15 @@ export const createCreditPayments = (
   let endDate = startDate + termOfCredit;
   let idPayment = 0;
   const paymentSum = Number((sumOfCredit / termOfCredit).toFixed(3));
+  let statusOfButtonPay = '';
   console.log('paymentValue: ', paymentSum);
 
   for (let i = startDate; i < endDate; i++) {
+    if (i === startDate) {
+      statusOfButtonPay = CreditStatusButtonEnum.ACTIVE;
+    } else {
+      statusOfButtonPay = CreditStatusButtonEnum.NO_ACTIVE;
+    }
     const creditPayment: ICreditPayment = {
       id: idPayment,
       dateOfContribution: dateStart,
@@ -30,6 +29,7 @@ export const createCreditPayments = (
       fine: 0,
       isPaid: false,
       status: CreditPaymentStatusEnum.IS_NOT_PAID,
+      statusOfButton: statusOfButtonPay,
     };
 
     arrayOfPayments.push(creditPayment);

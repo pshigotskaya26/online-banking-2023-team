@@ -18,7 +18,11 @@ const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
       <td className="transaction-item__service">{props.payment.status}</td>
       <td className="transaction-item__type">{props.payment.fine}</td>
       <td className="transaction-item__value">
-        <button className="button button-do-payment">Pay</button>
+        <button
+          className={'button button-do-payment ' + props.payment.statusOfButton}
+        >
+          Pay
+        </button>
       </td>
     </tr>
   );

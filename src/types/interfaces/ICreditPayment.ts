@@ -5,4 +5,5 @@ export default interface ICreditPayment {
   fine: number;
   isPaid: boolean;
   status: string;
+  statusOfButton: string;
 }
