@@ -4,12 +4,14 @@ import ICredit from '../../types/interfaces/ICredit';
 import { getStringDate } from '../../utils/formateDateTime';
 import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
 import ICreditPayment from '../../types/interfaces/ICreditPayment';
+import CreditPaymentItem from '../creditPaymentItem';
 
 interface CreditItemProps {
   credit: ICredit;
 }
 
 const CreditItem: React.FC<CreditItemProps> = (props) => {
+  console.log('array payments; ', props.credit.arrOfPayments);
   return (
     <div className="credit-item">
       <h4 className="credit-item__title">
@@ -90,7 +92,7 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
             </thead>
             <tbody>
               {props.credit.arrOfPayments.map((paymentItem: ICreditPayment) => (
-                <creditPaymentItem key={paymentItem.id} payment={paymentItem} />
+                <CreditPaymentItem key={paymentItem.id} payment={paymentItem} />
               ))}
             </tbody>
           </table>
