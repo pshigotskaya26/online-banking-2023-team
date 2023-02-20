@@ -5,7 +5,6 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import CreditTermEnum from '../../types/enums/CreditTermEnum';
 import CreditThingEnum from '../../types/enums/CreditThingEnum';
 import CreditSumEnum from '../../types/enums/CreditSumEnum';
-import dayjs from 'dayjs';
 import { useActions } from '../../hooks/useActions';
 import ICredit from '../../types/interfaces/ICredit';
 import { createCreditPayments } from '../../utils/createCreditPayments';

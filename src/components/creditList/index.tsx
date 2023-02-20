@@ -25,7 +25,7 @@ const CreditList = () => {
 
   return (
     <div className="creditList-container">
-      <h2 className="creditList__title">My credits list:</h2>
+      <h3 className="creditList__title">My credits list:</h3>
       <div className="creditList__content">
         {credits.map((creditItem: ICredit) => (
           <CreditItem key={creditItem.id} credit={creditItem} />
