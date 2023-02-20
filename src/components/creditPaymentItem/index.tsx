@@ -14,7 +14,7 @@ const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
       <td className="transaction-item__date">
         {getStringDate(props.payment.dateOfContribution)}
       </td>
-      <td className="transaction-item__status">payment value</td>
+      <td className="transaction-item__status">{props.payment.paymentValue}</td>
       <td className="transaction-item__service">{props.payment.status}</td>
       <td className="transaction-item__type">{props.payment.fine}</td>
       <td className="transaction-item__value">

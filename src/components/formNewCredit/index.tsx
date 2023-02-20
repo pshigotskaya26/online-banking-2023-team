@@ -33,7 +33,11 @@ const FormNewCredit: React.FC = () => {
     fine: 0,
     userId: user?.id ?? 0,
     isAllPaid: false,
-    arrOfPayments: createCreditPayments(Number(creditTerm), Date.now()),
+    arrOfPayments: createCreditPayments(
+      Number(creditTerm),
+      Date.now(),
+      Number(creditSum),
+    ),
   };
 
   const { addUserCredit } = useActions();
