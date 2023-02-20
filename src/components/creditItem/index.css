@@ -16,8 +16,12 @@
 }
 
 .credit-item__description {
-  width: 600px;
-  @apply pl-10 pb-6;
+  width: 100%;
+  @apply flex items-end pl-10 pb-6;
+}
+
+.credit-description__info {
+  width: 550px;
 }
 
 .credit-description {
@@ -51,4 +55,9 @@
 
 .credit-payments__head th {
   @apply p-1.5 text-start font-normal;
+}
+
+.button-pay-all {
+  cursor: pointer;
+  @apply bg-amber-400 hover:bg-amber-500;
 }
