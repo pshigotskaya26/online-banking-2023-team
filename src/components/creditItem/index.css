@@ -6,13 +6,18 @@
   @apply pb-6 text-purple-600;
 }
 
-.credit-description__title {
-  @apply pl-6 text-blue-500;
+.credit-description__title,
+.credit-payments__title {
+  @apply text-blue-500;
+}
+
+.credit-description__content {
+  @apply pl-6;
 }
 
 .credit-item__description {
   width: 600px;
-  @apply pl-10;
+  @apply pl-10 pb-6;
 }
 
 .credit-description {
@@ -26,4 +31,24 @@
 
 .credit-description__value {
   @apply w-3/5 text-gray-400;
+}
+
+.credit-item__payments {
+  @apply pl-10;
+}
+
+.credit-payments__title {
+  @apply pb-6;
+}
+
+.credit-payments__table {
+  @apply w-full;
+}
+
+.credit-payments__head {
+  @apply text-white bg-amber-400;
+}
+
+.credit-payments__head th {
+  @apply p-1.5 text-start font-normal;
 }
