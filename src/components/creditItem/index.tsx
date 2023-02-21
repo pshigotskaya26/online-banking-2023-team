@@ -4,11 +4,9 @@ import ICredit from '../../types/interfaces/ICredit';
 import { getStringDate } from '../../utils/formateDateTime';
 import { toggleActiveCreditButtonAllPay } from '../../utils/toggleActiveCreditButtonAllPay';
 import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
-import CreditStatusEnum from '../../types/enums/CreditStatusEnum';
 import ICreditPayment from '../../types/interfaces/ICreditPayment';
 import CreditPaymentItem from '../creditPaymentItem';
 import ICard from '../../types/interfaces/ICard';
-import { useActions } from '../../hooks/useActions';
 
 interface CreditItemProps {
   credit: ICredit;

@@ -1,5 +1,5 @@
 import './index.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ICreditPayment from '../../types/interfaces/ICreditPayment';
 import { getStringDate } from '../../utils/formateDateTime';
 import ICard from '../../types/interfaces/ICard';
@@ -17,6 +17,11 @@ const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
   ) => {
     setCurrentCard(Number(event.target.value));
   };
+
+  const currentDate = Date.now();
+  console.log('currentDate: ', currentDate);
+
+  useEffect(() => {});
 
   return (
     <tr className="credit-payment-item">
