@@ -16,6 +16,17 @@ class CreditsAPI {
     localStorage.setItem('credits', JSON.stringify(credits));
     return credits.filter((credit) => credit.userId === newCredit.userId);
   }
+
+  updateCredits(newCredits: ICredit[]): ICredit[] {
+    const credits: ICredit[] = JSON.parse(
+      localStorage.getItem('credits') ?? '[]',
+    );
+    const newCreditList = credits
+      .filter((credit) => newCredits.every((cd) => cd.id !== credit.id))
+      .concat(newCredits);
+    localStorage.setItem('credits', JSON.stringify(newCreditList));
+    return newCredits;
+  }
 }
 
 const creditsAPI = new CreditsAPI();

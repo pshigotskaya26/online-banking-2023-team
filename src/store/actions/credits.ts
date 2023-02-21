@@ -42,3 +42,24 @@ export const addUserCredit = (newCredit: ICredit) => {
     }
   };
 };
+
+export const updateCredits = (userCredits: ICredit[]) => {
+  return (dispatch: Dispatch<CreditsManagementActions>) => {
+    try {
+      dispatch({ type: CreditsActionTypes.UPDATE_CREDITS });
+      const response = creditsAPI.updateCredits(userCredits);
+      dispatch({
+        type: CreditsActionTypes.UPDATE_CREDITS_SUCCESS,
+        payload: response,
+      });
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e.message);
+        dispatch({
+          type: CreditsActionTypes.UPDATE_CREDITS_ERROR,
+          payload: e.message,
+        });
+      }
+    }
+  };
+};

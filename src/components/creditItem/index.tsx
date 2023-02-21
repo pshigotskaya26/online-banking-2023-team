@@ -1,7 +1,8 @@
 import './index.css';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import ICredit from '../../types/interfaces/ICredit';
 import { getStringDate } from '../../utils/formateDateTime';
+import { toggleActiveCreditButtonAllPay } from '../../utils/toggleActiveCreditButtonAllPay';
 import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
 import ICreditPayment from '../../types/interfaces/ICreditPayment';
 import CreditPaymentItem from '../creditPaymentItem';
@@ -10,12 +11,17 @@ import ICard from '../../types/interfaces/ICard';
 interface CreditItemProps {
   credit: ICredit;
   cards: ICard[];
+  id: number;
 }
 
 const CreditItem: React.FC<CreditItemProps> = (props) => {
-  //console.log('array payments; ', props.credit.arrOfPayments);
+  console.log('creditItem: ', props.credit);
 
-  //console.log('cards in creditPaymentItem: ', props.cards);
+  useEffect(() => {
+    if (props.credit.isAllPaid === true) {
+      toggleActiveCreditButtonAllPay(true, props.id);
+    }
+  });
 
   return (
     <div className="credit-item">

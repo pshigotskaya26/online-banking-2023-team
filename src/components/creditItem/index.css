@@ -61,3 +61,7 @@
   cursor: pointer;
   @apply bg-amber-400 hover:bg-amber-500;
 }
+
+.button-pay-all.no-active {
+  @apply pointer-events-none bg-slate-200 pl-6 pr-6 pt-2 pb-2;
+}

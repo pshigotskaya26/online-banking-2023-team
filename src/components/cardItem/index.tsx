@@ -10,7 +10,6 @@ import CardNumber from '../cardNumber';
 import CardBalance from '../cardBalance';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useActions } from '../../hooks/useActions';
-import { IClientUser } from '../../types/interfaces/IUser';
 
 interface CardItemProps {
   card: ICard;

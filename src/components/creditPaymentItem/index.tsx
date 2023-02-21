@@ -10,15 +10,12 @@ interface CreditPaymentItemProps {
 }
 
 const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
-  console.log('cards in PaymentItem: ', props.cards);
-
   const [currentCard, setCurrentCard] = useState<number>(props.cards[0].number);
 
   const handleSelectPaymentCard = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setCurrentCard(Number(event.target.value));
-    console.log('currentCard: ', currentCard);
   };
 
   return (

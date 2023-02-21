@@ -1,20 +1,18 @@
 import './index.css';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useActions } from '../../hooks/useActions';
 import ICredit from '../../types/interfaces/ICredit';
 import CreditItem from '../creditItem';
-import ICard from '../../types/interfaces/ICard';
 
 const CreditList = () => {
   const { user } = useAppSelector((state) => state.authuser);
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);
   const { cards } = useAppSelector((state) => state.usercards);
-
-  console.log('cards in CreditList: ', cards);
-
   const { getCreditsByUserId } = useActions();
   const [credits, setCredits] = useState<ICredit[]>([]);
+
+  console.log('credits: ', credits);
 
   useEffect(() => {
     if (user !== null) {
@@ -31,7 +29,12 @@ const CreditList = () => {
       <h3 className="creditList__title">My credits list:</h3>
       <div className="creditList__content">
         {credits.map((creditItem: ICredit) => (
-          <CreditItem key={creditItem.id} credit={creditItem} cards={cards} />
+          <CreditItem
+            id={creditItem.id}
+            key={creditItem.id}
+            credit={creditItem}
+            cards={cards}
+          />
         ))}
       </div>
     </div>
