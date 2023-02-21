@@ -1,17 +1,22 @@
 import './index.css';
-import React from 'react';
+import React, { useState } from 'react';
 import ICredit from '../../types/interfaces/ICredit';
 import { getStringDate } from '../../utils/formateDateTime';
 import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
 import ICreditPayment from '../../types/interfaces/ICreditPayment';
 import CreditPaymentItem from '../creditPaymentItem';
+import ICard from '../../types/interfaces/ICard';
 
 interface CreditItemProps {
   credit: ICredit;
+  cards: ICard[];
 }
 
 const CreditItem: React.FC<CreditItemProps> = (props) => {
-  console.log('array payments; ', props.credit.arrOfPayments);
+  //console.log('array payments; ', props.credit.arrOfPayments);
+
+  //console.log('cards in creditPaymentItem: ', props.cards);
+
   return (
     <div className="credit-item">
       <h4 className="credit-item__title">
@@ -93,11 +98,16 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
                 <th>Status type</th>
                 <th>Fine</th>
                 <th>Pay</th>
+                <th>Choose card:</th>
               </tr>
             </thead>
             <tbody>
               {props.credit.arrOfPayments.map((paymentItem: ICreditPayment) => (
-                <CreditPaymentItem key={paymentItem.id} payment={paymentItem} />
+                <CreditPaymentItem
+                  key={paymentItem.id}
+                  payment={paymentItem}
+                  cards={props.cards}
+                />
               ))}
             </tbody>
           </table>

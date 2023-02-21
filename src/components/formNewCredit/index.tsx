@@ -47,7 +47,8 @@ const FormNewCredit: React.FC = () => {
     navigate('/my-credits');
   };
 
-  console.log('objNewCredit: ', objNewCredit);
+  //console.log('objNewCredit: ', objNewCredit);
+
   const handleSelectThing = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCreditThing(event.target.value);
   };
