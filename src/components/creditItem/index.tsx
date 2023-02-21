@@ -4,12 +4,15 @@ import ICredit from '../../types/interfaces/ICredit';
 import { getStringDate } from '../../utils/formateDateTime';
 import { toggleActiveCreditButtonAllPay } from '../../utils/toggleActiveCreditButtonAllPay';
 import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
+import CreditStatusEnum from '../../types/enums/CreditStatusEnum';
 import ICreditPayment from '../../types/interfaces/ICreditPayment';
 import CreditPaymentItem from '../creditPaymentItem';
 import ICard from '../../types/interfaces/ICard';
+import { useActions } from '../../hooks/useActions';
 
 interface CreditItemProps {
   credit: ICredit;
+  credits: ICredit[];
   cards: ICard[];
   id: number;
 }
@@ -20,6 +23,8 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
   useEffect(() => {
     if (props.credit.isAllPaid === true) {
       toggleActiveCreditButtonAllPay(true, props.id);
+    } else {
+      toggleActiveCreditButtonAllPay(false, props.id);
     }
   });
 
@@ -83,6 +88,15 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
               </div>
               <div className="credit-description__value credit-description__start-date-value">
                 {getStringDate(props.credit.dateStart)}
+              </div>
+            </div>
+
+            <div className="credit-description credit-description__status">
+              <div className="credit-description__text credit-description__status-text">
+                A CREDIT STATUS:
+              </div>
+              <div className="credit-description__value credit-description__status-value">
+                {props.credit.status}
               </div>
             </div>
           </div>

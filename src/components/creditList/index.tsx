@@ -32,6 +32,7 @@ const CreditList = () => {
           <CreditItem
             id={creditItem.id}
             key={creditItem.id}
+            credits={credits}
             credit={creditItem}
             cards={cards}
           />
