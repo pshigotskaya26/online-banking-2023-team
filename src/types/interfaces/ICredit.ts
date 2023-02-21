@@ -12,5 +12,6 @@ export default interface ICredit {
   fine: number; // пеня
   userId: number;
   isAllPaid: boolean; // is everything paid
+  status: string; //open or close credit
   arrOfPayments: ICreditPayment[];
 }

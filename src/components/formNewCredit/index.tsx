@@ -8,6 +8,7 @@ import CreditSumEnum from '../../types/enums/CreditSumEnum';
 import { useActions } from '../../hooks/useActions';
 import ICredit from '../../types/interfaces/ICredit';
 import { createCreditPayments } from '../../utils/createCreditPayments';
+import CreditStatusEnum from '../../types/enums/CreditStatusEnum';
 
 const FormNewCredit: React.FC = () => {
   const { user } = useAppSelector((state) => state.authuser);
@@ -33,6 +34,7 @@ const FormNewCredit: React.FC = () => {
     fine: 0,
     userId: user?.id ?? 0,
     isAllPaid: false,
+    status: CreditStatusEnum.OPEN,
     arrOfPayments: createCreditPayments(
       Number(creditTerm),
       Date.now(),
