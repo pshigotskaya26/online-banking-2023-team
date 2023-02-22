@@ -3,15 +3,15 @@
 }
 
 .cardList__head {
-  @apply flex justify-between;
+  @apply flex justify-between items-center;
 }
 
 .cardList__content {
-  @apply flex flex-wrap gap-x-5 gap-y-5 pb-5;
+  @apply flex flex-wrap gap-x-5 gap-y-5 pb-5 mt-4;
 }
 
 .cardList__title {
-  @apply pb-6 text-xl text-blue-800;
+  @apply text-xl text-blue-800;
 }
 
 .button {
@@ -19,5 +19,5 @@
 }
 
 .button-add {
-  @apply bg-amber-400 hover:bg-amber-500;
+  @apply w-1/4 bg-amber-400 hover:bg-amber-500;
 }

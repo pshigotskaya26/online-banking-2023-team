@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../../../hooks/useAppSelector';
 import IService from '../../../../types/interfaces/IService';
@@ -6,10 +6,14 @@ import { fetchServices } from '../../../../store/actions/services';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SelectCard from '../../../../components/selectCard';
 import ICard from '../../../../types/interfaces/ICard';
-import InputNumber from '../../../../components/inputNumber';
 import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
 import Calculator from '../../../../components/calculator';
 import Button from '../../../../components/button';
+import { useActions } from '../../../../hooks/useActions';
+import { ITransaction } from '../../../../types/interfaces/ITransaction';
+import dayjs from 'dayjs';
+import TransactionsTypesEnum from '../../../../types/enums/TransactionsTypesEnum';
+import TransactionStatusEnum from '../../../../types/enums/TransactionStatusEnum';
 
 interface PaymentFormProps {}
 
@@ -17,6 +21,8 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
   const { code } = useParams();
   const { services } = useAppSelector((state) => state.services);
   const { cards } = useAppSelector((state) => state.usercards);
+  const { user } = useAppSelector((state) => state.authuser);
+  const { createPayment } = useActions();
 
   const [service, setService] = useState<IService>({
     title: '',
@@ -42,7 +48,20 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
 
   const [paymentSum, setPaymentSum] = useState(0);
   const [isCalcShow, setIsCalcShow] = useState(false);
-  const handlePayment = () => {};
+  const handlePayment = () => {
+    const transaction: ITransaction = {
+      id: 0,
+      cardid: activeCard.id,
+      timestamp: dayjs().unix(),
+      targetid: service.id,
+      userid: user?.id ?? 0,
+      value: paymentSum,
+      entityid: service.id,
+      entitytype: TransactionsTypesEnum.PAYMENT,
+      status: TransactionStatusEnum.PENDING,
+    };
+    createPayment(transaction);
+  };
   const isButtonDisabled = paymentSum === 0 || paymentSum > activeCard?.balance;
 
   return (

@@ -23,23 +23,29 @@ const routes: RouteObject[] = [
   },
   {
     path: '/services',
-    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
-      <ServicesPage />
-    </ProtectedRoute>,
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+        <ServicesPage />
+      </ProtectedRoute>
+    ),
     id: 'Services',
   },
   {
     path: '/users',
-    element: <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
-      <UsersPage />
-    </ProtectedRoute>,
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+        <UsersPage />
+      </ProtectedRoute>
+    ),
     id: 'Users',
   },
   {
     path: '/dashboard',
-    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
-      <DashboardPage />
-    </ProtectedRoute>,
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+        <DashboardPage />
+      </ProtectedRoute>
+    ),
     id: 'Dashboard',
   },
   {
@@ -59,32 +65,40 @@ const routes: RouteObject[] = [
   },
   {
     path: '/transfers',
-    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
-      <TransfersPage />
-    </ProtectedRoute>,
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+        <TransfersPage />
+      </ProtectedRoute>
+    ),
     id: 'Transfers',
   },
   {
-    path: '/payments',
-    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
-      <PaymentsPage />
-    </ProtectedRoute>,
+    path: '/payments/*',
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+        <PaymentsPage />
+      </ProtectedRoute>
+    ),
     id: 'Payments',
     children: [
       {
         path: ':code',
-        element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
-          <PaymentForm />
-        </ProtectedRoute>,
+        element: (
+          <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+            <PaymentForm />
+          </ProtectedRoute>
+        ),
         id: 'PaymentForm',
       },
     ],
   },
   {
     path: '/new-card',
-    element: <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
-      <NewCardPage />
-    </ProtectedRoute>,
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+        <NewCardPage />
+      </ProtectedRoute>
+    ),
     id: 'NewCard',
   },
   {
