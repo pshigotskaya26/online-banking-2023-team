@@ -18,6 +18,7 @@ interface CreditItemProps {
 const CreditItem: React.FC<CreditItemProps> = (props) => {
   console.log('creditItem: ', props.credit);
 
+  /*
   useEffect(() => {
     if (props.credit.isAllPaid === true) {
       toggleActiveCreditButtonAllPay(true, props.id);
@@ -25,7 +26,7 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
       toggleActiveCreditButtonAllPay(false, props.id);
     }
   });
-
+*/
   return (
     <div className="credit-item">
       <h4 className="credit-item__title">
@@ -116,7 +117,6 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
                 <th>Status type</th>
                 <th>Fine</th>
                 <th>Pay</th>
-                <th>Choose card:</th>
               </tr>
             </thead>
             <tbody>

@@ -23,6 +23,7 @@ interface CreditPaymentItemProps {
 }
 
 const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
+  /*
   const [currentCard, setCurrentCard] = useState<number>(props.cards[0].number);
   const [statusOfButtonPay, setStatusOfButtonPay] = useState<string>(
     props.payment.statusOfButton,
@@ -93,7 +94,7 @@ const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
       }
     }
   });
-
+*/
   return (
     <tr className="credit-payment-item">
       <td className="credit-payment__orderNumb">{props.payment.id + 1}</td>
@@ -102,26 +103,13 @@ const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
       </td>
       <td className="credit-payment__status">{props.payment.paymentValue}</td>
       <td className="credit-payment__service">{props.payment.status}</td>
-      <td className="credit-payment__type">{fineOfPayment}</td>
+      <td className="credit-payment__type">-</td>
       <td className="credit-payment__value">
-        <button className={'button button-do-payment ' + statusOfButtonPay}>
+        <button
+          className={'button button-do-payment ' + props.payment.statusOfButton}
+        >
           Pay
         </button>
-      </td>
-      <td className="credit-payment__card">
-        <select
-          onChange={handleSelectPaymentCard}
-          className="select-payment-card w-full"
-          size={props.cards.length}
-          value={currentCard}
-        >
-          {props.cards.map((cardItem: ICard) => (
-            <option key={cardItem.id} value={cardItem.number}>
-              {cardItem.number} ({cardItem.currency}) (Balance:{' '}
-              {cardItem.balance})
-            </option>
-          ))}
-        </select>
       </td>
     </tr>
   );
