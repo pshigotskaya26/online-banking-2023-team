@@ -1,11 +1,12 @@
 import './index.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import CreditTermEnum from '../../types/enums/CreditTermEnum';
 import CreditThingEnum from '../../types/enums/CreditThingEnum';
 import CreditSumEnum from '../../types/enums/CreditSumEnum';
 import { useActions } from '../../hooks/useActions';
+import ICard from '../../types/interfaces/ICard';
 import ICredit from '../../types/interfaces/ICredit';
 import { createCreditPayments } from '../../utils/createCreditPayments';
 import CreditStatusEnum from '../../types/enums/CreditStatusEnum';
@@ -14,12 +15,19 @@ import CreditPaymentFineEnum from '../../types/enums/CreditPaymentFineEnum';
 const FormNewCredit: React.FC = () => {
   const { user } = useAppSelector((state) => state.authuser);
   console.log('user: ', user);
+  const { cards: userCards } = useAppSelector((state) => state.usercards);
 
+  const [cards, setCards] = useState<ICard[]>([]);
   const [creditTerm, setCreditTerm] = useState<string>(CreditTermEnum.TEN_DAYS);
   const [creditThing, setCreditThing] = useState<string>(
     CreditThingEnum.BICYCLE,
   );
   const [creditSum, setCreditSum] = useState<string>(CreditSumEnum.SUM_10000);
+  const [creditCardId, setCreditCardId] = useState<number>(0);
+
+  useEffect(() => {
+    setCards(userCards);
+  }, [userCards]);
 
   const navigate = useNavigate();
 
@@ -41,6 +49,7 @@ const FormNewCredit: React.FC = () => {
       Date.now(),
       Number(creditSum),
     ),
+    cardId: creditCardId,
   };
 
   const { addUserCredit } = useActions();
@@ -49,8 +58,6 @@ const FormNewCredit: React.FC = () => {
     addUserCredit(newCredit);
     navigate('/my-credits');
   };
-
-  //console.log('objNewCredit: ', objNewCredit);
 
   const handleSelectThing = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCreditThing(event.target.value);
@@ -62,6 +69,10 @@ const FormNewCredit: React.FC = () => {
 
   const handleSelectTerm = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCreditTerm(event.target.value);
+  };
+
+  const handleSelectCardId = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCreditCardId(Number(event.target.value));
   };
 
   return (
@@ -127,6 +138,24 @@ const FormNewCredit: React.FC = () => {
               {Object.values(CreditTermEnum).map((item: string) => (
                 <option key={item} value={item}>
                   {item}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="new-credit__CardId w-1/5">
+            <p className="mb-4 text-sm font-medium text-gray-900 dark:text-white h-8">
+              Select a card:
+            </p>
+            <select
+              onChange={handleSelectCardId}
+              className="select-card w-full"
+              size={cards.length}
+              value={creditCardId}
+            >
+              {cards.map((cardItem: ICard) => (
+                <option key={cardItem.id} value={cardItem.id}>
+                  {cardItem.number} ({cardItem.currency})
                 </option>
               ))}
             </select>

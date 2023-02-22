@@ -14,4 +14,5 @@ export default interface ICredit {
   isAllPaid: boolean; // is everything paid
   status: string; //open or close credit
   arrOfPayments: ICreditPayment[];
+  cardId: number;
 }

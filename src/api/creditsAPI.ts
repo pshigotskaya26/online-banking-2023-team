@@ -6,6 +6,7 @@ class CreditsAPI {
       localStorage.getItem('credits') ?? '[]',
     );
     return credits.filter((credit) => credit.userId === userid);
+    //.map()
   }
 
   addUserCredit(newCredit: ICredit): ICredit[] {
