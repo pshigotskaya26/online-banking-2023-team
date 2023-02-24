@@ -125,6 +125,8 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
                   key={paymentItem.id}
                   payment={paymentItem}
                   cards={props.cards}
+                  credits={props.credits}
+                  credit={props.credit}
                 />
               ))}
             </tbody>
