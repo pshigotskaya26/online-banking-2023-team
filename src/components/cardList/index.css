@@ -3,7 +3,7 @@
 }
 
 .cardList__head {
-  @apply flex justify-between;
+  @apply flex justify-between pb-6;
 }
 
 .cardList__buttons {
