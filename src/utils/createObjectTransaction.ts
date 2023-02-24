@@ -22,5 +22,4 @@ export const createObjectTransaction = (
     entitytype: entityType,
   };
   return transaction;
-
 };

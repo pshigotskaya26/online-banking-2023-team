@@ -52,10 +52,14 @@ const adminRoutes = [
   },
   {
     path: '/users',
-    title: "Users",
-    isAuth: false
+    title: 'Users',
+    isAuth: false,
   },
-
+  {
+    path: '/credits-admin',
+    title: 'Credits',
+    isAuth: false,
+  },
   {
     path: '/logout',
     title: 'Logout',

@@ -1,6 +1,6 @@
 enum recipientsViewEnum {
   YOUR_CARD,
-  ANOTHER_CARD
+  ANOTHER_CARD,
 }
 
-export default recipientsViewEnum
+export default recipientsViewEnum;
