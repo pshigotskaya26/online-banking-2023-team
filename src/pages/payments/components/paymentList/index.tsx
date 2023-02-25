@@ -9,7 +9,7 @@ interface PaymentListProps {
 
 export const PaymentList: FC<PaymentListProps> = ({ services }) => {
   if (services.length === 0) {
-    return <div>There is no services for display.</div>;
+    return <div className={'p-3 '}>There is no services for display.</div>;
   }
 
   return (
