@@ -33,7 +33,12 @@ const SelectCard: React.FC<SelectCardProps> = ({
       className="card-item bg-gray-100 relative shadow transition-transform transform hover:scale-105"
       style={
         activeCardData?.background
-          ? { background: `url(${imageBackground})` }
+          ? {
+              background: `url(${imageBackground})`,
+              backgroundRepeat: 'no-repeat',
+              height: '212px',
+              width: '340px',
+            }
           : {}
       }
     >
