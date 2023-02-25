@@ -5,6 +5,7 @@ import * as TransfersActions from './transfers';
 import * as CardManagement from './cardsManagement';
 import * as UsersActions from './users';
 import * as TransactionsActions from './transactions';
+import * as CreditsAdminActions from './credits-admin';
 
 const ApplicationActions = {
   ...ServicesActionCreators,
@@ -14,6 +15,7 @@ const ApplicationActions = {
   ...CardManagement,
   ...UsersActions,
   ...TransactionsActions,
+  ...CreditsAdminActions,
 };
 
 export default ApplicationActions;

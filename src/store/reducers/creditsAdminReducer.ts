@@ -18,9 +18,13 @@ export const CreditsAdminReducer = (
     case CreditsAdminActionTypes.FETCH_CREDITS:
       return { ...state, isLoadingCredits: true };
     case CreditsAdminActionTypes.FETCH_CREDITS_SUCCESS:
-      return { ...state, isLoadingCredits: true };
+      return { ...state, isLoadingCredits: false, credits: action.payload };
     case CreditsAdminActionTypes.FETCH_CREDITS_ERROR:
-      return { ...state };
+      return {
+        ...state,
+        isLoadingCredits: false,
+        errorLoadingCredits: action.payload,
+      };
     default:
       return state;
   }

@@ -21,6 +21,7 @@ interface FetchCreditsAdminSuccessAction {
 
 interface FetchCreditsAdminErrorAction {
   type: CreditsAdminActionTypes.FETCH_CREDITS_ERROR;
+  payload: string;
 }
 
 export type CreditsAdminActions =
