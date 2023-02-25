@@ -54,12 +54,16 @@ const FormNewCredit: React.FC = () => {
 
   const { addUserCredit } = useActions();
   const { replenishBalanceForCredit } = useActions();
+  const { getCreditsByUserId } = useActions();
 
   const changeCredits = async (newCredit: ICredit = objNewCredit) => {
-    console.log('newCredit cardId: ', newCredit.cardId);
-    addUserCredit(newCredit);
-    replenishBalanceForCredit(creditCardId, Number(creditSum));
-    navigate('/dashboard');
+    if (user !== null) {
+      console.log('newCredit cardId: ', newCredit.cardId);
+      addUserCredit(newCredit);
+      replenishBalanceForCredit(creditCardId, Number(creditSum));
+      getCreditsByUserId(user.id, cards);
+      navigate('/dashboard');
+    }
   };
 
   const handleSelectThing = (event: React.ChangeEvent<HTMLSelectElement>) => {

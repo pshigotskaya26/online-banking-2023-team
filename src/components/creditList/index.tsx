@@ -1,22 +1,27 @@
+import React, { useEffect, useState } from 'react';
 import './index.css';
-import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useActions } from '../../hooks/useActions';
 import ICredit from '../../types/interfaces/ICredit';
 import CreditItem from '../creditItem';
 import ICard from '../../types/interfaces/ICard';
 
-const CreditList = () => {
+interface CreditListProps {
+  credits: ICredit[];
+  cards: ICard[];
+}
+
+const CreditList: React.FC<CreditListProps> = (props) => {
   const { user } = useAppSelector((state) => state.authuser);
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);
   const { cards: userCards } = useAppSelector((state) => state.usercards);
   const { getCardsByUserId } = useActions();
   const { getCreditsByUserId } = useActions();
-  const [cards, setCards] = useState<ICard[]>([]);
-  const [credits, setCredits] = useState<ICredit[]>([]);
+  const [cards, setCards] = useState<ICard[]>(props.cards);
+  const [credits, setCredits] = useState<ICredit[]>(props.credits);
 
-  console.log('credits: ', credits);
-  console.log('cards: ', cards);
+  //console.log('credits: ', credits);
+  //console.log('cards: ', cards);
 
   useEffect(() => {
     if (user !== null) {

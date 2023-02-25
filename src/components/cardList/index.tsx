@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './index.css';
 import ICard from '../../types/interfaces/ICard';
 import ICredit from '../../types/interfaces/ICredit';
@@ -9,7 +9,10 @@ import { useActions } from '../../hooks/useActions';
 import { toggleActiveCreditButton } from '../../utils/toggleActiveCreditButton';
 import { toggleActiveMyCreditsButton } from '../../utils/toggleActiveMyCreditsButton';
 
-interface CardListProps {}
+interface CardListProps {
+  credits: ICredit[];
+  cards: ICard[];
+}
 
 const CardList: React.FC<CardListProps> = (props) => {
   const { user } = useAppSelector((state) => state.authuser);
@@ -18,20 +21,8 @@ const CardList: React.FC<CardListProps> = (props) => {
 
   const { getCardsByUserId } = useActions();
   const { getCreditsByUserId } = useActions();
-  const [cards, setCards] = useState<ICard[]>([]);
-  const [credits, setCredits] = useState<ICredit[]>([]);
-
-  useEffect(() => {
-    if (user !== null) {
-      getCardsByUserId(user.id);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (user !== null) {
-      getCreditsByUserId(user.id, cards);
-    }
-  }, [user]);
+  const [cards, setCards] = useState<ICard[]>(props.cards);
+  const [credits, setCredits] = useState<ICredit[]>(props.credits);
 
   useEffect(() => {
     setCards(userCards);
@@ -41,21 +32,31 @@ const CardList: React.FC<CardListProps> = (props) => {
     setCredits(userCredits);
   }, [userCredits]);
 
-  if (cards.length) {
+  useEffect(() => {
+    if (user !== null) {
+      getCardsByUserId(user.id);
+      console.log('cards in useeffect cardList: ', cards);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user !== null) {
+      //console.log('cards in useeffect cardList: ', cards);
+      getCreditsByUserId(user.id, cards);
+    }
+  }, [user]);
+
+  if (props.cards.length) {
     toggleActiveCreditButton(true);
   } else {
     toggleActiveCreditButton(false);
   }
 
-  if (credits.length) {
+  if (props.credits.length) {
     toggleActiveMyCreditsButton(true);
   } else {
     toggleActiveMyCreditsButton(false);
   }
-
-  console.log('cards in cardList: ', cards);
-
-  console.log('credits in CardList: ', credits.length);
 
   return (
     <div className="cardList-container">

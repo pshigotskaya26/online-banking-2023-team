@@ -34,10 +34,14 @@ const FormNewCard: React.FC = () => {
   };
 
   const { addUserCard } = useActions();
+  const { getCardsByUserId } = useActions();
 
   const changeCards = (newCard: ICard = objNewCard) => {
-    addUserCard(newCard);
-    navigate('/dashboard');
+    if (user !== null) {
+      addUserCard(newCard);
+      //const arrCards = getCardsByUserId(user.id);
+      navigate('/dashboard');
+    }
   };
 
   const handleSelectCurrency = (

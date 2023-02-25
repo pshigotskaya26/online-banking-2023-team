@@ -70,7 +70,7 @@ class CreditsAPI {
     });
 
     //do clickable buttons depending on the current balance on the card
-
+    /*
     userCredits.forEach((creditItem) => {
       let cardId = creditItem.cardId;
       let cardBalance = userCards.filter(
@@ -91,8 +91,8 @@ class CreditsAPI {
         }
       });
     });
+*/
 
-    console.log('userCredits: ', userCredits);
     localStorage.setItem('credits', JSON.stringify(userCredits));
     this.updateCredits(userCredits);
     return userCredits;
