@@ -1,5 +1,5 @@
 import './style.css';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faStar,
@@ -21,6 +21,10 @@ export const TabsPanel: FC<TabsProps> = ({ callback }) => {
     setSelected(tabName);
     callback(tabName);
   };
+
+  useEffect(() => {
+    callback(selected);
+  }, []);
 
   return (
     <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">

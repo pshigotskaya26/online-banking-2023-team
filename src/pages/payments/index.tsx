@@ -17,7 +17,7 @@ const PaymentsPage = () => {
   const [payments, setPayments] = useState<IService[]>([]);
 
   const filterFavoriteServices = () =>
-    services.filter((service) => user?.favoriteServices.includes(service.id));
+    services.filter((service) => user?.favoriteServices?.includes(service.id));
   const tabChangeHandler = (tabName: PaymentTabsNamesEnum) => {
     let srvcs = services;
     switch (tabName) {
@@ -35,10 +35,6 @@ const PaymentsPage = () => {
   useEffect(() => {
     fetchServices();
   }, []);
-
-  useEffect(() => {
-    setPayments(filterFavoriteServices());
-  }, [services]);
 
   return (
     <ClientLayout>
