@@ -97,6 +97,7 @@ class CardsAPI {
       }
     }
     localStorage.setItem('cards', JSON.stringify(cards));
+    console.log('cards after taking credit: ', cards);
     return cards;
   };
 }

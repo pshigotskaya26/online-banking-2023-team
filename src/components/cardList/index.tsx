@@ -21,18 +21,6 @@ const CardList: React.FC<CardListProps> = (props) => {
   const [cards, setCards] = useState<ICard[]>([]);
   const [credits, setCredits] = useState<ICredit[]>([]);
 
-  if (cards.length) {
-    toggleActiveCreditButton(true);
-  } else {
-    toggleActiveCreditButton(false);
-  }
-
-  if (credits.length) {
-    toggleActiveMyCreditsButton(true);
-  } else {
-    toggleActiveMyCreditsButton(false);
-  }
-
   useEffect(() => {
     if (user !== null) {
       getCardsByUserId(user.id);
@@ -52,6 +40,22 @@ const CardList: React.FC<CardListProps> = (props) => {
   useEffect(() => {
     setCredits(userCredits);
   }, [userCredits]);
+
+  if (cards.length) {
+    toggleActiveCreditButton(true);
+  } else {
+    toggleActiveCreditButton(false);
+  }
+
+  if (credits.length) {
+    toggleActiveMyCreditsButton(true);
+  } else {
+    toggleActiveMyCreditsButton(false);
+  }
+
+  console.log('cards in cardList: ', cards);
+
+  console.log('credits in CardList: ', credits.length);
 
   return (
     <div className="cardList-container">

@@ -70,23 +70,27 @@ class CreditsAPI {
     });
 
     //do clickable buttons depending on the current balance on the card
-    /*
+
     userCredits.forEach((creditItem) => {
       let cardId = creditItem.cardId;
       let cardBalance = userCards.filter(
         (cardItem) => cardItem.id === cardId,
       )[0].balance;
 
+      console.log('cardBalance: ', cardBalance);
+
       creditItem.arrOfPayments.forEach((paymentItem) => {
         if (
           paymentItem.status === CreditPaymentStatusEnum.IS_NOT_PAID &&
-          paymentItem.paymentValue < cardBalance
+          paymentItem.paymentValue <= cardBalance
         ) {
+          console.log('cardBalance: before ', cardBalance);
+          cardBalance = cardBalance - paymentItem.paymentValue;
+          console.log('cardBalance: after-- ', cardBalance);
+          paymentItem.statusOfButton = CreditStatusButtonEnum.ACTIVE;
         }
       });
     });
-
-    */
 
     console.log('userCredits: ', userCredits);
     localStorage.setItem('credits', JSON.stringify(userCredits));

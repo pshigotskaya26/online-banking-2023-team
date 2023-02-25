@@ -3,21 +3,26 @@ import { ITransferData } from '../types/interfaces/ITransaction';
 import axios from 'axios';
 
 class TransfersAPI {
-
   private findCardsByUserID(id: number): ICard[] | undefined {
     const data = localStorage.getItem('cards') ?? '[]';
     const existCards: ICard[] = JSON.parse(data);
-    return existCards.filter(el => el.userid === id);
+    return existCards.filter((el) => el.userid === id);
   }
 
-  private async getConvertedMoney(currencyFrom: string, currencyTo: string, amount: number): Promise<number> {
+  private async getConvertedMoney(
+    currencyFrom: string,
+    currencyTo: string,
+    amount: number,
+  ): Promise<number> {
     let config = {
       headers: {
-        'apikey': 'iG4QESDWXjOp3Jb8Ya9zIAMwTgAN44wW',
+        apikey: 'CKhfOVDTNzgYebZQ4228NRj9i4uQVWWZ',
       },
     };
-    const res = await axios.get(`https://api.apilayer.com/fixer/convert?to=${currencyTo}&from=${currencyFrom}&amount=${amount}`, config);
-
+    const res = await axios.get(
+      `https://api.apilayer.com/fixer/convert?to=${currencyTo}&from=${currencyFrom}&amount=${amount}`,
+      config,
+    );
 
     if (res.status === 200) {
       const data = res.data;
@@ -25,7 +30,6 @@ class TransfersAPI {
     } else {
       throw new Error('Не удалось получить курс валют лоя перевода');
     }
-
   }
 
   private findCardByNumber(number: number): ICard | undefined {
@@ -34,13 +38,19 @@ class TransfersAPI {
     return existCards.find((card) => card.number === number);
   }
 
-  private getCardsWithUpdatedBalance({ cardTo, cardFrom, amountFrom, amountTo }: ITransferData) {
+  private getCardsWithUpdatedBalance({
+    cardTo,
+    cardFrom,
+    amountFrom,
+    amountTo,
+  }: ITransferData) {
     const data = localStorage.getItem('cards') ?? '[]';
     const existCards: ICard[] = JSON.parse(data);
     const cardsUpdated = existCards.map((card) => {
       if (card.number === cardTo) {
         return {
-          ...card, balance: amountTo
+          ...card,
+          balance: amountTo
             ? card.balance + amountTo
             : card.balance + amountFrom,
         };
@@ -72,7 +82,11 @@ class TransfersAPI {
     if (cardToDB && cardFrom) {
       let cards: ICard[];
       if (cardFrom.currency !== cardToDB.currency) {
-        const convertedMoney = await this.getConvertedMoney(cardFrom.currency, cardToDB.currency, transferData.amountFrom);
+        const convertedMoney = await this.getConvertedMoney(
+          cardFrom.currency,
+          cardToDB.currency,
+          transferData.amountFrom,
+        );
         transferData = {
           ...transferData,
           amountTo: +convertedMoney.toFixed(2),
@@ -113,14 +127,12 @@ class TransfersAPI {
     // } else {
     //   return {} as ITransaction;
     // }
-
   };
 
   fetchCardsByUserId(id: number): ICard[] {
     const cards = this.findCardsByUserID(id);
     return cards ? cards : [];
   }
-
 }
 
 const transfersAPI = new TransfersAPI();
