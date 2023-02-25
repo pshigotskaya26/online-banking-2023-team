@@ -17,7 +17,6 @@ class UserAPI {
     return existUsers.find((user) => user.id === id);
   }
 
-
   fetchUserInfo(credentials: AuthUserData): IClientUser | IAdminUser {
     const user = this.findUserByEmail(credentials.login);
     if (!user) {
@@ -28,7 +27,10 @@ class UserAPI {
       throw new Error('Incorrect email or password');
     }
 
-    localStorage.setItem('activeUserID', JSON.stringify(user.id));
+    localStorage.setItem(
+      'activeUserSession',
+      JSON.stringify({ id: user.id, ts: Date.now() }),
+    );
 
     return user;
   }
@@ -46,8 +48,15 @@ class UserAPI {
     return userInfo;
   }
 
+  updateSession(userid: number): void {
+    localStorage.setItem(
+      'activeUserSession',
+      JSON.stringify({ id: userid, ts: Date.now() }),
+    );
+  }
+
   logoutSystem(): null {
-    localStorage.removeItem('activeUserID');
+    localStorage.removeItem('activeUserSession');
     return null;
   }
 
@@ -58,7 +67,6 @@ class UserAPI {
     }
     return user;
   }
-
 }
 
 const authUserAPI = new UserAPI();
