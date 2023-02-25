@@ -2,12 +2,13 @@ import { Dispatch } from 'redux';
 import { CreditsActionTypes, CreditsManagementActions } from '../types/credits';
 import creditsAPI from '../../api/creditsAPI';
 import ICredit from '../../types/interfaces/ICredit';
+import ICard from '../../types/interfaces/ICard';
 
-export const getCreditsByUserId = (userid: number) => {
+export const getCreditsByUserId = (userid: number, userCards: ICard[]) => {
   return (dispatch: Dispatch<CreditsManagementActions>) => {
     try {
       dispatch({ type: CreditsActionTypes.FETCH_CREDITS });
-      const response = creditsAPI.getCreditsByUserId(userid);
+      const response = creditsAPI.getCreditsByUserId(userid, userCards);
       dispatch({
         type: CreditsActionTypes.FETCH_CREDITS_SUCCESS,
         payload: response,

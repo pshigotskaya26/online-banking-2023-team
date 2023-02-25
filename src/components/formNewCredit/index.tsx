@@ -23,7 +23,7 @@ const FormNewCredit: React.FC = () => {
     CreditThingEnum.BICYCLE,
   );
   const [creditSum, setCreditSum] = useState<string>(CreditSumEnum.SUM_10000);
-  const [creditCardId, setCreditCardId] = useState<number>(0);
+  const [creditCardId, setCreditCardId] = useState<number>(1);
 
   useEffect(() => {
     setCards(userCards);
@@ -56,6 +56,7 @@ const FormNewCredit: React.FC = () => {
   const { replenishBalanceForCredit } = useActions();
 
   const changeCredits = async (newCredit: ICredit = objNewCredit) => {
+    console.log('newCredit cardId: ', newCredit.cardId);
     addUserCredit(newCredit);
     replenishBalanceForCredit(creditCardId, Number(creditSum));
     navigate('/dashboard');

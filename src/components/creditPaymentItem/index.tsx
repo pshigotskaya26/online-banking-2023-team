@@ -101,10 +101,10 @@ const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
       <td className="credit-payment__date">
         {getStringDate(props.payment.dateOfContribution)}
       </td>
-      <td className="credit-payment__status">{props.payment.paymentValue}</td>
-      <td className="credit-payment__service">{props.payment.status}</td>
-      <td className="credit-payment__type">-</td>
-      <td className="credit-payment__value">
+      <td className="credit-payment__value">{props.payment.paymentValue}</td>
+      <td className="credit-payment__status">{props.payment.status}</td>
+      <td className="credit-payment__fine">{props.payment.fine}</td>
+      <td className="credit-payment__button">
         <button
           className={'button button-do-payment ' + props.payment.statusOfButton}
         >

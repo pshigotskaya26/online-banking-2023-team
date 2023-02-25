@@ -32,7 +32,7 @@ class CardsAPI {
   ): Promise<number> {
     let config = {
       headers: {
-        apikey: 'iG4QESDWXjOp3Jb8Ya9zIAMwTgAN44wW',
+        apikey: 'CKhfOVDTNzgYebZQ4228NRj9i4uQVWWZ',
       },
     };
     const res = await axios.get(
@@ -76,6 +76,7 @@ class CardsAPI {
     let cardCurrency = '';
 
     for (let i = 0; i < cards.length; i++) {
+      console.log('cards[i]-------------------------------: ', cards[i]);
       if (cards[i].id === cardId) {
         cardCurrency = cards[i].currency;
       }
@@ -88,7 +89,7 @@ class CardsAPI {
       summOfCredit,
     );
 
-    const convertedSummOfCreditFixed = +convertedSummOfCredit.toFixed(2);
+    const convertedSummOfCreditFixed = Number(convertedSummOfCredit.toFixed(2));
 
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].id === cardId) {

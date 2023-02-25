@@ -41,7 +41,7 @@ const CardList: React.FC<CardListProps> = (props) => {
 
   useEffect(() => {
     if (user !== null) {
-      getCreditsByUserId(user.id);
+      getCreditsByUserId(user.id, cards);
     }
   }, [user]);
 
