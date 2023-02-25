@@ -21,3 +21,23 @@ export const fetchCreditsAll = () => {
     }
   };
 };
+
+export const getPaymentsByDays = () => {
+  return (dispatch: Dispatch<CreditsAdminActions>) => {
+    const data = creditsAdminAPI.fetchPaymentsByDays();
+    dispatch({
+      type: CreditsAdminActionTypes.FETCH_PAYMENTS_BY_DAYS,
+      payload: data,
+    });
+  };
+};
+
+export const getCreditsByDays = () => {
+  return (dispatch: Dispatch<CreditsAdminActions>) => {
+    const data = creditsAdminAPI.fetchCreditsByDays();
+    dispatch({
+      type: CreditsAdminActionTypes.FETCH_CREDITS_BY_DAYS,
+      payload: data,
+    });
+  };
+};

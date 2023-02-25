@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { getStringDate } from '../../../utils/formateDateTime';
 import React, { FC } from 'react';
+import ICredit from '../../../types/interfaces/ICredit';
 
 interface LatestCreditsProps {
-  credits: any;
+  credits: ICredit[];
 }
 
 const LatestCredits: FC<LatestCreditsProps> = ({ credits }) => {
@@ -23,14 +24,20 @@ const LatestCredits: FC<LatestCreditsProps> = ({ credits }) => {
       >
         <div className="pt-4" id="faq">
           <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-            {credits.map((el: any) => {
+            {credits.map((el: ICredit) => {
+              const summPaid = el.arrOfPayments
+                ? el.arrOfPayments.reduce(
+                    (acc, el) => acc + el.paymentValue || 0,
+                    0,
+                  )
+                : 0;
               return (
                 <li className="py-3 sm:py-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center min-w-0">
                       <div className="ml-3">
                         <Link
-                          to={'/credits-admin/' + 2}
+                          to={'/credits-admin/' + el.id}
                           className="font-medium text-gray-900 truncate dark:text-white"
                         >
                           {el.entity} (ФИО)
@@ -45,7 +52,7 @@ const LatestCredits: FC<LatestCreditsProps> = ({ credits }) => {
                       </div>
                     </div>
                     <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                      ${el.summPaid} / ${el.summOfCredit}
+                      ${summPaid} / ${el.summOfCredit}
                     </div>
                   </div>
                 </li>
