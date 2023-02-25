@@ -1,5 +1,5 @@
 import { ITransaction } from '../types/interfaces/ITransaction';
-import { tab } from '@testing-library/user-event/dist/tab';
+import TransactionStatusEnum from '../types/enums/TransactionStatusEnum';
 
 class TransactionsAPI {
   private getAllTransactions(): ITransaction[] {
@@ -12,6 +12,7 @@ class TransactionsAPI {
   addTransaction(transaction: ITransaction): ITransaction {
     const transactions = this.getAllTransactions();
     transaction.id = transactions.push(transaction);
+    transaction.status = TransactionStatusEnum.SUCCESS;
     localStorage.setItem('transactions', JSON.stringify(transactions));
     return transaction;
   }

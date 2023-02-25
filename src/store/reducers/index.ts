@@ -6,6 +6,7 @@ import { CardsReducer } from './cardsReducer';
 import { RegisterReducer } from './registerReducer';
 import { UsersReducer } from './usersReducer';
 import { PaymentsReducer } from './paymentsReducer';
+import { TransactionsReducer } from './transactionsReducer';
 
 export const rootReducer = combineReducers({
   services: ServicesReducer,
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers({
   usercards: CardsReducer,
   users: UsersReducer,
   payments: PaymentsReducer,
+  transactions: TransactionsReducer,
 });
