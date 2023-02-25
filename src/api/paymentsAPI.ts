@@ -9,10 +9,12 @@ class PaymentsAPI {
     if (!card) {
       throw new Error('The card is not exist');
     }
-    if (card.balance < transaction.value) {
+    if (card.balance < Math.abs(transaction.value)) {
       throw new Error('Not enough money for payment');
     }
 
+    card.balance += transaction.value;
+    cardsAPI.updateCards([card]);
     return transactionsAPI.addTransaction(transaction);
   }
 }

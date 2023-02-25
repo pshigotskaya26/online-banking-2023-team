@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../../../hooks/useAppSelector';
 import IService from '../../../../types/interfaces/IService';
 import { fetchServices } from '../../../../store/actions/services';
@@ -23,6 +23,7 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
   const { cards } = useAppSelector((state) => state.usercards);
   const { user } = useAppSelector((state) => state.authuser);
   const { createPayment } = useActions();
+  const navigate = useNavigate();
 
   const [service, setService] = useState<IService>({
     title: '',
@@ -55,12 +56,13 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
       timestamp: dayjs().unix(),
       targetid: service.id,
       userid: user?.id ?? 0,
-      value: paymentSum,
+      value: -1 * paymentSum,
       entityid: service.id,
       entitytype: TransactionsTypesEnum.PAYMENT,
       status: TransactionStatusEnum.PENDING,
     };
     createPayment(transaction);
+    navigate('/payments');
   };
   const isButtonDisabled = paymentSum === 0 || paymentSum > activeCard?.balance;
 
