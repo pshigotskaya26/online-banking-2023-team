@@ -27,6 +27,11 @@ const TransactionList: React.FC<TransitionListProps> = () => {
     setTransactions(userTransactions);
   }, [userTransactions]);
 
+  const { fetchServices } = useActions();
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
   return (
     <div className="transactionList-container">
       <h2 className="transactionList__title">Transaction history:</h2>

@@ -50,8 +50,12 @@ const TransactionItem: React.FC<TransactionItemProps> = ({ transaction }) => {
         <div>{getStringTime(transaction.timestamp)}</div>
       </td>
       <td className="transaction-item__service">
-        <FontAwesomeIcon icon={service.icon!} size={'2x'} />{' '}
-        <span className={'align-super ml-3'}>{service.title}</span>
+        {service.icon && (
+          <>
+            <FontAwesomeIcon icon={service.icon} size={'2x'} />{' '}
+            <span className={'align-super ml-3'}>{service.title}</span>
+          </>
+        )}
       </td>
       <td className="transaction-item__type">{transaction.entitytype}</td>
       <td className="transaction-item__status">{transaction.status}</td>
