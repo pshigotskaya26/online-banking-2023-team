@@ -18,8 +18,6 @@ interface CreditItemProps {
 }
 
 const CreditItem: React.FC<CreditItemProps> = (props) => {
-  console.log('props in creditItem: ', props);
-
   const { user } = useAppSelector((state) => state.authuser);
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);
   const { cards: userCards } = useAppSelector((state) => state.usercards);
@@ -28,9 +26,6 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
   const { getCreditsByUserId } = useActions();
   const [cards, setCards] = useState<ICard[]>(props.cards);
   const [credits, setCredits] = useState<ICredit[]>(props.credits);
-
-  //console.log('credits: ', credits);
-  //console.log('cards: ', cards);
 
   useEffect(() => {
     setCards(userCards);
@@ -43,28 +38,17 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
   useEffect(() => {
     if (user !== null) {
       getCardsByUserId(user.id);
-      console.log('cards in useeffect creditlist: ', cards);
     }
   }, [user]);
 
   useEffect(() => {
     if (user !== null) {
       getCreditsByUserId(user.id, cards);
-      console.log('credits in useeffect creditlist: ', credits);
     }
   }, [user]);
 
-  /*
-  useEffect(() => {
-    if (props.credit.isAllPaid === true) {
-      toggleActiveCreditButtonAllPay(true, props.id);
-    } else {
-      toggleActiveCreditButtonAllPay(false, props.id);
-    }
-  });
-*/
   return (
-    <div className="credit-item">
+    <div className="credit-item" id={`${props.id}`}>
       <h4 className="credit-item__title">
         {props.credit.id}. Credit: {props.credit.entity}
       </h4>
@@ -137,7 +121,11 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
           </div>
         </div>
         <div className="credit-description__button">
-          <button className="button button-pay-all">Pay all</button>
+          <button
+            className={'button button-pay-all ' + props.credit.statusOfButton}
+          >
+            Pay all
+          </button>
         </div>
       </div>
 
@@ -159,6 +147,7 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
               {props.credit.arrOfPayments.map((paymentItem: ICreditPayment) => (
                 <CreditPaymentItem
                   key={paymentItem.id}
+                  id={paymentItem.id}
                   payment={paymentItem}
                   cards={props.cards}
                   credits={props.credits}

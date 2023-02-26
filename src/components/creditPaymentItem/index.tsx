@@ -1,22 +1,15 @@
 import './index.css';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ICreditPayment from '../../types/interfaces/ICreditPayment';
-import CreditPaymentStatusEnum from '../../types/enums/CreditPaymentStatusEnum';
-import CreditStatusButtonEnum from '../../types/enums/CreditStatusButtonEnum';
-import CreditPaymentFineEnum from '../../types/enums/CreditPaymentFineEnum';
-import { changeStatusPaymentButtonPay } from '../../utils/changeStatusPaymentButtonPay';
-import { changePaymentFine } from '../../utils/changePaymentFine';
-import { getCountOfDays } from '../../utils/getCountOfDays';
-import {
-  getStringDate,
-  getStringDay,
-  getStringMonth,
-} from '../../utils/formateDateTime';
+import { useActions } from '../../hooks/useActions';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { getStringDate } from '../../utils/formateDateTime';
 import ICard from '../../types/interfaces/ICard';
 import ICredit from '../../types/interfaces/ICredit';
 
 interface CreditPaymentItemProps {
   payment: ICreditPayment;
+  id: number;
   cards: ICard[];
   credits: ICredit[];
   credit: ICredit;
@@ -95,6 +88,14 @@ const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
     }
   });
 */
+  const { user } = useAppSelector((state) => state.authuser);
+  const { payCreditPayment } = useActions();
+
+  const payPayment = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (user !== null) {
+      payCreditPayment(props.id, props.credits, props.cards, props.credit);
+    }
+  };
   return (
     <tr className="credit-payment-item">
       <td className="credit-payment__orderNumb">{props.payment.id + 1}</td>
@@ -107,6 +108,10 @@ const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
       <td className="credit-payment__button">
         <button
           className={'button button-do-payment ' + props.payment.statusOfButton}
+          id={`${props.id}`}
+          onClick={(event) => {
+            payPayment(event);
+          }}
         >
           Pay
         </button>

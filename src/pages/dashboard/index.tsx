@@ -36,19 +36,15 @@ const DashboardPage = () => {
   useEffect(() => {
     if (user !== null) {
       getCardsByUserId(user.id);
-
-      console.log('cards in useeffect cardList dashboard: ', cards);
     }
   }, [user]);
 
   useEffect(() => {
     if (user !== null) {
-      console.log('credits in useeffect cardList dashboard: ', credits);
       getCreditsByUserId(user.id, cards);
     }
   }, [user]);
-  console.log('cards in useeffect cardList dashboard111: ', cards);
-  console.log('credits in useeffect cardList dashboard111: ', credits);
+
   return (
     <ClientLayout>
       <PageTitle title={'Dashboard'} />

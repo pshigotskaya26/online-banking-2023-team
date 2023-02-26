@@ -12,7 +12,6 @@ interface CreditListProps {
 }
 
 const CreditList: React.FC<CreditListProps> = (props) => {
-  console.log('props in creditList: ', props);
   const { user } = useAppSelector((state) => state.authuser);
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);
   const { cards: userCards } = useAppSelector((state) => state.usercards);
@@ -21,9 +20,6 @@ const CreditList: React.FC<CreditListProps> = (props) => {
   const { getCreditsByUserId } = useActions();
   const [cards, setCards] = useState<ICard[]>(props.cards);
   const [credits, setCredits] = useState<ICredit[]>(props.credits);
-
-  //console.log('credits: ', credits);
-  //console.log('cards: ', cards);
 
   useEffect(() => {
     setCards(userCards);
@@ -36,14 +32,12 @@ const CreditList: React.FC<CreditListProps> = (props) => {
   useEffect(() => {
     if (user !== null) {
       getCardsByUserId(user.id);
-      console.log('cards in useeffect creditlist: ', cards);
     }
   }, [user]);
 
   useEffect(() => {
     if (user !== null) {
       getCreditsByUserId(user.id, cards);
-      console.log('credits in useeffect creditlist: ', credits);
     }
   }, [user]);
 

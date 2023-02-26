@@ -11,10 +11,10 @@ import ICredit from '../../types/interfaces/ICredit';
 import { createCreditPayments } from '../../utils/createCreditPayments';
 import CreditStatusEnum from '../../types/enums/CreditStatusEnum';
 import CreditPaymentFineEnum from '../../types/enums/CreditPaymentFineEnum';
+import CreditStatusButtonEnum from '../../types/enums/CreditStatusButtonEnum';
 
 const FormNewCredit: React.FC = () => {
   const { user } = useAppSelector((state) => state.authuser);
-  console.log('user: ', user);
   const { cards: userCards } = useAppSelector((state) => state.usercards);
 
   const [cards, setCards] = useState<ICard[]>([]);
@@ -50,6 +50,7 @@ const FormNewCredit: React.FC = () => {
       Number(creditSum),
     ),
     cardId: creditCardId,
+    statusOfButton: CreditStatusButtonEnum.ACTIVE,
   };
 
   const { addUserCredit } = useActions();
@@ -58,7 +59,6 @@ const FormNewCredit: React.FC = () => {
 
   const changeCredits = async (newCredit: ICredit = objNewCredit) => {
     if (user !== null) {
-      console.log('newCredit cardId: ', newCredit.cardId);
       addUserCredit(newCredit);
       replenishBalanceForCredit(creditCardId, Number(creditSum));
       getCreditsByUserId(user.id, cards);

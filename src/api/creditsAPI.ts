@@ -3,6 +3,7 @@ import ICard from '../types/interfaces/ICard';
 import CreditPaymentStatusEnum from '../types/enums/CreditPaymentStatusEnum';
 import CreditPaymentFineEnum from '../types/enums/CreditPaymentFineEnum';
 import CreditStatusButtonEnum from '../types/enums/CreditStatusButtonEnum';
+import CreditStatusEnum from '../types/enums/CreditStatusEnum';
 import { getStringDay } from '../utils/formateDateTime';
 import { getStringMonth } from '../utils/formateDateTime';
 import { getCountOfDays } from '../utils/getCountOfDays';
@@ -21,7 +22,7 @@ class CreditsAPI {
       userCards,
     );
 
-    localStorage.setItem('credits', JSON.stringify(creditsWithStatusButton));
+    //localStorage.setItem('credits', JSON.stringify(creditsWithStatusButton));
     this.updateCredits(creditsWithStatusButton);
     return creditsWithStatusButton;
   }
@@ -32,43 +33,49 @@ class CreditsAPI {
     const currentMonth = Number(getStringMonth(currentDate));
 
     credits.forEach((creditItem) => {
-      creditItem.arrOfPayments.forEach((paymentItem) => {
-        const paymentDay = Number(getStringDay(paymentItem.dateOfContribution));
-        const paymentMonth = Number(
-          getStringMonth(paymentItem.dateOfContribution),
-        );
-        //if todayDate === paymentDate
-        if (
-          paymentItem.status === CreditPaymentStatusEnum.IS_NOT_PAID &&
-          currentDay === paymentDay &&
-          currentMonth === paymentMonth
-        ) {
-          paymentItem.fine = Number(CreditPaymentFineEnum.ZERO);
-        }
-        //if todayDate > paymentDate
-        if (
-          paymentItem.status === CreditPaymentStatusEnum.IS_NOT_PAID &&
-          ((currentDay > paymentDay && currentMonth >= paymentMonth) ||
-            (currentDay < paymentDay && currentMonth > paymentMonth))
-        ) {
-          const differ = getCountOfDays(
-            currentDate,
-            paymentItem.dateOfContribution,
+      if (creditItem.isAllPaid === false) {
+        creditItem.arrOfPayments.forEach((paymentItem) => {
+          const paymentDay = Number(
+            getStringDay(paymentItem.dateOfContribution),
           );
-          paymentItem.fine = Number(CreditPaymentFineEnum.FIVE) * differ;
-        }
-      });
+          const paymentMonth = Number(
+            getStringMonth(paymentItem.dateOfContribution),
+          );
+          //if todayDate === paymentDate
+          if (
+            paymentItem.status === CreditPaymentStatusEnum.IS_NOT_PAID &&
+            currentDay === paymentDay &&
+            currentMonth === paymentMonth
+          ) {
+            paymentItem.fine = Number(CreditPaymentFineEnum.ZERO);
+          }
+          //if todayDate > paymentDate
+          if (
+            paymentItem.status === CreditPaymentStatusEnum.IS_NOT_PAID &&
+            ((currentDay > paymentDay && currentMonth >= paymentMonth) ||
+              (currentDay < paymentDay && currentMonth > paymentMonth))
+          ) {
+            const differ = getCountOfDays(
+              currentDate,
+              paymentItem.dateOfContribution,
+            );
+            paymentItem.fine = Number(CreditPaymentFineEnum.FIVE) * differ;
+          }
+        });
+      }
     });
     return credits;
   }
 
   addFineToCredit(credits: ICredit[]): ICredit[] {
     credits.forEach((creditItem) => {
-      let sumFine = 0;
-      creditItem.arrOfPayments.forEach((paymentItem) => {
-        sumFine += paymentItem.fine;
-      });
-      creditItem.fine = sumFine;
+      if (creditItem.isAllPaid === false) {
+        let sumFine = 0;
+        creditItem.arrOfPayments.forEach((paymentItem) => {
+          sumFine += paymentItem.fine;
+        });
+        creditItem.fine = sumFine;
+      }
     });
     return credits;
   }
@@ -76,8 +83,6 @@ class CreditsAPI {
   setStatusToButtonsPay(credits: ICredit[], cards: ICard[]): ICredit[] {
     credits.forEach((creditItem) => {
       let cardId = creditItem.cardId;
-      //let arrCards = userCards;
-      let balanceCard: number;
 
       const foundedCard = cards.filter((cardItem) => cardItem.id === cardId);
 
@@ -100,6 +105,69 @@ class CreditsAPI {
         });
       }
     });
+    return credits;
+  }
+
+  payCreditPayment(
+    idPayment: number,
+    credits: ICredit[],
+    cards: ICard[],
+    credit: ICredit,
+  ): ICredit[] {
+    console.log('hello', credits);
+
+    credits.forEach((creditItem) => {
+      if (creditItem.id === credit.id) {
+        let creditSum = creditItem.summOfCredit;
+        let creditPaidSum = creditItem.summPaid;
+        let creditRemainder = creditItem.remainder;
+        let creditCardId = creditItem.cardId;
+
+        console.log(
+          'creditSum in payCredit: ',
+          creditSum,
+          creditPaidSum,
+          creditRemainder,
+          creditCardId,
+        );
+
+        const foundedCard = cards.filter(
+          (cardItem) => cardItem.id === creditCardId,
+        );
+
+        if (foundedCard[0] !== undefined) {
+          let cardBalance = foundedCard[0].balance;
+          console.log('cardBalance in payCredit: ', cardBalance);
+
+          creditItem.arrOfPayments.forEach((paymentItem) => {
+            if (paymentItem.id === idPayment) {
+              paymentItem.isPaid = true;
+              paymentItem.status = CreditPaymentStatusEnum.IS_PAID;
+              paymentItem.statusOfButton = CreditStatusButtonEnum.NO_ACTIVE;
+
+              let sumPaymentFine = Number(
+                (paymentItem.paymentValue + paymentItem.fine).toFixed(2),
+              );
+
+              creditItem.summPaid = Number(
+                (creditItem.summPaid + sumPaymentFine).toFixed(2),
+              );
+
+              creditItem.remainder = Number(
+                (creditRemainder - sumPaymentFine).toFixed(2),
+              );
+              if (creditItem.summPaid >= creditItem.summOfCredit) {
+                creditItem.status = CreditStatusEnum.CLOSE;
+                creditItem.isAllPaid = true;
+                creditItem.statusOfButton = CreditStatusButtonEnum.NO_ACTIVE;
+              }
+            }
+          });
+        }
+      }
+    });
+
+    this.updateCredits(credits);
     return credits;
   }
 

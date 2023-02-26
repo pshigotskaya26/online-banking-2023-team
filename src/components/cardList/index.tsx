@@ -15,7 +15,6 @@ interface CardListProps {
 }
 
 const CardList: React.FC<CardListProps> = (props) => {
-  console.log('props in cardlist: ', props);
   const { user } = useAppSelector((state) => state.authuser);
   const { cards: userCards } = useAppSelector((state) => state.usercards);
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);
@@ -36,13 +35,11 @@ const CardList: React.FC<CardListProps> = (props) => {
   useEffect(() => {
     if (user !== null) {
       getCardsByUserId(user.id);
-      console.log('cards in useeffect cardList: ', cards);
     }
   }, [user]);
 
   useEffect(() => {
     if (user !== null) {
-      //console.log('cards in useeffect cardList: ', cards);
       getCreditsByUserId(user.id, cards);
     }
   }, [user]);
