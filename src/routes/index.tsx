@@ -12,6 +12,8 @@ import ProtectedRoute from './protected-route';
 import UserRolesEnum from '../types/enums/UserRolesEnum';
 import ErrorPage from '../pages/error';
 import UsersPage from '../pages/users';
+import CreditsAdmin from '../pages/credits-admin';
+import CreditInfoAdmin from '../pages/credit-info-admin';
 import PaymentsPage from '../pages/payments';
 import { PaymentForm } from '../pages/payments/components/paymentForm';
 
@@ -100,6 +102,24 @@ const routes: RouteObject[] = [
       </ProtectedRoute>
     ),
     id: 'NewCard',
+  },
+  {
+    path: '/credits-admin',
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+        <CreditsAdmin />
+      </ProtectedRoute>
+    ),
+    id: 'Credits Admin',
+  },
+  {
+    path: '/credits-admin/:id',
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+        <CreditInfoAdmin />
+      </ProtectedRoute>
+    ),
+    id: 'Credits Admin Info',
   },
   {
     path: '*',

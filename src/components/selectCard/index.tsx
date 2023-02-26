@@ -11,14 +11,8 @@ interface SelectCardProps {
   setActiveCard: (card: ICard) => void;
 }
 
-const SelectCard: React.FC<SelectCardProps> = ({
-  cards,
-  activeCardData,
-  setActiveCard,
-}) => {
-  const imageBackground = getBackgroundImageByColor(
-    activeCardData?.background || '',
-  );
+const SelectCard: React.FC<SelectCardProps> = ({ cards, activeCardData, setActiveCard }) => {
+  const imageBackground = getBackgroundImageByColor(activeCardData?.background || '');
   const navigate = useNavigate();
   const handleActiveCard = (e: ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value;

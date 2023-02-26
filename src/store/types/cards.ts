@@ -46,7 +46,7 @@ interface UpdateUserCardsError {
 
 interface UpdateUserCardsWithSalarySuccess {
   type: CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS;
-  payload: ICard[];
+  payload: { cardId: number, amount: number };
 }
 
 export type CardsManagementActions =

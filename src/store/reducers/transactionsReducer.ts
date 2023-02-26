@@ -1,34 +1,19 @@
-import {
-  TransactionsActions,
-  TransactionsActionTypes,
-  TransactionsState,
-} from '../types/transactions';
+import { TransactionsActions, TransactionsActionTypes, TransactionsState } from '../types/transactions';
 
 const initialState: TransactionsState = {
   transactions: [],
-  loadingTransactions: false,
+  isLoadingTransactions: false,
   errorLoadingTransactions: '',
 };
 
-export const TransactionsReducer = (
-  state = initialState,
-  action: TransactionsActions,
-): TransactionsState => {
+export const TransactionsReducer = (state = initialState, action: TransactionsActions): TransactionsState => {
   switch (action.type) {
     case TransactionsActionTypes.FETCH_TRANSACTIONS:
-      return { ...state, loadingTransactions: true };
+      return { ...state, isLoadingTransactions: true };
     case TransactionsActionTypes.FETCH_TRANSACTIONS_SUCCESS:
-      return {
-        ...state,
-        loadingTransactions: false,
-        transactions: action.payload,
-      };
+      return { ...state, transactions: action.payload, isLoadingTransactions: false };
     case TransactionsActionTypes.FETCH_TRANSACTIONS_ERROR:
-      return {
-        ...state,
-        loadingTransactions: false,
-        errorLoadingTransactions: action.payload,
-      };
+      return { ...state, errorLoadingTransactions: action.payload, isLoadingTransactions: false };
     default:
       return state;
   }

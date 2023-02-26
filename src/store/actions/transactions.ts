@@ -5,14 +5,14 @@ import {
 } from '../types/transactions';
 import transactionsAPI from '../../api/transactionsAPI';
 
-export const getTransactionsByUserId = (userid: number) => {
+export const fetchTransactions = (id: number) => {
   return (dispatch: Dispatch<TransactionsActions>) => {
     try {
       dispatch({ type: TransactionsActionTypes.FETCH_TRANSACTIONS });
-      const result = transactionsAPI.getTransactionsByUserId(userid);
+      const response = transactionsAPI.fetchTransactions(id);
       dispatch({
         type: TransactionsActionTypes.FETCH_TRANSACTIONS_SUCCESS,
-        payload: result,
+        payload: response,
       });
     } catch (e: unknown) {
       if (e instanceof Error) {

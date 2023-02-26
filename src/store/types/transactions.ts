@@ -2,8 +2,8 @@ import { ITransaction } from '../../types/interfaces/ITransaction';
 
 export interface TransactionsState {
   transactions: ITransaction[];
-  loadingTransactions: boolean;
-  errorLoadingTransactions: string;
+  isLoadingTransactions: boolean,
+  errorLoadingTransactions: string
 }
 
 export enum TransactionsActionTypes {
@@ -12,21 +12,22 @@ export enum TransactionsActionTypes {
   FETCH_TRANSACTIONS_ERROR = 'FETCH_TRANSACTIONS_ERROR',
 }
 
-interface FetchTransactions {
-  type: TransactionsActionTypes.FETCH_TRANSACTIONS;
+interface FetchTransactionsAction {
+  type: TransactionsActionTypes.FETCH_TRANSACTIONS,
 }
 
-interface FetchTransactionsSuccess {
-  type: TransactionsActionTypes.FETCH_TRANSACTIONS_SUCCESS;
-  payload: ITransaction[];
+interface FetchTransactionsActionSuccess {
+  type: TransactionsActionTypes.FETCH_TRANSACTIONS_SUCCESS,
+  payload: ITransaction[]
 }
 
-interface FetchTransactionsError {
-  type: TransactionsActionTypes.FETCH_TRANSACTIONS_ERROR;
-  payload: string;
+interface FetchTransactionsActionError {
+  type: TransactionsActionTypes.FETCH_TRANSACTIONS_ERROR,
+  payload: string
 }
+
 
 export type TransactionsActions =
-  | FetchTransactions
-  | FetchTransactionsSuccess
-  | FetchTransactionsError;
+  FetchTransactionsAction
+  | FetchTransactionsActionSuccess
+  | FetchTransactionsActionError

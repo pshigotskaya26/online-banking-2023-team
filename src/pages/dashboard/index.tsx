@@ -7,14 +7,17 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import EmptyBox from '../../components/enptyBox';
 
 const DashboardPage = () => {
-  const { user } = useAppSelector((state) => state.authuser);
+  const { user } = useAppSelector(state => state.authuser);
+
+
   return (
     <ClientLayout>
       <PageTitle title={'Dashboard'} />
-      {user?.isDisabledOperations ? (
-        <>
-          <CardList></CardList>
-          <TransactionList></TransactionList>
+      {!user?.isDisabledOperations
+
+        ? <>
+          <CardList />
+          <TransactionList />
         </>
       ) : (
         <EmptyBox text={'Operations for this user are disabled'} />

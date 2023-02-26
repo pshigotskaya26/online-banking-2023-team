@@ -10,7 +10,6 @@ import CardNumber from '../cardNumber';
 import CardBalance from '../cardBalance';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useActions } from '../../hooks/useActions';
-import { IClientUser } from '../../types/interfaces/IUser';
 
 interface CardItemProps {
   card: ICard;
@@ -21,7 +20,7 @@ const CardItem: React.FC<CardItemProps> = (props) => {
   const { replenishBalance } = useActions();
 
   const changeBalance = async () => {
-    if (user !== null) {
+    if (user) {
       replenishBalance(props.card.id, props.card.currency);
     }
   };
@@ -81,12 +80,7 @@ const CardItem: React.FC<CardItemProps> = (props) => {
           </div>
         </div>
       </div>
-      <button
-        className="button button-replenish"
-        onClick={(event) => {
-          changeBalance();
-        }}
-      >
+      <button className="button button-replenish" onClick={changeBalance}>
         Replenish balance
       </button>
     </div>
