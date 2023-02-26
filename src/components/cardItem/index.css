@@ -40,5 +40,5 @@
 }
 
 .button-replenish {
-  @apply w-max bg-amber-400 hover:bg-amber-500;
+  @apply w-full bg-amber-400 hover:bg-amber-500;
 }

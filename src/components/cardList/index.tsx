@@ -29,9 +29,9 @@ const CardList: React.FC<CardListProps> = (props) => {
     <div className="cardList-container">
       <div className="cardList__head">
         <h2 className="cardList__title">Card list:</h2>
-        <button className="button button-add">
-          <Link to={'/new-card'}>Add card</Link>
-        </button>
+        <Link to={'/new-card'} className={'button-add text-center rounded'}>
+          <button className="button">Add card</button>
+        </Link>
       </div>
 
       <div className="cardList__content">
