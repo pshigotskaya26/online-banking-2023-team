@@ -17,7 +17,7 @@ const CreditsAdmin = () => {
     <ClientLayout>
       <>
         <LatestCredits credits={credits} />
-        {credits.length && <GraphicsCredits />}
+        {credits.length > 0 && <GraphicsCredits />}
       </>
     </ClientLayout>
   );

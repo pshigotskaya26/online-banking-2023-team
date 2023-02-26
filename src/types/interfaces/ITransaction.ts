@@ -8,6 +8,7 @@ export interface ITransaction {
   cardid: number;
   timestamp: number; //время платежа
   value: number; //сумма платежа
+  targetid?: number;
   cardNumber: number;
   entitytype: TransactionsTypesEnum;
   cardCurrency: CardCurrencyEnum;

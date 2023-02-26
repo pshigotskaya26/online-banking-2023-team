@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 export const getStringDate = (time: number) => {
-  return dayjs.unix(time).format('DD-MM-YYYY');
+  return dayjs(time).format('DD-MM-YYYY');
 };
 
 export const getStringTerm = (time: number) => {

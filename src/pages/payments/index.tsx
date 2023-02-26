@@ -10,6 +10,7 @@ import { Route, Routes } from 'react-router-dom';
 import { PaymentForm } from './components/paymentForm';
 import IService from '../../types/interfaces/IService';
 import { ITransaction } from '../../types/interfaces/ITransaction';
+import { fetchTransactions } from '../../store/actions/transactions';
 
 const PaymentsPage = () => {
   const { user } = useAppSelector((state) => state.authuser);
@@ -17,7 +18,7 @@ const PaymentsPage = () => {
   const { transactions: userTransactions } = useAppSelector(
     (state) => state.transactions,
   );
-  const { getTransactionsByUserId, fetchServices } = useActions();
+  const { fetchTransactions, fetchServices } = useActions();
 
   const [payments, setPayments] = useState<IService[]>([]);
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
@@ -28,7 +29,7 @@ const PaymentsPage = () => {
 
   useEffect(() => {
     if (user !== null) {
-      getTransactionsByUserId(user.id);
+      fetchTransactions(user.id);
     }
   }, [user]);
 
@@ -41,7 +42,7 @@ const PaymentsPage = () => {
 
   const filterPopularServices = () =>
     services.filter((service) =>
-      transactions.some((trans) => trans.entityid === service.id),
+      transactions.some((trans) => trans.targetid === service.id),
     );
   const tabChangeHandler = (tabName: PaymentTabsNamesEnum) => {
     let srvcs = services;

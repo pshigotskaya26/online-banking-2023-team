@@ -125,6 +125,16 @@ class TransactionsAPI {
     };
     this.addTransaction(transaction);
   }
+
+  createTransactionPayment(transaction: ITransaction): ITransaction {
+    const transactions: ITransaction[] = JSON.parse(
+      localStorage.getItem('transactions') ?? '[]',
+    );
+    transaction.id = transactions.push(transaction);
+    transaction.status = TransactionStatusEnum.SUCCESS;
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+    return transaction;
+  }
 }
 
 const transactionsAPI = new TransactionsAPI();

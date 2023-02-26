@@ -68,9 +68,10 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
       targetid: service.id,
       userid: user?.id ?? 0,
       value: -1 * paymentSum,
-      entityid: service.id,
       entitytype: TransactionsTypesEnum.PAYMENT,
       status: TransactionStatusEnum.PENDING,
+      cardNumber: activeCard.number,
+      cardCurrency: activeCard.currency,
     };
     createPayment(transaction);
     navigate('/payments');

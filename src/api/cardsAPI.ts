@@ -1,6 +1,8 @@
 import ICard from '../types/interfaces/ICard';
 import axios from 'axios';
 import { API_LAYER_KEY } from '../consts';
+import CardCurrencyEnum from '../types/enums/CardCurrencyEnum';
+import { ITransaction } from '../types/interfaces/ITransaction';
 
 class CardsAPI {
   getCardsByUserId(userid: number): ICard[] {
@@ -57,7 +59,7 @@ class CardsAPI {
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].id === cardId) {
         cards[i].balance =
-          Number(cards[i].balance.toFixed(2)) + convertedSalaryFixed;
+          Number(cards[i].balance.toFixed(2)) + convertedSalary;
       }
     }
     localStorage.setItem('cards', JSON.stringify(cards));

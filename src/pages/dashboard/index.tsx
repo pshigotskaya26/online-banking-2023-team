@@ -1,21 +1,16 @@
 import ClientLayout from '../../layouts/client';
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { ITransaction } from '../../types/interfaces/ITransaction';
-import transactionsData from '../../data/transactions';
 import CardList from '../../components/cardList';
 import TransactionList from '../../components/transactionList';
 import PageTitle from '../../components/pageTitle';
 import ICredit from '../../types/interfaces/ICredit';
 import ICard from '../../types/interfaces/ICard';
 import { useActions } from '../../hooks/useActions';
+import EmptyBox from '../../components/enptyBox';
 
 const DashboardPage = () => {
-  const { user } = useAppSelector(state => state.authuser);
-
-
   const { user } = useAppSelector((state) => state.authuser);
-
   const { cards: userCards } = useAppSelector((state) => state.usercards);
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);
 
@@ -48,10 +43,9 @@ const DashboardPage = () => {
   return (
     <ClientLayout>
       <PageTitle title={'Dashboard'} />
-      {!user?.isDisabledOperations
-
-        ? <>
-          <CardList />
+      {!user?.isDisabledOperations ? (
+        <>
+          <CardList cards={cards} credits={credits} />
           <TransactionList />
         </>
       ) : (

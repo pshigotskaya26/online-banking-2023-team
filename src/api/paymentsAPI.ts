@@ -15,7 +15,7 @@ class PaymentsAPI {
 
     card.balance += transaction.value;
     cardsAPI.updateCards([card]);
-    return transactionsAPI.addTransaction(transaction);
+    return transactionsAPI.createTransactionPayment(transaction);
   }
 }
 
