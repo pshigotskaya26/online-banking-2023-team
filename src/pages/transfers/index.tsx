@@ -13,9 +13,11 @@ import { TransferStatus } from '../../types/enums/TransferStatus';
 import EmptyBox from '../../components/enptyBox';
 
 const TransfersPage = () => {
-  const { transferStatus, errorTransfer } = useAppSelector(state => state.transfers);
-  const { cards } = useAppSelector(state => state.usercards);
-  const { user } = useAppSelector(state => state.authuser);
+  const { transferStatus, errorTransfer } = useAppSelector(
+    (state) => state.transfers,
+  );
+  const { cards } = useAppSelector((state) => state.usercards);
+  const { user } = useAppSelector((state) => state.authuser);
   const { makeATransferByNumberCard, createNewTransfer } = useActions();
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const TransfersPage = () => {
 
   const handleTransfer = (transferData: ITransferData) => {
     if (user) {
-      makeATransferByNumberCard(transferData, user.id);
+      makeATransferByNumberCard(transferData);
     }
   };
   return (
@@ -36,33 +38,39 @@ const TransfersPage = () => {
         }
       />
 
-      {!user?.isDisabledOperations
-        ? <>
-          <div className='bg-white py-6 sm:py-8 lg:py-18'>
-            {
-              transferStatus === TransferStatus.CREATE &&
-              <FormTransfer cards={cards} idUser={user?.id} handleTransfer={handleTransfer} />
-            }
-            {
-              transferStatus === TransferStatus.LOADING &&
+      {!user?.isDisabledOperations ? (
+        <>
+          <div className="bg-white py-6 sm:py-8 lg:py-18">
+            {transferStatus === TransferStatus.CREATE && (
+              <FormTransfer
+                cards={cards}
+                idUser={user?.id}
+                handleTransfer={handleTransfer}
+              />
+            )}
+            {transferStatus === TransferStatus.LOADING && (
               <FormTransferSkeleton />
-            }
-            {
-              transferStatus === TransferStatus.RESULT_SUCCESS &&
-              <FormTransferResult icon={faCheck} text={'Translation completed successfully'}
-                                  handlerResult={createNewTransfer} />
-            }
-            {
-              transferStatus === TransferStatus.RESULT_ERROR &&
-              <FormTransferResult icon={faXmark} text={'Translation failed'} handlerResult={createNewTransfer}
-                                  description={errorTransfer} />
-            }
+            )}
+            {transferStatus === TransferStatus.RESULT_SUCCESS && (
+              <FormTransferResult
+                icon={faCheck}
+                text={'Translation completed successfully'}
+                handlerResult={createNewTransfer}
+              />
+            )}
+            {transferStatus === TransferStatus.RESULT_ERROR && (
+              <FormTransferResult
+                icon={faXmark}
+                text={'Translation failed'}
+                handlerResult={createNewTransfer}
+                description={errorTransfer}
+              />
+            )}
           </div>
         </>
-        : <EmptyBox text={'Operations for this user are disabled'} />
-      }
-
-
+      ) : (
+        <EmptyBox text={'Operations for this user are disabled'} />
+      )}
     </ClientLayout>
   );
 };

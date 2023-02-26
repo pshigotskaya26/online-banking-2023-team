@@ -1,5 +1,6 @@
 import TransactionsTypesEnum from '../enums/TransactionsTypesEnum';
 import TransactionStatusEnum from '../enums/TransactionStatusEnum';
+import CardCurrencyEnum from '../enums/CardCurrencyEnum';
 
 export interface ITransaction {
   id: number;
@@ -7,15 +8,15 @@ export interface ITransaction {
   cardid: number;
   timestamp: number; //время платежа
   value: number; //сумма платежа
-  entityid: number;
+  cardNumber: number;
   entitytype: TransactionsTypesEnum;
-  targetid: number;
+  cardCurrency: CardCurrencyEnum;
   status: TransactionStatusEnum;
 }
 
 export interface ITransferData {
-  cardFrom: number,
-  cardTo: number,
-  amountFrom: number,
-  amountTo?: number
+  cardFrom: number;
+  cardTo: number;
+  amountFrom: number;
+  amountTo?: number;
 }

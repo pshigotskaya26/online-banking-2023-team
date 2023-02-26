@@ -1,5 +1,8 @@
 import { Dispatch } from 'redux';
-import { TransactionsActions, TransactionsActionTypes } from '../types/transactions';
+import {
+  TransactionsActions,
+  TransactionsActionTypes,
+} from '../types/transactions';
 import transactionsAPI from '../../api/transactionsAPI';
 
 export const fetchTransactions = (id: number) => {
@@ -7,11 +10,16 @@ export const fetchTransactions = (id: number) => {
     try {
       dispatch({ type: TransactionsActionTypes.FETCH_TRANSACTIONS });
       const response = transactionsAPI.fetchTransactions(id);
-      console.log(response)
-      dispatch({ type: TransactionsActionTypes.FETCH_TRANSACTIONS_SUCCESS, payload: response });
+      dispatch({
+        type: TransactionsActionTypes.FETCH_TRANSACTIONS_SUCCESS,
+        payload: response,
+      });
     } catch (e: unknown) {
       if (e instanceof Error) {
-        dispatch({ type: TransactionsActionTypes.FETCH_TRANSACTIONS_ERROR, payload: e.message });
+        dispatch({
+          type: TransactionsActionTypes.FETCH_TRANSACTIONS_ERROR,
+          payload: e.message,
+        });
       }
     }
   };
