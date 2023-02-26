@@ -72,7 +72,7 @@ export const replenishBalance = (cardId: number, cardCurrency: string) => {
       );
       dispatch({
         type: CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS,
-        payload: [], //{ cardId: cardId, amount: response },
+        payload: response,
       });
     } catch (e: unknown) {
       await transactionsAPI.createTransactionReplanish(

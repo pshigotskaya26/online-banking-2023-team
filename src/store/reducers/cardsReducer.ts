@@ -34,10 +34,7 @@ export const CardsReducer = (
       return {
         ...state,
         loadingCardsInfo: false,
-        /*cards: state.cards.map(card => card.id === action.payload.cardId
-          ? { ...card, balance: card.balance + action.payload.amount }
-          : card
-        )*/
+        cards: action.payload,
       };
 
     default:
