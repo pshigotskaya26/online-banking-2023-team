@@ -23,7 +23,6 @@ const TransactionList: React.FC<TransitionListProps> = () => {
   }, [user]);
 
   useEffect(() => {
-    console.log(userTransactions);
     setTransactions(userTransactions);
   }, [userTransactions]);
 

@@ -48,6 +48,40 @@ class UserAPI {
     return userInfo;
   }
 
+  addServiceToFavorites(
+    userid: number,
+    serviceid: number,
+  ): IClientUser | IAdminUser {
+    const data = localStorage.getItem('users') ?? '[]';
+    const existUsers: Array<IClientUser | IAdminUser> = JSON.parse(data);
+    const targetUser = existUsers.find((user) => user.id === userid);
+    if (!targetUser) {
+      throw new Error('User not exist');
+    }
+
+    targetUser.favoriteServices.push(serviceid);
+    localStorage.setItem('users', JSON.stringify(existUsers));
+    return targetUser;
+  }
+
+  removeServiceFromFavorites(
+    userid: number,
+    serviceid: number,
+  ): IClientUser | IAdminUser {
+    const data = localStorage.getItem('users') ?? '[]';
+    const existUsers: Array<IClientUser | IAdminUser> = JSON.parse(data);
+    const targetUser = existUsers.find((user) => user.id === userid);
+    if (!targetUser) {
+      throw new Error('User not exist');
+    }
+
+    targetUser.favoriteServices = targetUser.favoriteServices.filter(
+      (sid) => sid !== serviceid,
+    );
+    localStorage.setItem('users', JSON.stringify(existUsers));
+    return targetUser;
+  }
+
   updateSession(userid: number): void {
     localStorage.setItem(
       'activeUserSession',

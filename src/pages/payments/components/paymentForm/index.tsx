@@ -22,7 +22,8 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
   const { services } = useAppSelector((state) => state.services);
   const { cards } = useAppSelector((state) => state.usercards);
   const { user } = useAppSelector((state) => state.authuser);
-  const { createPayment } = useActions();
+  const { createPayment, addServiceToFavorites, removeServiceFromFavorites } =
+    useActions();
   const navigate = useNavigate();
 
   const [service, setService] = useState<IService>({
@@ -32,6 +33,10 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
     icon: undefined,
     isAvailable: false,
   });
+  const [isFavoriteService, setIsFavorite] = useState(
+    user?.favoriteServices.includes(service.id),
+  );
+
   useEffect(() => {
     fetchServices();
   });
@@ -41,6 +46,12 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
     );
     if (target) setService(target);
   }, [services]);
+
+  useEffect(() => {
+    if (user !== null) {
+      setIsFavorite(user.favoriteServices.includes(service.id));
+    }
+  }, [user, service]);
 
   const [activeCard, setActiveCard] = useState<ICard>({} as ICard);
   useEffect(() => {
@@ -64,6 +75,19 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
     createPayment(transaction);
     navigate('/payments');
   };
+
+  const addToFavorites = () => {
+    if (user && service) {
+      addServiceToFavorites(user.id, service.id);
+    }
+  };
+
+  const removeFromFavorites = () => {
+    if (user && service) {
+      removeServiceFromFavorites(user.id, service.id);
+    }
+  };
+
   const isButtonDisabled = paymentSum === 0 || paymentSum > activeCard?.balance;
 
   return (
@@ -122,6 +146,24 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
             handleButton={handlePayment}
             isDisable={isButtonDisabled}
           />
+        </div>
+      </div>
+      {}
+      <div className={'my-3 flex justify-center'}>
+        <div className={'w-2/3'}>
+          {isFavoriteService ? (
+            <Button
+              text={'Remove from Favorites'}
+              handleButton={removeFromFavorites}
+              isDisable={false}
+            />
+          ) : (
+            <Button
+              text={'Add to Favorites'}
+              handleButton={addToFavorites}
+              isDisable={false}
+            />
+          )}
         </div>
       </div>
     </div>
