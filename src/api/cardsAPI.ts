@@ -1,6 +1,6 @@
 import ICard from '../types/interfaces/ICard';
 import axios from 'axios';
-import CardCurrencyEnum from '../types/enums/CardCurrencyEnum';
+import { API_LAYER_KEY } from '../consts';
 
 class CardsAPI {
   getCardsByUserId(userid: number): ICard[] {
@@ -25,14 +25,14 @@ class CardsAPI {
     return cards.filter((card) => card.userid === newCard.userid);
   }
 
-  private async getConvertedMoney(
+  async getConvertedMoney(
     currencyFrom: string,
     currencyTo: string,
     amount: number,
   ): Promise<number> {
     let config = {
       headers: {
-        apikey: 'CKhfOVDTNzgYebZQ4228NRj9i4uQVWWZ',
+        apikey: API_LAYER_KEY,
       },
     };
     const res = await axios.get(
@@ -48,20 +48,12 @@ class CardsAPI {
     }
   }
 
-  replenishBalance = async (cardId: number, cardCurrency: string) => {
+  replenishBalance = async (
+    cardId: number,
+    cardCurrency: string,
+    convertedSalary: number,
+  ) => {
     const cards: ICard[] = JSON.parse(localStorage.getItem('cards') ?? '[]');
-    const currencyFrom = CardCurrencyEnum.BYN;
-    const currencyTo = cardCurrency;
-    const salary = 1000;
-
-    const convertedSalary = await this.getConvertedMoney(
-      currencyFrom,
-      currencyTo,
-      salary,
-    );
-
-    const convertedSalaryFixed = Number(convertedSalary.toFixed(2));
-
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].id === cardId) {
         cards[i].balance =
@@ -69,7 +61,7 @@ class CardsAPI {
       }
     }
     localStorage.setItem('cards', JSON.stringify(cards));
-    return cards;
+    return convertedSalary;
   };
 
   replenishBalanceForCredit = async (cardId: number, summOfCredit: number) => {

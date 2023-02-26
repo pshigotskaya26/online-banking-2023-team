@@ -1,6 +1,8 @@
 import ICard from '../types/interfaces/ICard';
 import { ITransferData } from '../types/interfaces/ITransaction';
 import axios from 'axios';
+import { API_LAYER_KEY } from '../consts';
+import transactionsAPI from './transactionsAPI';
 
 class TransfersAPI {
   private findCardsByUserID(id: number): ICard[] | undefined {
@@ -16,7 +18,7 @@ class TransfersAPI {
   ): Promise<number> {
     let config = {
       headers: {
-        apikey: 'CKhfOVDTNzgYebZQ4228NRj9i4uQVWWZ',
+apikey: API_LAYER_KEY,
       },
     };
     const res = await axios.get(
@@ -46,7 +48,7 @@ class TransfersAPI {
   }: ITransferData) {
     const data = localStorage.getItem('cards') ?? '[]';
     const existCards: ICard[] = JSON.parse(data);
-    const cardsUpdated = existCards.map((card) => {
+    return existCards.map((card) => {
       if (card.number === cardTo) {
         return {
           ...card,
@@ -60,7 +62,6 @@ class TransfersAPI {
         return card;
       }
     });
-    return cardsUpdated;
   }
 
   fetchCardInfo = (number: number): ICard => {
@@ -95,38 +96,11 @@ class TransfersAPI {
       } else {
         cards = this.getCardsWithUpdatedBalance(transferData);
       }
+      await transactionsAPI.createTransactionTransfer(transferData);
 
       this.getCardsWithUpdatedBalance(transferData);
       localStorage.setItem('cards', JSON.stringify(cards));
     }
-
-    // if (cardFrom) {
-    //   return {
-    //     id: Date.now(),
-    //     userid: cardFrom.userid,
-    //     cardid: cardFrom.id,
-    //     timestamp: Date.now(),
-    //     value: transferData.amount,
-    //     entityid: 1,
-    //     entitytype: TransactionsTypesEnum.TRANSFER,
-    //     targetid: 1,
-    //     status: TransactionStatusEnum.SUCCESS,
-    //   };
-    // } else if (cardToDB) {
-    //   return {
-    //     id: Date.now(),
-    //     userid: cardToDB.userid,
-    //     cardid: cardToDB.id,
-    //     timestamp: Date.now(),
-    //     value: transferData.amount,
-    //     entityid: 1,
-    //     entitytype: TransactionsTypesEnum.TRANSFER,
-    //     targetid: 1,
-    //     status: TransactionStatusEnum.SUCCESS,
-    //   };
-    // } else {
-    //   return {} as ITransaction;
-    // }
   };
 
   fetchCardsByUserId(id: number): ICard[] {

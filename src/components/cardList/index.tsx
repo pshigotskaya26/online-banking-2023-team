@@ -14,7 +14,7 @@ interface CardListProps {
   cards: ICard[];
 }
 
-const CardList: React.FC<CardListProps> = (props) => {
+const CardList: React.FC<CardListProps> = () => {
   const { user } = useAppSelector((state) => state.authuser);
   const { cards: userCards } = useAppSelector((state) => state.usercards);
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);

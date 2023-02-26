@@ -22,13 +22,20 @@ export const getCardUserById = (arrUsers: IClientUser[], idProps: number) => {
 export const generateCardNumber = () => {
   let startStr = '';
 
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < 15; i++) {
     let randomNumber = Math.floor(Math.random() * 10);
+
     startStr += randomNumber;
   }
+  let firstFigure = randomInteger(1, 9);
 
-  return Number(startStr);
+  return Number(firstFigure.toString() + startStr.toString());
 };
+
+function randomInteger(min: number, max: number) {
+  let rand = min - 0.5 + Math.random() * (max - min + 1);
+  return Math.round(rand);
+}
 
 export const changeIconEyeInCard = (isShownValue: boolean) => {
   let iconEye = isShownValue ? faEye : faEyeSlash;

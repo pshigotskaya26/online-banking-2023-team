@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import DashboardPage from '../pages/dashboard';
 import { ServicesPage } from '../pages/services';
 import AuthorizationPage from '../pages/authorization';
@@ -10,6 +10,14 @@ import TransfersPage from '../pages/transfers';
 import NewCardPage from '../pages/newcard';
 import NewCreditPage from '../pages/newcredit';
 import MyCreditsPage from '../pages/mycredits';
+import ProtectedRoute from './protected-route';
+import UserRolesEnum from '../types/enums/UserRolesEnum';
+import ErrorPage from '../pages/error';
+import UsersPage from '../pages/users';
+import CreditsAdmin from '../pages/credits-admin';
+import CreditInfoAdmin from '../pages/credit-info-admin';
+import PaymentsPage from '../pages/payments';
+import { PaymentForm } from '../pages/payments/components/paymentForm';
 
 const routes: RouteObject[] = [
   {
@@ -19,22 +27,29 @@ const routes: RouteObject[] = [
   },
   {
     path: '/services',
-    element: <ServicesPage />,
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+        <ServicesPage />
+      </ProtectedRoute>
+    ),
     id: 'Services',
   },
   {
-    path: '/example',
+    path: '/users',
     element: (
-      <div>
-        <h1>Hello World</h1>
-        <Link to="about">About Us</Link>
-      </div>
+      <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+        <UsersPage />
+      </ProtectedRoute>
     ),
-    id: 'Example',
+    id: 'Users',
   },
   {
     path: '/dashboard',
-    element: <DashboardPage />,
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+        <DashboardPage />
+      </ProtectedRoute>
+    ),
     id: 'Dashboard',
   },
   {
@@ -45,7 +60,7 @@ const routes: RouteObject[] = [
   {
     path: '/logout',
     element: <AuthorizationPage isLogin={false} />,
-    id: 'Loguot',
+    id: 'Logout',
   },
   {
     path: '/registration',
@@ -54,12 +69,40 @@ const routes: RouteObject[] = [
   },
   {
     path: '/transfers',
-    element: <TransfersPage />,
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+        <TransfersPage />
+      </ProtectedRoute>
+    ),
     id: 'Transfers',
   },
   {
+    path: '/payments/*',
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+        <PaymentsPage />
+      </ProtectedRoute>
+    ),
+    id: 'Payments',
+    children: [
+      {
+        path: ':code',
+        element: (
+          <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+            <PaymentForm />
+          </ProtectedRoute>
+        ),
+        id: 'PaymentForm',
+      },
+    ],
+  },
+  {
     path: '/new-card',
-    element: <NewCardPage />,
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+        <NewCardPage />
+      </ProtectedRoute>
+    ),
     id: 'NewCard',
   },
   {
@@ -67,11 +110,34 @@ const routes: RouteObject[] = [
     element: <NewCreditPage />,
     id: 'NewCredit',
   },
-
   {
     path: '/my-credits',
     element: <MyCreditsPage />,
     id: 'MyCredits',
+  }, {
+    path: '/credits-admin',
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+        <CreditsAdmin />
+      </ProtectedRoute>
+    ),
+    id: 'Credits Admin',
+  },
+  {
+  
+    path: '/credits-admin/:id',
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
+        <CreditInfoAdmin />
+      </ProtectedRoute>
+    ),
+    id: 'Credits Admin Info',
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
+    id: '404',
+
   },
 ];
 

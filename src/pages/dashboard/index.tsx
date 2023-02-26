@@ -11,8 +11,8 @@ import ICard from '../../types/interfaces/ICard';
 import { useActions } from '../../hooks/useActions';
 
 const DashboardPage = () => {
-  const [transactions, setTransactions] =
-    useState<ITransaction[]>(transactionsData);
+  const { user } = useAppSelector(state => state.authuser);
+
 
   const { user } = useAppSelector((state) => state.authuser);
 
@@ -48,8 +48,15 @@ const DashboardPage = () => {
   return (
     <ClientLayout>
       <PageTitle title={'Dashboard'} />
-      <CardList cards={cards} credits={credits}></CardList>
-      <TransactionList transactions={transactions}></TransactionList>
+      {!user?.isDisabledOperations
+
+        ? <>
+          <CardList />
+          <TransactionList />
+        </>
+      ) : (
+        <EmptyBox text={'Operations for this user are disabled'} />
+      )}
     </ClientLayout>
   );
 };

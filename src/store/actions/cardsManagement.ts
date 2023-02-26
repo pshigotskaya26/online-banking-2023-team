@@ -2,6 +2,8 @@ import { Dispatch } from 'redux';
 import { CardsActionTypes, CardsManagementActions } from '../types/cards';
 import cardsAPI from '../../api/cardsAPI';
 import ICard from '../../types/interfaces/ICard';
+import transactionsAPI from '../../api/transactionsAPI';
+import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
 
 export const getCardsByUserId = (userid: number) => {
   return (dispatch: Dispatch<CardsManagementActions>) => {
@@ -16,27 +18,6 @@ export const getCardsByUserId = (userid: number) => {
       if (e instanceof Error) {
         dispatch({
           type: CardsActionTypes.FETCH_CARDS_ERROR,
-          payload: e.message,
-        });
-      }
-    }
-  };
-};
-
-export const updateCards = (userCards: ICard[]) => {
-  return (dispatch: Dispatch<CardsManagementActions>) => {
-    try {
-      dispatch({ type: CardsActionTypes.UPDATE_CARDS });
-      const response = cardsAPI.updateCards(userCards);
-      dispatch({
-        type: CardsActionTypes.UPDATE_CARDS_SUCCESS,
-        payload: response,
-      });
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        console.log(e.message);
-        dispatch({
-          type: CardsActionTypes.UPDATE_CARDS_ERROR,
           payload: e.message,
         });
       }
@@ -67,16 +48,39 @@ export const addUserCard = (newCard: ICard) => {
 
 export const replenishBalance = (cardId: number, cardCurrency: string) => {
   return async (dispatch: Dispatch<CardsManagementActions>) => {
+    const currencyFrom = CardCurrencyEnum.BYN;
+    const currencyTo = cardCurrency;
+    const salary = 1000;
+    const convertedSalary = await cardsAPI.getConvertedMoney(
+      currencyFrom,
+      currencyTo,
+      salary,
+    );
+    const convertedSalaryFixed = +convertedSalary.toFixed(2);
+
     try {
       dispatch({ type: CardsActionTypes.UPDATE_CARDS });
-      const response = await cardsAPI.replenishBalance(cardId, cardCurrency);
+
+      const response = await cardsAPI.replenishBalance(
+        cardId,
+        cardCurrency,
+        convertedSalaryFixed,
+      );
+      await transactionsAPI.createTransactionReplanish(
+        cardId,
+        convertedSalaryFixed,
+      );
       dispatch({
         type: CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS,
-        payload: response,
+        payload: { cardId: cardId, amount: response },
       });
     } catch (e: unknown) {
+      await transactionsAPI.createTransactionReplanish(
+        cardId,
+        convertedSalaryFixed,
+        true,
+      );
       if (e instanceof Error) {
-        console.log(e.message);
         dispatch({
           type: CardsActionTypes.UPDATE_CARDS_ERROR,
           payload: e.message,
