@@ -3,7 +3,6 @@ import './index.css';
 import { ITransaction } from '../../types/interfaces/ITransaction';
 import { getStringDate, getStringTime } from '../../utils/formateDateTime';
 import TransactionStatusEnum from '../../types/enums/TransactionStatusEnum';
-
 interface TransactionItemProps {
   transaction: ITransaction;
 }

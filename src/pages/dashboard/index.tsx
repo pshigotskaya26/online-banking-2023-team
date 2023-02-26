@@ -1,5 +1,5 @@
 import ClientLayout from '../../layouts/client';
-import React from 'react';
+import React, { useState } from 'react';
 import CardList from '../../components/cardList';
 import TransactionList from '../../components/transactionList';
 import PageTitle from '../../components/pageTitle';
@@ -19,9 +19,9 @@ const DashboardPage = () => {
           <CardList />
           <TransactionList />
         </>
-        : <EmptyBox text={'Operations for this user are disabled'} />
-      }
-
+      ) : (
+        <EmptyBox text={'Operations for this user are disabled'} />
+      )}
     </ClientLayout>
   );
 };

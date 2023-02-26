@@ -34,6 +34,11 @@ const clientRoutes = [
     isAuth: false,
   },
   {
+    path: '/payments',
+    title: 'Payments',
+    isAuth: false,
+  },
+  {
     path: '/logout',
     title: 'Logout',
     isAuth: true,
@@ -114,6 +119,7 @@ const Header: React.FC = () => {
 
           {user !== null && (
             <div className="flex justify-center items-center space-x-4 cursor-pointer ml-auto">
+              <span className={'font-bold'}>{user.name}</span>
               <div className="relative">
                 <img
                   alt=""

@@ -14,6 +14,8 @@ import ErrorPage from '../pages/error';
 import UsersPage from '../pages/users';
 import CreditsAdmin from '../pages/credits-admin';
 import CreditInfoAdmin from '../pages/credit-info-admin';
+import PaymentsPage from '../pages/payments';
+import { PaymentForm } from '../pages/payments/components/paymentForm';
 
 const routes: RouteObject[] = [
   {
@@ -71,6 +73,26 @@ const routes: RouteObject[] = [
       </ProtectedRoute>
     ),
     id: 'Transfers',
+  },
+  {
+    path: '/payments/*',
+    element: (
+      <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+        <PaymentsPage />
+      </ProtectedRoute>
+    ),
+    id: 'Payments',
+    children: [
+      {
+        path: ':code',
+        element: (
+          <ProtectedRoute expectedRoles={[UserRolesEnum.CLIENT]}>
+            <PaymentForm />
+          </ProtectedRoute>
+        ),
+        id: 'PaymentForm',
+      },
+    ],
   },
   {
     path: '/new-card',

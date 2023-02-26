@@ -11,6 +11,8 @@ export enum AuthActionTypes {
   FETCH_USERINFO_SUCCESS = 'FETCH_USERINFO_SUCCESS',
   FETCH_USERINFO_ERROR = 'FETCH_USERINFO_ERROR',
   LOGUOT_SYSTEM = 'LOGOUT_SYSTEM',
+  ADD_FAVORITE_PAYMENT = 'ADD_FAVORITE_PAYMENT',
+  REMOVE_FAVORITE_PAYMENT = 'REMOVE_FAVORITE_PAYMENT',
 }
 
 interface FetchUserInfo {
@@ -32,8 +34,20 @@ interface LoguotSystem {
   payload: null;
 }
 
+interface AddFavoritePaymentAction {
+  type: AuthActionTypes.ADD_FAVORITE_PAYMENT;
+  payload: IClientUser | IAdminUser;
+}
+
+interface RemoveFavoritePaymentAction {
+  type: AuthActionTypes.REMOVE_FAVORITE_PAYMENT;
+  payload: IClientUser | IAdminUser;
+}
+
 export type AuthUserActions =
   | FetchUserInfo
   | FetchUserInfoSuccess
   | FetchUserInfoError
-  | LoguotSystem;
+  | LoguotSystem
+  | AddFavoritePaymentAction
+  | RemoveFavoritePaymentAction;

@@ -26,6 +26,10 @@ export const AuthReducer = (
         loadingUserInfo: false,
         errorLoadingUser: action.payload,
       };
+    case AuthActionTypes.ADD_FAVORITE_PAYMENT:
+      return { ...state, loadingUserInfo: false, user: action.payload };
+    case AuthActionTypes.REMOVE_FAVORITE_PAYMENT:
+      return { ...state, loadingUserInfo: false, user: action.payload };
     default:
       return state;
   }
