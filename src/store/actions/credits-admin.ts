@@ -41,3 +41,13 @@ export const getCreditsByDays = () => {
     });
   };
 };
+
+export const fetchCreditInfo = (id: number) => {
+  return (dispatch: Dispatch<CreditsAdminActions>) => {
+    const data = creditsAdminAPI.fetchCreditInfoByID(id);
+    dispatch({
+      type: CreditsAdminActionTypes.FETCH_CREDIT_INFO_BY_ID,
+      payload: data,
+    });
+  };
+};

@@ -9,6 +9,12 @@ class CreditsAdminAPI {
     return JSON.parse(data);
   }
 
+  private findCreditById(id: number): ICredit | undefined {
+    const data = localStorage.getItem('credits') ?? '[]';
+    const credits: ICredit[] = JSON.parse(data);
+    return credits.find((credit) => credit.id === id);
+  }
+
   private getPaymentsByDays(days: number): ICreditPayment[] | undefined {
     const credits = localStorage.getItem('credits') ?? '[]';
     return JSON.parse(credits)
@@ -96,6 +102,14 @@ class CreditsAdminAPI {
       res = this.getCreditsByDay(credits);
     }
     return res;
+  }
+
+  fetchCreditInfoByID(id: number): ICredit {
+    const credit = this.findCreditById(id);
+    if (!credit) {
+      throw new Error('Credit is not exist');
+    }
+    return credit;
   }
 }
 

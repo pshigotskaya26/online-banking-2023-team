@@ -7,6 +7,7 @@ export interface CreditsAdminState {
   errorLoadingCredits: string;
   paymentsByDays: ILineGraphicData[];
   creditsByDays: ILineGraphicData[];
+  creditInfo: ICredit | null;
 }
 
 export enum CreditsAdminActionTypes {
@@ -15,6 +16,7 @@ export enum CreditsAdminActionTypes {
   FETCH_CREDITS_ERROR = 'FETCH_CREDITS_ERROR',
   FETCH_PAYMENTS_BY_DAYS = 'FETCH_PAYMENTS_BY_DAYS',
   FETCH_CREDITS_BY_DAYS = 'FETCH_CREDITS_BY_DAYS',
+  FETCH_CREDIT_INFO_BY_ID = 'FETCH_CREDIT_INFO_BY_ID',
 }
 
 interface FetchCreditsAdminAction {
@@ -23,7 +25,7 @@ interface FetchCreditsAdminAction {
 
 interface FetchCreditsAdminSuccessAction {
   type: CreditsAdminActionTypes.FETCH_CREDITS_SUCCESS;
-  payload: any[];
+  payload: ICredit[];
 }
 
 interface FetchCreditsAdminErrorAction {
@@ -41,9 +43,15 @@ interface FetchCreditsByDaysAction {
   payload: ILineGraphicData[];
 }
 
+interface FetchCreditInfoByIDAction {
+  type: CreditsAdminActionTypes.FETCH_CREDIT_INFO_BY_ID;
+  payload: ICredit;
+}
+
 export type CreditsAdminActions =
   | FetchCreditsAdminSuccessAction
   | FetchCreditsAdminAction
   | FetchCreditsAdminErrorAction
   | FetchPaymentsByDaysAction
-  | FetchCreditsByDaysAction;
+  | FetchCreditsByDaysAction
+  | FetchCreditInfoByIDAction;

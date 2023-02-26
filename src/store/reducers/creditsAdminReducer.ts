@@ -10,6 +10,7 @@ const initialState: CreditsAdminState = {
   isLoadingCredits: false,
   paymentsByDays: [],
   creditsByDays: [],
+  creditInfo: null,
 };
 
 export const CreditsAdminReducer = (
@@ -36,6 +37,12 @@ export const CreditsAdminReducer = (
       return {
         ...state,
         creditsByDays: action.payload,
+      };
+
+    case CreditsAdminActionTypes.FETCH_CREDIT_INFO_BY_ID:
+      return {
+        ...state,
+        creditInfo: action.payload,
       };
     default:
       return state;
