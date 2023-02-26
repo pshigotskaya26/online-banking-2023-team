@@ -5,7 +5,7 @@ import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useParams } from 'react-router-dom';
 import { getStringDate } from '../../utils/formateDateTime';
-import { getPaidSumm } from '../../utils/getPaidSumm';
+import { getFineSumm, getPaidSumm } from '../../utils/getPaidSumm';
 
 const CreditInfoAdmin = () => {
   let { id } = useParams();
@@ -13,6 +13,8 @@ const CreditInfoAdmin = () => {
   const { fetchCreditInfo } = useActions();
   const { creditInfo } = useAppSelector((state) => state.creditsAdmin);
   const summPaid = getPaidSumm(creditInfo ? creditInfo.arrOfPayments : []);
+  const summFine = getFineSumm(creditInfo ? creditInfo.arrOfPayments : []);
+
   useEffect(() => {
     fetchCreditInfo(Number(id));
   }, [id]);
@@ -21,8 +23,8 @@ const CreditInfoAdmin = () => {
     <ClientLayout>
       {creditInfo && (
         <>
-          <PageTitle title={'Credit information: ' + creditInfo.id} />
-          <div className="grid w-full grid-cols-1 gap-4 mt-4 xl:grid-cols-2 2xl:grid-cols-3">
+          <PageTitle title={'Credit information: #' + creditInfo.id} />
+          <div className="grid w-full grid-cols-1 gap-4 mt-4 xl:grid-cols-2 2xl:grid-cols-2">
             <div
               className="items-center justify-between p-4 bg-white border border-gray-200
           rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-6 dark:bg-gray-800"
@@ -49,16 +51,24 @@ const CreditInfoAdmin = () => {
             >
               <div className="w-full">
                 <h3 className="text-base font-normal text-gray-500 dark:text-gray-400">
+                  Status
+                </h3>
+                <span className="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">
+                  {creditInfo.status}
+                </span>
+              </div>
+            </div>
+            <div
+              className="items-center justify-between p-4 bg-white border border-gray-200
+          rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-6 dark:bg-gray-800"
+            >
+              <div className="w-full">
+                <h3 className="text-base font-normal text-gray-500 dark:text-gray-400">
                   Сумма оплаченная / Всего
                 </h3>
                 <span className="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">
                   {summPaid} / {creditInfo.summOfCredit}
                 </span>
-                <p className="flex items-center text-base font-normal text-gray-500 dark:text-gray-400">
-                  <span className="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
-                    12.5%
-                  </span>
-                </p>
               </div>
             </div>
             <div
@@ -70,13 +80,8 @@ const CreditInfoAdmin = () => {
                   Сумма пени
                 </h3>
                 <span className="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">
-                  2,340$
+                  {summFine}
                 </span>
-                <p className="flex items-center text-base font-normal text-gray-500 dark:text-gray-400">
-                  <span className="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
-                    12.5%
-                  </span>
-                </p>
               </div>
             </div>
           </div>
@@ -114,7 +119,10 @@ const CreditInfoAdmin = () => {
                 {creditInfo.arrOfPayments &&
                   creditInfo.arrOfPayments.map((payment, i) => {
                     return (
-                      <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
+                      <tr
+                        key={payment.id}
+                        className="hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
                         <td className="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
                           {i + 1}
                         </td>
