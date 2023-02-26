@@ -19,6 +19,7 @@ export interface UserCredentials {
 
 export interface IClientUser extends IUser {
   cards: number[]; //cardids
+  credits: number[];
 }
 
 export interface IAdminUser extends IUser {

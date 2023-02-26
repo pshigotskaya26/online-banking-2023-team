@@ -1,19 +1,13 @@
-import ClientLayout from '../../layouts/client';
 import React, { useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { ITransaction } from '../../types/interfaces/ITransaction';
-import transactionsData from '../../data/transactions';
-import CardList from '../../components/cardList';
-import TransactionList from '../../components/transactionList';
-import PageTitle from '../../components/pageTitle';
-import ICredit from '../../types/interfaces/ICredit';
-import ICard from '../../types/interfaces/ICard';
 import { useActions } from '../../hooks/useActions';
+import ClientLayout from '../../layouts/client';
+import PageTitle from '../../components/pageTitle';
+import CreditList from '../../components/creditList';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import ICard from '../../types/interfaces/ICard';
+import ICredit from '../../types/interfaces/ICredit';
 
-const DashboardPage = () => {
-  const { user } = useAppSelector(state => state.authuser);
-
-
+const MyCreditsPage = () => {
   const { user } = useAppSelector((state) => state.authuser);
 
   const { cards: userCards } = useAppSelector((state) => state.usercards);
@@ -47,18 +41,10 @@ const DashboardPage = () => {
 
   return (
     <ClientLayout>
-      <PageTitle title={'Dashboard'} />
-      {!user?.isDisabledOperations
-
-        ? <>
-          <CardList />
-          <TransactionList />
-        </>
-      ) : (
-        <EmptyBox text={'Operations for this user are disabled'} />
-      )}
+      <PageTitle title={'My credits'} />
+      <CreditList credits={credits} cards={cards}></CreditList>
     </ClientLayout>
   );
 };
 
-export default DashboardPage;
+export default MyCreditsPage;

@@ -8,6 +8,8 @@ import MainPage from '../pages/main';
 
 import TransfersPage from '../pages/transfers';
 import NewCardPage from '../pages/newcard';
+import NewCreditPage from '../pages/newcredit';
+import MyCreditsPage from '../pages/mycredits';
 import ProtectedRoute from './protected-route';
 import UserRolesEnum from '../types/enums/UserRolesEnum';
 import ErrorPage from '../pages/error';
@@ -104,6 +106,15 @@ const routes: RouteObject[] = [
     id: 'NewCard',
   },
   {
+    path: '/take-credit',
+    element: <NewCreditPage />,
+    id: 'NewCredit',
+  },
+  {
+    path: '/my-credits',
+    element: <MyCreditsPage />,
+    id: 'MyCredits',
+  }, {
     path: '/credits-admin',
     element: (
       <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
@@ -113,6 +124,7 @@ const routes: RouteObject[] = [
     id: 'Credits Admin',
   },
   {
+  
     path: '/credits-admin/:id',
     element: (
       <ProtectedRoute expectedRoles={[UserRolesEnum.ADMIN]}>
@@ -125,6 +137,7 @@ const routes: RouteObject[] = [
     path: '*',
     element: <ErrorPage />,
     id: '404',
+
   },
 ];
 

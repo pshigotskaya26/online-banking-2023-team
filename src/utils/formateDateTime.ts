@@ -11,3 +11,11 @@ export const getStringTerm = (time: number) => {
 export const getStringTime = (time: number) => {
   return dayjs(time).format('hh:mm:ss');
 };
+
+export const getStringDay = (time: number) => {
+  return dayjs(time).format('DD');
+};
+
+export const getStringMonth = (time: number) => {
+  return dayjs(time).format('MM');
+};

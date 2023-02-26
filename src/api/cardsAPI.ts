@@ -54,14 +54,45 @@ class CardsAPI {
     convertedSalary: number,
   ) => {
     const cards: ICard[] = JSON.parse(localStorage.getItem('cards') ?? '[]');
-
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].id === cardId) {
-        cards[i].balance += convertedSalary;
+        cards[i].balance =
+          Number(cards[i].balance.toFixed(2)) + convertedSalaryFixed;
       }
     }
     localStorage.setItem('cards', JSON.stringify(cards));
     return convertedSalary;
+  };
+
+  replenishBalanceForCredit = async (cardId: number, summOfCredit: number) => {
+    const cards: ICard[] = JSON.parse(localStorage.getItem('cards') ?? '[]');
+    let cardCurrency = '';
+
+    for (let i = 0; i < cards.length; i++) {
+      console.log('cards[i]-------------------------------: ', cards[i]);
+      if (cards[i].id === cardId) {
+        cardCurrency = cards[i].currency;
+      }
+    }
+
+    const currencyFrom = CardCurrencyEnum.BYN;
+    const convertedSummOfCredit = await this.getConvertedMoney(
+      currencyFrom,
+      cardCurrency,
+      summOfCredit,
+    );
+
+    const convertedSummOfCreditFixed = Number(convertedSummOfCredit.toFixed(2));
+
+    for (let i = 0; i < cards.length; i++) {
+      if (cards[i].id === cardId) {
+        cards[i].balance =
+          Number(cards[i].balance.toFixed(2)) + convertedSummOfCreditFixed;
+      }
+    }
+    localStorage.setItem('cards', JSON.stringify(cards));
+    console.log('cards after taking credit: ', cards);
+    return cards;
   };
 }
 

@@ -1,0 +1,7 @@
+.creditList-container {
+  @apply py-5 border-b border-solid border-b-gray-200;
+}
+
+.creditList__title {
+  @apply pb-6 text-xl text-blue-800;
+}

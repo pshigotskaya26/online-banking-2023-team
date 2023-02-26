@@ -15,4 +15,5 @@ export default interface ICredit {
   status: string; //open or close credit
   arrOfPayments: ICreditPayment[];
   cardId: number;
+  statusOfButton: string;
 }

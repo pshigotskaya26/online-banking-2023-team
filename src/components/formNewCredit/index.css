@@ -1,0 +1,20 @@
+.new-credit__form {
+  @apply w-full p-4 bg-gray-50 border min-h-[300px] border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700;
+}
+
+.new-credit__content {
+  @apply flex justify-between gap-x-2.5;
+}
+
+.user-data__value {
+  @apply text-zinc-400;
+}
+
+.new-credit__buttons {
+  @apply flex gap-x-5;
+}
+
+.button-create-credit {
+  cursor: pointer;
+  @apply bg-amber-400 hover:bg-amber-500;
+}

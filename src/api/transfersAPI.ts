@@ -18,7 +18,7 @@ class TransfersAPI {
   ): Promise<number> {
     let config = {
       headers: {
-        apikey: API_LAYER_KEY,
+apikey: API_LAYER_KEY,
       },
     };
     const res = await axios.get(
@@ -53,8 +53,8 @@ class TransfersAPI {
         return {
           ...card,
           balance: amountTo
-            ? +(card.balance + amountTo).toFixed(2)
-            : +(card.balance + amountFrom).toFixed(2),
+            ? card.balance + amountTo
+            : card.balance + amountFrom,
         };
       } else if (card.number === cardFrom) {
         return { ...card, balance: card.balance - amountFrom };

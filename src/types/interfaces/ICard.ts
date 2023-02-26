@@ -1,4 +1,3 @@
-
 export default interface ICard {
   id: number; // internal
   number: number; // 5454 1234 1234 1234

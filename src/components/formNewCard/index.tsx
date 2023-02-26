@@ -13,7 +13,6 @@ import { useActions } from '../../hooks/useActions';
 
 const FormNewCard: React.FC = () => {
   const { user } = useAppSelector((state) => state.authuser);
-  console.log('user: ', user);
   const [currency, setCurrency] = useState<string>(CardCurrencyEnum.USD);
   const [expiration, setExpiration] = useState<string>(
     CardExpiryDateEnum.ONE_YEAR,
@@ -34,10 +33,14 @@ const FormNewCard: React.FC = () => {
   };
 
   const { addUserCard } = useActions();
+  const { getCardsByUserId } = useActions();
 
   const changeCards = (newCard: ICard = objNewCard) => {
-    addUserCard(newCard);
-    navigate('/dashboard');
+    if (user !== null) {
+      addUserCard(newCard);
+      //const arrCards = getCardsByUserId(user.id);
+      navigate('/dashboard');
+    }
   };
 
   const handleSelectCurrency = (

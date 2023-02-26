@@ -109,6 +109,8 @@ const RegistrationForm: React.FC = () => {
       photo,
       role,
       cards: [],
+      credits: [],
+
       favoriteServices: [],
       isDisabledOperations: false,
     };
