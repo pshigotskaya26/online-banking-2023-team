@@ -9,28 +9,29 @@ import { getCountOfDays } from '../utils/getCountOfDays';
 
 class CreditsAPI {
   getCreditsByUserId(userid: number, userCards: ICard[]): ICredit[] {
-    /*
-    const credits: ICredit[] = JSON.parse(
-      localStorage.getItem('credits') ?? '[]',
-    );
-
-
-    return credits.filter((credit) => credit.userId === userid);
-    */
-    //.map()
-
-    const currentDate = Date.now();
-    const currentDay = Number(getStringDay(currentDate));
-    const currentMonth = Number(getStringMonth(currentDate));
-
     const credits: ICredit[] = JSON.parse(
       localStorage.getItem('credits') ?? '[]',
     );
 
     const userCredits = credits.filter((credit) => credit.userId === userid);
+    const paymentsWithFines = this.addFineToPayment(userCredits);
+    const creditsWithFines = this.addFineToCredit(paymentsWithFines);
+    const creditsWithStatusButton = this.setStatusToButtonsPay(
+      creditsWithFines,
+      userCards,
+    );
 
-    //assign fines to paymentItem
-    userCredits.forEach((creditItem) => {
+    localStorage.setItem('credits', JSON.stringify(creditsWithStatusButton));
+    this.updateCredits(creditsWithStatusButton);
+    return creditsWithStatusButton;
+  }
+
+  addFineToPayment(credits: ICredit[]): ICredit[] {
+    const currentDate = Date.now();
+    const currentDay = Number(getStringDay(currentDate));
+    const currentMonth = Number(getStringMonth(currentDate));
+
+    credits.forEach((creditItem) => {
       creditItem.arrOfPayments.forEach((paymentItem) => {
         const paymentDay = Number(getStringDay(paymentItem.dateOfContribution));
         const paymentMonth = Number(
@@ -58,44 +59,48 @@ class CreditsAPI {
         }
       });
     });
+    return credits;
+  }
 
-    //assign general Fine to creditItem
-
-    userCredits.forEach((creditItem) => {
+  addFineToCredit(credits: ICredit[]): ICredit[] {
+    credits.forEach((creditItem) => {
       let sumFine = 0;
       creditItem.arrOfPayments.forEach((paymentItem) => {
         sumFine += paymentItem.fine;
       });
       creditItem.fine = sumFine;
     });
+    return credits;
+  }
 
-    //do clickable buttons depending on the current balance on the card
-    /*
-    userCredits.forEach((creditItem) => {
+  setStatusToButtonsPay(credits: ICredit[], cards: ICard[]): ICredit[] {
+    credits.forEach((creditItem) => {
       let cardId = creditItem.cardId;
-      let cardBalance = userCards.filter(
-        (cardItem) => cardItem.id === cardId,
-      )[0].balance;
+      //let arrCards = userCards;
+      let balanceCard: number;
 
-      console.log('cardBalance: ', cardBalance);
+      const foundedCard = cards.filter((cardItem) => cardItem.id === cardId);
 
-      creditItem.arrOfPayments.forEach((paymentItem) => {
-        if (
-          paymentItem.status === CreditPaymentStatusEnum.IS_NOT_PAID &&
-          paymentItem.paymentValue <= cardBalance
-        ) {
-          console.log('cardBalance: before ', cardBalance);
-          cardBalance = cardBalance - paymentItem.paymentValue;
-          console.log('cardBalance: after-- ', cardBalance);
-          paymentItem.statusOfButton = CreditStatusButtonEnum.ACTIVE;
-        }
-      });
+      if (foundedCard[0] !== undefined) {
+        let cardBalance = foundedCard[0].balance;
+
+        creditItem.arrOfPayments.forEach((paymentItem) => {
+          if (
+            paymentItem.status === CreditPaymentStatusEnum.IS_NOT_PAID &&
+            paymentItem.paymentValue <= cardBalance
+          ) {
+            cardBalance = cardBalance - paymentItem.paymentValue;
+            paymentItem.statusOfButton = CreditStatusButtonEnum.ACTIVE;
+          } else if (
+            paymentItem.status === CreditPaymentStatusEnum.IS_NOT_PAID &&
+            paymentItem.paymentValue > cardBalance
+          ) {
+            paymentItem.statusOfButton = CreditStatusButtonEnum.NO_ACTIVE;
+          }
+        });
+      }
     });
-*/
-
-    localStorage.setItem('credits', JSON.stringify(userCredits));
-    this.updateCredits(userCredits);
-    return userCredits;
+    return credits;
   }
 
   addUserCredit(newCredit: ICredit): ICredit[] {

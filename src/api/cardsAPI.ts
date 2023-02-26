@@ -60,11 +60,12 @@ class CardsAPI {
       salary,
     );
 
-    const convertedSalaryFixed = +convertedSalary.toFixed(2);
+    const convertedSalaryFixed = Number(convertedSalary.toFixed(2));
 
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].id === cardId) {
-        cards[i].balance += convertedSalaryFixed;
+        cards[i].balance =
+          Number(cards[i].balance.toFixed(2)) + convertedSalaryFixed;
       }
     }
     localStorage.setItem('cards', JSON.stringify(cards));
@@ -93,7 +94,8 @@ class CardsAPI {
 
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].id === cardId) {
-        cards[i].balance += convertedSummOfCreditFixed;
+        cards[i].balance =
+          Number(cards[i].balance.toFixed(2)) + convertedSummOfCreditFixed;
       }
     }
     localStorage.setItem('cards', JSON.stringify(cards));

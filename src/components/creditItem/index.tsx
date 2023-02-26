@@ -1,7 +1,9 @@
 import './index.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ICredit from '../../types/interfaces/ICredit';
 import { getStringDate } from '../../utils/formateDateTime';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useActions } from '../../hooks/useActions';
 import { toggleActiveCreditButtonAllPay } from '../../utils/toggleActiveCreditButtonAllPay';
 import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
 import ICreditPayment from '../../types/interfaces/ICreditPayment';
@@ -16,7 +18,41 @@ interface CreditItemProps {
 }
 
 const CreditItem: React.FC<CreditItemProps> = (props) => {
-  console.log('creditItem: ', props.credit);
+  console.log('props in creditItem: ', props);
+
+  const { user } = useAppSelector((state) => state.authuser);
+  const { credits: userCredits } = useAppSelector((state) => state.usercredits);
+  const { cards: userCards } = useAppSelector((state) => state.usercards);
+
+  const { getCardsByUserId } = useActions();
+  const { getCreditsByUserId } = useActions();
+  const [cards, setCards] = useState<ICard[]>(props.cards);
+  const [credits, setCredits] = useState<ICredit[]>(props.credits);
+
+  //console.log('credits: ', credits);
+  //console.log('cards: ', cards);
+
+  useEffect(() => {
+    setCards(userCards);
+  }, [userCards]);
+
+  useEffect(() => {
+    setCredits(userCredits);
+  }, [userCredits]);
+
+  useEffect(() => {
+    if (user !== null) {
+      getCardsByUserId(user.id);
+      console.log('cards in useeffect creditlist: ', cards);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user !== null) {
+      getCreditsByUserId(user.id, cards);
+      console.log('credits in useeffect creditlist: ', credits);
+    }
+  }, [user]);
 
   /*
   useEffect(() => {

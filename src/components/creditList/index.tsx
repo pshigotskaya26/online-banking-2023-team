@@ -12,9 +12,11 @@ interface CreditListProps {
 }
 
 const CreditList: React.FC<CreditListProps> = (props) => {
+  console.log('props in creditList: ', props);
   const { user } = useAppSelector((state) => state.authuser);
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);
   const { cards: userCards } = useAppSelector((state) => state.usercards);
+
   const { getCardsByUserId } = useActions();
   const { getCreditsByUserId } = useActions();
   const [cards, setCards] = useState<ICard[]>(props.cards);
@@ -24,24 +26,26 @@ const CreditList: React.FC<CreditListProps> = (props) => {
   //console.log('cards: ', cards);
 
   useEffect(() => {
-    if (user !== null) {
-      getCardsByUserId(user.id);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (user !== null) {
-      getCreditsByUserId(user.id, cards);
-    }
-  }, [user]);
+    setCards(userCards);
+  }, [userCards]);
 
   useEffect(() => {
     setCredits(userCredits);
   }, [userCredits]);
 
   useEffect(() => {
-    setCards(userCards);
-  }, [userCards]);
+    if (user !== null) {
+      getCardsByUserId(user.id);
+      console.log('cards in useeffect creditlist: ', cards);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user !== null) {
+      getCreditsByUserId(user.id, cards);
+      console.log('credits in useeffect creditlist: ', credits);
+    }
+  }, [user]);
 
   return (
     <div className="creditList-container">
