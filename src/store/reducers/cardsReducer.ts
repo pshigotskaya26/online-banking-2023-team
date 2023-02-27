@@ -9,6 +9,7 @@ const initialState: CardsState = {
   cards: [],
   loadingCardsInfo: false,
   errorLoadingCards: '',
+  loadingReplenish: false,
 };
 
 export const CardsReducer = (
@@ -36,6 +37,15 @@ export const CardsReducer = (
         loadingCardsInfo: false,
         cards: action.payload,
       };
+
+    case CardsActionTypes.REPLENISH_BALANCE:
+      return { ...state, loadingReplenish: true };
+
+    case CardsActionTypes.REPLENISH_BALANCE_SUCCESS:
+      return { ...state, cards: action.payload, loadingReplenish: false };
+
+    case CardsActionTypes.REPLENISH_BALANCE_ERROR:
+      return { ...state, loadingReplenish: false };
 
     default:
       return state;

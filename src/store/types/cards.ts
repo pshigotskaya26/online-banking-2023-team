@@ -6,6 +6,7 @@ export interface CardsState {
   cards: ICard[];
   loadingCardsInfo: boolean;
   errorLoadingCards: string;
+  loadingReplenish: boolean;
 }
 
 export enum CardsActionTypes {
@@ -16,6 +17,9 @@ export enum CardsActionTypes {
   UPDATE_CARDS_SUCCESS = 'UPDATE_CARDS_SUCCESS',
   UPDATE_CARDS_ERROR = 'UPDATE_CARDS_ERROR',
   UPDATE_CARDS_WITH_SALARY_SUCCESS = 'UPDATE_CARDS_WITH_SALARY_SUCCESS',
+  REPLENISH_BALANCE = 'REPLENISH_BALANCE',
+  REPLENISH_BALANCE_ERROR = 'REPLENISH_BALANCE_ERROR',
+  REPLENISH_BALANCE_SUCCESS = 'REPLENISH_BALANCE_SUCCESS',
 }
 
 interface FetchCards {
@@ -35,13 +39,28 @@ interface FetchCardsError {
 interface UpdateUserCards {
   type: CardsActionTypes.UPDATE_CARDS;
 }
+
 interface UpdateUserCardsSuccess {
   type: CardsActionTypes.UPDATE_CARDS_SUCCESS;
   payload: ICard[];
 }
+
 interface UpdateUserCardsError {
   type: CardsActionTypes.UPDATE_CARDS_ERROR;
   payload: string;
+}
+
+interface ReplenishBalanceAction {
+  type: CardsActionTypes.REPLENISH_BALANCE;
+}
+
+interface ReplenishBalanceSuccessAction {
+  type: CardsActionTypes.REPLENISH_BALANCE_SUCCESS;
+  payload: ICard[];
+}
+
+interface ReplenishBalanceErrorAction {
+  type: CardsActionTypes.REPLENISH_BALANCE_ERROR;
 }
 
 interface UpdateUserCardsWithSalarySuccess {
@@ -56,4 +75,7 @@ export type CardsManagementActions =
   | UpdateUserCards
   | UpdateUserCardsSuccess
   | UpdateUserCardsError
-  | UpdateUserCardsWithSalarySuccess;
+  | UpdateUserCardsWithSalarySuccess
+  | ReplenishBalanceAction
+  | ReplenishBalanceSuccessAction
+  | ReplenishBalanceErrorAction;
