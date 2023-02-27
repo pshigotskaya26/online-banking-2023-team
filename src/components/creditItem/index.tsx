@@ -9,6 +9,7 @@ import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
 import ICreditPayment from '../../types/interfaces/ICreditPayment';
 import CreditPaymentItem from '../creditPaymentItem';
 import ICard from '../../types/interfaces/ICard';
+import { defineNumberCard } from '../../utils/defineNumberCard';
 
 interface CreditItemProps {
   credit: ICredit;
@@ -27,6 +28,9 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
   const { payAllCredit, decreaseTheBalanceForCredit } = useActions();
   const [cards, setCards] = useState<ICard[]>(props.cards);
   const [credits, setCredits] = useState<ICredit[]>(props.credits);
+  const [cardNumber, setCardNumber] = useState<number>(
+    defineNumberCard(props.cards, props.credit.cardId),
+  );
 
   useEffect(() => {
     setCards(userCards);
@@ -122,6 +126,15 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
               </div>
               <div className="credit-description__value credit-description__start-date-value">
                 {getStringDate(props.credit.dateStart)}
+              </div>
+            </div>
+
+            <div className="credit-description credit-description__card-number">
+              <div className="credit-description__text credit-description__card-number-text">
+                A credit card number:
+              </div>
+              <div className="credit-description__value credit-description__card-number-value">
+                {cardNumber}
               </div>
             </div>
 
