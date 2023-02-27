@@ -11,7 +11,9 @@ import EmptyBox from '../../components/enptyBox';
 
 const DashboardPage = () => {
   const { user } = useAppSelector((state) => state.authuser);
-  const { cards: userCards } = useAppSelector((state) => state.usercards);
+  const { cards: userCards, loadingCardsInfo } = useAppSelector(
+    (state) => state.usercards,
+  );
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);
 
   const { getCardsByUserId, getCreditsByUserId } = useActions();
@@ -21,7 +23,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     setCards(userCards);
-  }, [userCards]);
+  }, [userCards, loadingCardsInfo]);
 
   useEffect(() => {
     setCredits(userCredits);
@@ -31,7 +33,7 @@ const DashboardPage = () => {
     if (user !== null) {
       getCardsByUserId(user.id);
     }
-  }, [user]);
+  }, [user, loadingCardsInfo]);
 
   useEffect(() => {
     if (user !== null) {

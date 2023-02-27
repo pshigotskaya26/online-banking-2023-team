@@ -19,8 +19,8 @@ const GraphicsCredits: FC<GraphicsCreditsProps> = () => {
 
   return (
     <div className={'flex flex-wrap justify-evenly mt-2'}>
-      <GraphicLineItem title={'Платежи по дням'} data={paymentsByDays} />
-      <GraphicLineItem title={'Взято кредитов по дням'} data={creditsByDays} />
+      <GraphicLineItem title={'Payments by day'} data={paymentsByDays} />
+      <GraphicLineItem title={'Loans taken by day'} data={creditsByDays} />
     </div>
   );
 };

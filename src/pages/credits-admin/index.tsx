@@ -17,6 +17,7 @@ const CreditsAdmin = () => {
     <ClientLayout>
       <>
         <LatestCredits credits={credits} />
+        Наверное нужно удалить ГРАФИКИ
         {credits.length > 0 && <GraphicsCredits />}
       </>
     </ClientLayout>
