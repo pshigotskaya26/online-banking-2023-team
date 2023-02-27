@@ -63,7 +63,6 @@ export const replenishBalance = (cardId: number, cardCurrency: string) => {
 
       const response = await cardsAPI.replenishBalance(
         cardId,
-        cardCurrency,
         convertedSalaryFixed,
       );
       await transactionsAPI.createTransactionReplanish(

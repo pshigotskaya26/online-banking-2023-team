@@ -50,11 +50,7 @@ class CardsAPI {
     }
   }
 
-  replenishBalance = async (
-    cardId: number,
-    cardCurrency: string,
-    convertedSalary: number,
-  ) => {
+  replenishBalance = async (cardId: number, convertedSalary: number) => {
     const cards: ICard[] = JSON.parse(localStorage.getItem('cards') ?? '[]');
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].id === cardId) {
