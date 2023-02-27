@@ -117,7 +117,7 @@ export const replenishBalanceForCredit = (
   };
 };
 
-export const decreaseTheBalance = (
+export const decreaseTheBalanceForPayment = (
   idPayment: number,
   credits: ICredit[],
   cards: ICard[],
@@ -126,7 +126,38 @@ export const decreaseTheBalance = (
   return (dispatch: Dispatch<CardsManagementActions>) => {
     try {
       dispatch({ type: CardsActionTypes.UPDATE_CARDS });
-      const response = cardsAPI.decreaseTheBalance(
+      const response = cardsAPI.decreaseTheBalanceForPayment(
+        idPayment,
+        credits,
+        cards,
+        credit,
+      );
+      dispatch({
+        type: CardsActionTypes.UPDATE_CARDS_SUCCESS,
+        payload: response,
+      });
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e.message);
+        dispatch({
+          type: CardsActionTypes.UPDATE_CARDS_ERROR,
+          payload: e.message,
+        });
+      }
+    }
+  };
+};
+
+export const decreaseTheBalanceForCredit = (
+  idPayment: number,
+  credits: ICredit[],
+  cards: ICard[],
+  credit: ICredit,
+) => {
+  return (dispatch: Dispatch<CardsManagementActions>) => {
+    try {
+      dispatch({ type: CardsActionTypes.UPDATE_CARDS });
+      const response = cardsAPI.decreaseTheBalanceForCredit(
         idPayment,
         credits,
         cards,

@@ -24,6 +24,7 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
 
   const { getCardsByUserId } = useActions();
   const { getCreditsByUserId } = useActions();
+  const { payAllCredit, decreaseTheBalanceForCredit } = useActions();
   const [cards, setCards] = useState<ICard[]>(props.cards);
   const [credits, setCredits] = useState<ICredit[]>(props.credits);
 
@@ -46,6 +47,20 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
       getCreditsByUserId(user.id, cards);
     }
   }, [user]);
+
+  const payPaymentAll = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (user !== null) {
+      decreaseTheBalanceForCredit(
+        props.id,
+        props.credits,
+        props.cards,
+        props.credit,
+      );
+      payAllCredit(props.id, props.credits, props.cards, props.credit);
+
+      // decreaseTheBalance(props.id, props.credits, props.cards, props.credit);
+    }
+  };
 
   return (
     <div className="credit-item" id={`${props.id}`}>
@@ -122,6 +137,9 @@ const CreditItem: React.FC<CreditItemProps> = (props) => {
         </div>
         <div className="credit-description__button">
           <button
+            onClick={(event) => {
+              payPaymentAll(event);
+            }}
             className={'button button-pay-all ' + props.credit.statusOfButton}
           >
             Pay all

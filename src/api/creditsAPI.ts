@@ -113,8 +113,6 @@ class CreditsAPI {
     cards: ICard[],
     credit: ICredit,
   ): ICredit[] {
-    console.log('hello', credits);
-
     credits.forEach((creditItem) => {
       if (creditItem.id === credit.id) {
         let creditSum = creditItem.summOfCredit;
@@ -122,21 +120,12 @@ class CreditsAPI {
         let creditRemainder = creditItem.remainder;
         let creditCardId = creditItem.cardId;
 
-        console.log(
-          'creditSum in payCredit: ',
-          creditSum,
-          creditPaidSum,
-          creditRemainder,
-          creditCardId,
-        );
-
         const foundedCard = cards.filter(
           (cardItem) => cardItem.id === creditCardId,
         );
 
         if (foundedCard[0] !== undefined) {
           let cardBalance = foundedCard[0].balance;
-          console.log('cardBalance in payCredit: ', cardBalance);
 
           creditItem.arrOfPayments.forEach((paymentItem) => {
             if (paymentItem.id === idPayment) {
@@ -155,13 +144,6 @@ class CreditsAPI {
               creditItem.remainder = Number(
                 (creditRemainder - sumPaymentFine).toFixed(2),
               );
-
-              //decreaseTheBalance(foundedCard, sumPaymentFine);
-              /*
-              foundedCard[0].balance = Number(
-                (foundedCard[0].balance - sumPaymentFine).toFixed(2),
-              );
-*/
               if (creditItem.summPaid >= creditItem.summOfCredit) {
                 creditItem.status = CreditStatusEnum.CLOSE;
                 creditItem.isAllPaid = true;
@@ -173,6 +155,49 @@ class CreditsAPI {
       }
     });
 
+    this.updateCredits(credits);
+    return credits;
+  }
+
+  payAllCredit(
+    idPayment: number,
+    credits: ICredit[],
+    cards: ICard[],
+    credit: ICredit,
+  ): ICredit[] {
+    credits.forEach((creditItem) => {
+      if (creditItem.id === credit.id) {
+        let sumAllPaymentsFines = 0;
+
+        creditItem.arrOfPayments.forEach((paymentItem) => {
+          if (paymentItem.status === CreditPaymentStatusEnum.IS_NOT_PAID) {
+            let sumPaymentFine = Number(
+              (paymentItem.paymentValue + paymentItem.fine).toFixed(2),
+            );
+            sumAllPaymentsFines = Number(
+              (sumAllPaymentsFines + sumPaymentFine).toFixed(2),
+            );
+          }
+        });
+
+        creditItem.arrOfPayments.forEach((paymentItem) => {
+          if (paymentItem.status === CreditPaymentStatusEnum.IS_NOT_PAID) {
+            paymentItem.isPaid = true;
+            paymentItem.status = CreditPaymentStatusEnum.IS_PAID;
+            paymentItem.statusOfButton = CreditStatusButtonEnum.NO_ACTIVE;
+          }
+        });
+
+        creditItem.summPaid = Number(
+          (creditItem.summPaid + sumAllPaymentsFines).toFixed(2),
+        );
+
+        creditItem.remainder = 0;
+        creditItem.status = CreditStatusEnum.CLOSE;
+        creditItem.isAllPaid = true;
+        creditItem.statusOfButton = CreditStatusButtonEnum.NO_ACTIVE;
+      }
+    });
     this.updateCredits(credits);
     return credits;
   }
