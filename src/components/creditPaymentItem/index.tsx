@@ -16,84 +16,18 @@ interface CreditPaymentItemProps {
 }
 
 const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
-  /*
-  const [currentCard, setCurrentCard] = useState<number>(props.cards[0].number);
-  const [statusOfButtonPay, setStatusOfButtonPay] = useState<string>(
-    props.payment.statusOfButton,
-  );
-  const [fineOfPayment, setFineOfPayment] = useState<number>(
-    props.payment.fine,
-  );
-
-  //console.log('statusOfButtonPay: ', statusOfButtonPay);
-
-  const handleSelectPaymentCard = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setCurrentCard(Number(event.target.value));
-  };
-
-  const currentDate = Date.now();
-  const currentDay = getStringDay(currentDate);
-  const currentMonth = getStringMonth(currentDate);
-  console.log('currentDay and currentMonth: ', currentDay, currentMonth);
-
-  const paymentDay = getStringDay(props.payment.dateOfContribution);
-  const paymentMonth = getStringMonth(props.payment.dateOfContribution);
-  console.log('paymentDay and paymentMonth: ', paymentDay, paymentMonth);
-
-  useEffect(() => {
-    if (
-      (currentDay !== paymentDay && currentMonth !== paymentMonth) ||
-      (currentDay !== paymentDay && currentMonth == paymentMonth)
-    ) {
-      //status of the payment is Paid
-      if (props.payment.status === CreditPaymentStatusEnum.IS_PAID) {
-        setStatusOfButtonPay(
-          (props.payment.statusOfButton = CreditStatusButtonEnum.NO_ACTIVE),
-        );
-
-        changeStatusPaymentButtonPay(
-          props.credit.id,
-          props.payment.id,
-          statusOfButtonPay,
-        );
-      }
-      //status of the payment is not Paid
-      if (props.payment.status === CreditPaymentStatusEnum.IS_NOT_PAID) {
-        console.log('la-la');
-        //if date of the payment < current date
-        if (
-          Number(paymentDay) < Number(currentDay) &&
-          props.payment.dateOfContribution < currentDate
-        ) {
-          setStatusOfButtonPay(
-            (props.payment.statusOfButton = CreditStatusButtonEnum.ACTIVE),
-          );
-          changeStatusPaymentButtonPay(
-            props.credit.id,
-            props.payment.id,
-            statusOfButtonPay,
-          );
-          const differDays = getCountOfDays(
-            currentDate,
-            props.payment.dateOfContribution,
-          );
-          console.log('differ: ', differDays);
-
-          setFineOfPayment(differDays * Number(CreditPaymentFineEnum.FIVE));
-          changePaymentFine(props.credit.id, props.payment.id, fineOfPayment);
-        }
-      }
-    }
-  });
-*/
   const { user } = useAppSelector((state) => state.authuser);
-  const { payCreditPayment } = useActions();
+  const { payCreditPayment, decreaseTheBalanceForPayment } = useActions();
 
   const payPayment = async (event: React.MouseEvent<HTMLButtonElement>) => {
     if (user !== null) {
       payCreditPayment(props.id, props.credits, props.cards, props.credit);
+      decreaseTheBalanceForPayment(
+        props.id,
+        props.credits,
+        props.cards,
+        props.credit,
+      );
     }
   };
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.css';
 import ICard from '../../types/interfaces/ICard';
 import { getStringTerm } from '../../utils/formateDateTime';
@@ -10,6 +10,7 @@ import CardNumber from '../cardNumber';
 import CardBalance from '../cardBalance';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useActions } from '../../hooks/useActions';
+import CardStatusButtonReplenishEnum from '../../types/enums/CardStatusButtonReplenishEnum';
 
 interface CardItemProps {
   card: ICard;
@@ -27,12 +28,23 @@ const CardItem: React.FC<CardItemProps> = (props) => {
   };
 
   const [isShownData, setShownData] = useState<boolean>(props.card.isShown);
+  const [statusButtonReplenish, setStatusButtonReplenish] = useState<string>(
+    CardStatusButtonReplenishEnum.ACTIVE,
+  );
   const imageBackground = getBackgroundImageByColor(props.card.background);
 
   const changeIconEye = () => {
     setShownData(!isShownData);
   };
 
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    if (currentUrl.includes('new-card')) {
+      setStatusButtonReplenish(CardStatusButtonReplenishEnum.NO_ACTIVE);
+    } else if (currentUrl.includes('dashboard')) {
+      setStatusButtonReplenish(CardStatusButtonReplenishEnum.ACTIVE);
+    }
+  });
   return (
     <div className="card-item">
       <div className="card" style={{ background: `url(${imageBackground})` }}>
