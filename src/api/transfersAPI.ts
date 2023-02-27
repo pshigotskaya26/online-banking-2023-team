@@ -18,7 +18,7 @@ class TransfersAPI {
   ): Promise<number> {
     let config = {
       headers: {
-apikey: API_LAYER_KEY,
+        apikey: API_LAYER_KEY,
       },
     };
     const res = await axios.get(
@@ -30,7 +30,7 @@ apikey: API_LAYER_KEY,
       const data = res.data;
       return data.result;
     } else {
-      throw new Error('Не удалось получить курс валют лоя перевода');
+      throw new Error('Failed to get exchange rate for transfer');
     }
   }
 

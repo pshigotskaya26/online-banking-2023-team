@@ -3,7 +3,6 @@ import axios from 'axios';
 import { API_LAYER_KEY } from '../consts';
 import CardCurrencyEnum from '../types/enums/CardCurrencyEnum';
 import ICredit from '../types/interfaces/ICredit';
-import { ITransaction } from '../types/interfaces/ITransaction';
 import CreditPaymentStatusEnum from '../types/enums/CreditPaymentStatusEnum';
 
 class CardsAPI {
@@ -37,7 +36,6 @@ class CardsAPI {
   }
 
   addUserCard(newCard: ICard): ICard[] {
-    //we need to save continuous numbering
     const cards: ICard[] = JSON.parse(localStorage.getItem('cards') ?? '[]');
     newCard.id = cards.push(newCard);
     localStorage.setItem('cards', JSON.stringify(cards));
@@ -69,7 +67,6 @@ class CardsAPI {
 
   replenishBalance = async (
     cardId: number,
-    cardCurrency: string,
     convertedSalary: number,
   ): Promise<ICard[]> => {
     const cards: ICard[] = JSON.parse(localStorage.getItem('cards') ?? '[]');

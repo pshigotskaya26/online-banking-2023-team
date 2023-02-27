@@ -11,13 +11,12 @@ import Calculator from '../../../../components/calculator';
 import Button from '../../../../components/button';
 import { useActions } from '../../../../hooks/useActions';
 import { ITransaction } from '../../../../types/interfaces/ITransaction';
-import dayjs from 'dayjs';
 import TransactionsTypesEnum from '../../../../types/enums/TransactionsTypesEnum';
 import TransactionStatusEnum from '../../../../types/enums/TransactionStatusEnum';
 
 interface PaymentFormProps {}
 
-export const PaymentForm: FC<PaymentFormProps> = ({}) => {
+export const PaymentForm: FC<PaymentFormProps> = () => {
   const { code } = useParams();
   const { services } = useAppSelector((state) => state.services);
   const { cards } = useAppSelector((state) => state.usercards);
