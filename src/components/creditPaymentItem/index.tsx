@@ -89,11 +89,12 @@ const CreditPaymentItem: React.FC<CreditPaymentItemProps> = (props) => {
   });
 */
   const { user } = useAppSelector((state) => state.authuser);
-  const { payCreditPayment } = useActions();
+  const { payCreditPayment, decreaseTheBalance } = useActions();
 
   const payPayment = async (event: React.MouseEvent<HTMLButtonElement>) => {
     if (user !== null) {
       payCreditPayment(props.id, props.credits, props.cards, props.credit);
+      decreaseTheBalance(props.id, props.credits, props.cards, props.credit);
     }
   };
   return (

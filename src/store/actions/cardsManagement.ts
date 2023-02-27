@@ -2,6 +2,7 @@ import { Dispatch } from 'redux';
 import { CardsActionTypes, CardsManagementActions } from '../types/cards';
 import cardsAPI from '../../api/cardsAPI';
 import ICard from '../../types/interfaces/ICard';
+import ICredit from '../../types/interfaces/ICredit';
 import transactionsAPI from '../../api/transactionsAPI';
 import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
 
@@ -102,6 +103,37 @@ export const replenishBalanceForCredit = (
       );
       dispatch({
         type: CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS,
+        payload: response,
+      });
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e.message);
+        dispatch({
+          type: CardsActionTypes.UPDATE_CARDS_ERROR,
+          payload: e.message,
+        });
+      }
+    }
+  };
+};
+
+export const decreaseTheBalance = (
+  idPayment: number,
+  credits: ICredit[],
+  cards: ICard[],
+  credit: ICredit,
+) => {
+  return (dispatch: Dispatch<CardsManagementActions>) => {
+    try {
+      dispatch({ type: CardsActionTypes.UPDATE_CARDS });
+      const response = cardsAPI.decreaseTheBalance(
+        idPayment,
+        credits,
+        cards,
+        credit,
+      );
+      dispatch({
+        type: CardsActionTypes.UPDATE_CARDS_SUCCESS,
         payload: response,
       });
     } catch (e: unknown) {

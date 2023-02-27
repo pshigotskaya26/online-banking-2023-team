@@ -4,8 +4,7 @@ import CreditPaymentStatusEnum from '../types/enums/CreditPaymentStatusEnum';
 import CreditPaymentFineEnum from '../types/enums/CreditPaymentFineEnum';
 import CreditStatusButtonEnum from '../types/enums/CreditStatusButtonEnum';
 import CreditStatusEnum from '../types/enums/CreditStatusEnum';
-import { getStringDay } from '../utils/formateDateTime';
-import { getStringMonth } from '../utils/formateDateTime';
+import { getStringDay, getStringMonth } from '../utils/formateDateTime';
 import { getCountOfDays } from '../utils/getCountOfDays';
 
 class CreditsAPI {
@@ -156,6 +155,13 @@ class CreditsAPI {
               creditItem.remainder = Number(
                 (creditRemainder - sumPaymentFine).toFixed(2),
               );
+
+              //decreaseTheBalance(foundedCard, sumPaymentFine);
+              /*
+              foundedCard[0].balance = Number(
+                (foundedCard[0].balance - sumPaymentFine).toFixed(2),
+              );
+*/
               if (creditItem.summPaid >= creditItem.summOfCredit) {
                 creditItem.status = CreditStatusEnum.CLOSE;
                 creditItem.isAllPaid = true;

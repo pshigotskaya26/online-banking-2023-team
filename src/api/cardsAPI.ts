@@ -2,6 +2,7 @@ import ICard from '../types/interfaces/ICard';
 import axios from 'axios';
 import { API_LAYER_KEY } from '../consts';
 import CardCurrencyEnum from '../types/enums/CardCurrencyEnum';
+import ICredit from '../types/interfaces/ICredit';
 import { ITransaction } from '../types/interfaces/ITransaction';
 
 class CardsAPI {
@@ -90,6 +91,38 @@ class CardsAPI {
     }
     localStorage.setItem('cards', JSON.stringify(cards));
     console.log('cards after taking credit: ', cards);
+    return cards;
+  };
+
+  decreaseTheBalance = (
+    idPayment: number,
+    credits: ICredit[],
+    cards: ICard[],
+    credit: ICredit,
+  ): ICard[] => {
+    credits.forEach((creditItem) => {
+      if (creditItem.id === credit.id) {
+        let creditCardId = creditItem.cardId;
+
+        const foundedCard = cards.filter(
+          (cardItem) => cardItem.id === creditCardId,
+        );
+
+        if (foundedCard[0] !== undefined) {
+          creditItem.arrOfPayments.forEach((paymentItem) => {
+            if (paymentItem.id === idPayment) {
+              let sumPaymentFine = Number(
+                (paymentItem.paymentValue + paymentItem.fine).toFixed(2),
+              );
+              foundedCard[0].balance = Number(
+                (foundedCard[0].balance - sumPaymentFine).toFixed(2),
+              );
+            }
+          });
+        }
+        this.updateCards(foundedCard);
+      }
+    });
     return cards;
   };
 }
