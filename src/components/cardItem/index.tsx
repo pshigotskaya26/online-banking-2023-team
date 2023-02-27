@@ -13,6 +13,7 @@ import { useActions } from '../../hooks/useActions';
 
 interface CardItemProps {
   card: ICard;
+  isReplenishAvailable?: boolean;
 }
 
 const CardItem: React.FC<CardItemProps> = (props) => {
@@ -80,9 +81,11 @@ const CardItem: React.FC<CardItemProps> = (props) => {
           </div>
         </div>
       </div>
-      <button className="button button-replenish" onClick={changeBalance}>
-        Replenish balance
-      </button>
+      {props.isReplenishAvailable && (
+        <button className="button button-replenish" onClick={changeBalance}>
+          Replenish balance
+        </button>
+      )}
     </div>
   );
 };

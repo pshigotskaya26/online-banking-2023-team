@@ -64,7 +64,7 @@ export const PaymentForm: FC<PaymentFormProps> = ({}) => {
     const transaction: ITransaction = {
       id: 0,
       cardid: activeCard.id,
-      timestamp: dayjs().unix(),
+      timestamp: Date.now(),
       targetid: service.id,
       userid: user?.id ?? 0,
       value: -1 * paymentSum,
