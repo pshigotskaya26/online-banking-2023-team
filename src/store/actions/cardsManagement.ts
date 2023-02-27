@@ -2,6 +2,7 @@ import { Dispatch } from 'redux';
 import { CardsActionTypes, CardsManagementActions } from '../types/cards';
 import cardsAPI from '../../api/cardsAPI';
 import ICard from '../../types/interfaces/ICard';
+import ICredit from '../../types/interfaces/ICredit';
 import transactionsAPI from '../../api/transactionsAPI';
 import CardCurrencyEnum from '../../types/enums/CardCurrencyEnum';
 
@@ -63,7 +64,6 @@ export const replenishBalance = (cardId: number, cardCurrency: string) => {
 
       const response = await cardsAPI.replenishBalance(
         cardId,
-        cardCurrency,
         convertedSalaryFixed,
       );
       await transactionsAPI.createTransactionReplanish(
@@ -103,6 +103,68 @@ export const replenishBalanceForCredit = (
       );
       dispatch({
         type: CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS,
+        payload: response,
+      });
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e.message);
+        dispatch({
+          type: CardsActionTypes.UPDATE_CARDS_ERROR,
+          payload: e.message,
+        });
+      }
+    }
+  };
+};
+
+export const decreaseTheBalanceForPayment = (
+  idPayment: number,
+  credits: ICredit[],
+  cards: ICard[],
+  credit: ICredit,
+) => {
+  return (dispatch: Dispatch<CardsManagementActions>) => {
+    try {
+      dispatch({ type: CardsActionTypes.UPDATE_CARDS });
+      const response = cardsAPI.decreaseTheBalanceForPayment(
+        idPayment,
+        credits,
+        cards,
+        credit,
+      );
+      dispatch({
+        type: CardsActionTypes.UPDATE_CARDS_SUCCESS,
+        payload: response,
+      });
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e.message);
+        dispatch({
+          type: CardsActionTypes.UPDATE_CARDS_ERROR,
+          payload: e.message,
+        });
+      }
+    }
+  };
+};
+
+export const decreaseTheBalanceForCredit = (
+  idPayment: number,
+  credits: ICredit[],
+  cards: ICard[],
+  credit: ICredit,
+) => {
+  return (dispatch: Dispatch<CardsManagementActions>) => {
+    try {
+      dispatch({ type: CardsActionTypes.UPDATE_CARDS });
+      const response = cardsAPI.decreaseTheBalanceForCredit(
+        idPayment,
+        credits,
+        cards,
+        credit,
+      );
+      dispatch({
+        type: CardsActionTypes.UPDATE_CARDS_SUCCESS,
         payload: response,
       });
     } catch (e: unknown) {

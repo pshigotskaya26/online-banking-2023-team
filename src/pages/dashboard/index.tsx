@@ -16,8 +16,7 @@ const DashboardPage = () => {
   );
   const { credits: userCredits } = useAppSelector((state) => state.usercredits);
 
-  const { getCardsByUserId } = useActions();
-  const { getCreditsByUserId } = useActions();
+  const { getCardsByUserId, getCreditsByUserId } = useActions();
 
   const [cards, setCards] = useState<ICard[]>([]);
   const [credits, setCredits] = useState<ICredit[]>([]);

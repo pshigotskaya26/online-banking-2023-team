@@ -74,6 +74,36 @@ export const payCreditPayment = (
   };
 };
 
+export const payAllCredit = (
+  idPayment: number,
+  credits: ICredit[],
+  cards: ICard[],
+  credit: ICredit,
+) => {
+  return (dispatch: Dispatch<CreditsManagementActions>) => {
+    try {
+      dispatch({ type: CreditsActionTypes.UPDATE_CREDITS });
+      const response = creditsAPI.payAllCredit(
+        idPayment,
+        credits,
+        cards,
+        credit,
+      );
+      dispatch({
+        type: CreditsActionTypes.UPDATE_CREDITS_SUCCESS,
+        payload: response,
+      });
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch({
+          type: CreditsActionTypes.FETCH_CREDITS_ERROR,
+          payload: e.message,
+        });
+      }
+    }
+  };
+};
+
 export const updateCredits = (userCredits: ICredit[]) => {
   return (dispatch: Dispatch<CreditsManagementActions>) => {
     try {

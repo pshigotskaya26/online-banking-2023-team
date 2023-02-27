@@ -120,7 +120,7 @@ class TransactionsAPI {
         ? TransactionStatusEnum.DECLINED
         : TransactionStatusEnum.SUCCESS,
       id: Date.now(),
-      entitytype: TransactionsTypesEnum.DRAWBACK,
+      entitytype: TransactionsTypesEnum.INVOICE,
       timestamp: Date.now(),
     };
     this.addTransaction(transaction);
