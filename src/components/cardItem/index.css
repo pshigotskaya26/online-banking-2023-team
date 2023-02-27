@@ -1,5 +1,5 @@
 .card-item {
-  width: 340px;
+  width: 360px;
   height: 213px;
   background-repeat: no-repeat;
   @apply flex flex-col p-2.5 mb-20 text-white rounded-lg; /*320px*/
