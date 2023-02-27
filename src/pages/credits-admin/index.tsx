@@ -4,7 +4,6 @@ import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
 
 import LatestCredits from './latestCredits';
-import GraphicsCredits from './graphicsCredits';
 
 const CreditsAdmin = () => {
   const { fetchCreditsAll } = useActions();
@@ -17,8 +16,6 @@ const CreditsAdmin = () => {
     <ClientLayout>
       <>
         <LatestCredits credits={credits} />
-        Наверное нужно удалить ГРАФИКИ
-        {credits.length > 0 && <GraphicsCredits />}
       </>
     </ClientLayout>
   );

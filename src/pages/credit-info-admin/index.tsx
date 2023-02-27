@@ -64,7 +64,7 @@ const CreditInfoAdmin = () => {
             >
               <div className="w-full">
                 <h3 className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  Сумма оплаченная / Всего
+                  Amount Paid / Total
                 </h3>
                 <span className="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">
                   {summPaid} / {creditInfo.summOfCredit}
@@ -77,7 +77,7 @@ const CreditInfoAdmin = () => {
             >
               <div className="w-full">
                 <h3 className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  Сумма пени
+                  Amount of fine
                 </h3>
                 <span className="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">
                   {summFine}

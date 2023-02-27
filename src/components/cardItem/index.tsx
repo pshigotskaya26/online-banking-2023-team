@@ -11,6 +11,7 @@ import CardBalance from '../cardBalance';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useActions } from '../../hooks/useActions';
 import CardStatusButtonReplenishEnum from '../../types/enums/CardStatusButtonReplenishEnum';
+import Button from '../button';
 
 interface CardItemProps {
   card: ICard;
@@ -19,8 +20,8 @@ interface CardItemProps {
 
 const CardItem: React.FC<CardItemProps> = (props) => {
   const { user } = useAppSelector((state) => state.authuser);
+  const { loadingReplenish } = useAppSelector((state) => state.usercards);
   const { replenishBalance } = useActions();
-
   const changeBalance = async () => {
     if (user) {
       replenishBalance(props.card.id, props.card.currency);
@@ -83,7 +84,7 @@ const CardItem: React.FC<CardItemProps> = (props) => {
           <div className="card-balance__text">Balance:</div>
           <CardBalance
             isShownData={isShownData}
-            cardBalance={props.card.balance}
+            cardBalance={+props.card.balance.toFixed(2)}
             cardCurrency={props.card.currency}
           />
           <div className="card_balance__icon-eye">
@@ -94,9 +95,12 @@ const CardItem: React.FC<CardItemProps> = (props) => {
         </div>
       </div>
       {props.isReplenishAvailable && (
-        <button className="button button-replenish" onClick={changeBalance}>
-          Replenish balance
-        </button>
+        <Button
+          text={'Replenish balance'}
+          handleButton={changeBalance}
+          isDisable={loadingReplenish}
+          isLoading={loadingReplenish}
+        />
       )}
     </div>
   );

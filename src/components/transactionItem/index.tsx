@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './index.css';
 import { ITransaction } from '../../types/interfaces/ITransaction';
 import { getStringDate, getStringTime } from '../../utils/formateDateTime';
-import TransactionStatusEnum from '../../types/enums/TransactionStatusEnum';
 import TransactionsTypesEnum from '../../types/enums/TransactionsTypesEnum';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getStringCardNumber } from '../../utils/formateCardData';

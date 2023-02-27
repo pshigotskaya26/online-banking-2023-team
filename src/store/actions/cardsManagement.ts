@@ -49,6 +49,7 @@ export const addUserCard = (newCard: ICard) => {
 
 export const replenishBalance = (cardId: number, cardCurrency: string) => {
   return async (dispatch: Dispatch<CardsManagementActions>) => {
+    dispatch({ type: CardsActionTypes.REPLENISH_BALANCE });
     const currencyFrom = CardCurrencyEnum.BYN;
     const currencyTo = cardCurrency;
     const salary = 1000;
@@ -71,7 +72,7 @@ export const replenishBalance = (cardId: number, cardCurrency: string) => {
         convertedSalaryFixed,
       );
       dispatch({
-        type: CardsActionTypes.UPDATE_CARDS_WITH_SALARY_SUCCESS,
+        type: CardsActionTypes.REPLENISH_BALANCE_SUCCESS,
         payload: response,
       });
     } catch (e: unknown) {
@@ -82,7 +83,7 @@ export const replenishBalance = (cardId: number, cardCurrency: string) => {
       );
       if (e instanceof Error) {
         dispatch({
-          type: CardsActionTypes.UPDATE_CARDS_ERROR,
+          type: CardsActionTypes.REPLENISH_BALANCE_ERROR,
           payload: e.message,
         });
       }
