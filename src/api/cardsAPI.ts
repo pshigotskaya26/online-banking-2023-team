@@ -159,12 +159,16 @@ class CardsAPI {
           });
 
           if (foundedCard[0].balance >= sumAllPaymentsFines) {
+            console.log(
+              'foundedCard[0].balance BEFORE: ',
+              foundedCard[0].balance,
+            );
             foundedCard[0].balance = Number(
               (foundedCard[0].balance - sumAllPaymentsFines).toFixed(2),
             );
           }
 
-          console.log('foundedCard[0].balance: ', foundedCard[0].balance);
+          console.log('foundedCard[0].balance AFTER: ', foundedCard[0].balance);
         }
         this.updateCards(foundedCard);
       }
